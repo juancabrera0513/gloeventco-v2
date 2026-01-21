@@ -1,0 +1,467 @@
+/* ================================
+   Glo Event Co — Tailwind v4 CSS
+   ================================ */
+
+/* Fuentes (display + body) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;600&family=Archivo+Black&family=Bungee+Outline&display=swap');
+
+/* Núcleo Tailwind v4 */
+@import "tailwindcss";
+
+/* Plugins (v4) */
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+/* ----------------
+   Tema (tokens v4)
+   ---------------- */
+@theme {
+  /* Tipografías */
+  --font-display: "Montserrat", ui-sans-serif, system-ui;
+  --font-body: "Poppins", ui-sans-serif, system-ui;
+
+  /* Colores base */
+  --color-base-bg: #0a0a0f;
+  --color-base-surface: #0f1117;
+
+  /* Paleta neon (BRAND) */
+  --color-neon-red:   #ff4567;
+  --color-neon-green: #23ff11;
+  --color-neon-blue:  #0083fd;
+
+  /* Sombras / halos (compat + brand) */
+  --shadow-glow:             0 0 24px rgba(0,131,253,.45);  /* BLUE */
+  --shadow-glow-strong:      0 0 56px rgba(0,131,253,.75);  /* BLUE */
+
+  /* compat: "pink" = RED brand */
+  --shadow-glow-pink:        0 0 24px rgba(255,69,103,.45); /* RED  */
+  --shadow-glow-pink-strong: 0 0 68px rgba(255,69,103,.80); /* RED  */
+
+  /* Extra por color */
+  --shadow-glow-blue:          0 0 24px rgba(0,131,253,.45);
+  --shadow-glow-blue-strong:   0 0 56px rgba(0,131,253,.75);
+
+  --shadow-glow-red:           0 0 24px rgba(255,69,103,.45);
+  --shadow-glow-red-strong:    0 0 56px rgba(255,69,103,.75);
+
+  --shadow-glow-green:         0 0 24px rgba(35,255,17,.45);
+  --shadow-glow-green-strong:  0 0 56px rgba(35,255,17,.75);
+}
+
+/* ------------
+   Global base
+   ------------ */
+:root { color-scheme: dark; }
+html, body, #root { height: 100%; }
+body {
+  background: var(--color-base-bg);
+  color: #e5e7eb; /* text-gray-200 */
+  font-family: var(--font-body);
+}
+
+/* ✅ evita links negros/azules/visitados raros */
+a, a:visited { color: inherit; text-decoration: none; }
+a:hover { text-decoration: none; }
+a:focus-visible {
+  outline: 2px solid rgba(0,131,253,.65);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* Imágenes responsivas por defecto */
+img, svg, video, canvas { display: block; max-width: 100%; }
+
+/* ----------------------
+   Utilidades estilo Glo
+   ---------------------- */
+
+/* Tarjeta tipo “glass” */
+.glass {
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Borde/aro neon suaves (por defecto BLUE) */
+.neon-border {
+  box-shadow:
+    inset 0 0 1px rgba(0,131,253,0.6),
+    0 0 12px rgba(0,131,253,0.25);
+}
+.neon-ring {
+  box-shadow:
+    0 0 0 2px rgba(0,131,253,0.5),
+    0 0 24px rgba(0,131,253,0.35);
+}
+
+/* ----------------
+   Texto neon (compat)
+   ---------------- */
+.neon-text-cyan {
+  color: #eaf2ff;
+  text-shadow:
+    0 0 6px  var(--color-neon-blue),
+    0 0 18px rgba(0,131,253,.60),
+    0 0 36px rgba(0,131,253,.40);
+}
+.neon-text-pink {
+  color: #ffecef;
+  text-shadow:
+    0 0 6px  var(--color-neon-red),
+    0 0 18px rgba(255,69,103,.60),
+    0 0 36px rgba(255,69,103,.40);
+}
+.neon-text-mint {
+  color: #ecffea;
+  text-shadow:
+    0 0 6px  var(--color-neon-green),
+    0 0 18px rgba(35,255,17,.60),
+    0 0 36px rgba(35,255,17,.40);
+}
+
+/* Opcionales directos */
+.neon-text-blue  { color: #eaf2ff; text-shadow: 0 0 6px var(--color-neon-blue),  0 0 18px rgba(0,131,253,.60), 0 0 36px rgba(0,131,253,.40); }
+.neon-text-red   { color: #ffecef; text-shadow: 0 0 6px var(--color-neon-red),   0 0 18px rgba(255,69,103,.60), 0 0 36px rgba(255,69,103,.40); }
+.neon-text-green { color: #ecffea; text-shadow: 0 0 6px var(--color-neon-green), 0 0 18px rgba(35,255,17,.60),  0 0 36px rgba(35,255,17,.40); }
+
+/* -------------------
+   “Glow System” v4
+   ------------------- */
+.glo-hover {
+  transition: box-shadow .25s ease, transform .25s ease, filter .25s ease;
+}
+.glo-hover:hover {
+  box-shadow: var(--shadow-glow-strong);
+  transform: translateY(-1px);
+}
+
+/* compat: "pink" = RED brand */
+.glo-hover-pink {
+  transition: box-shadow .25s ease, transform .25s ease, filter .25s ease;
+}
+.glo-hover-pink:hover {
+  box-shadow: var(--shadow-glow-red-strong);
+  transform: translateY(-1px);
+}
+
+/* ✅ NUEVO: mint/green hover (para variant="mint") */
+.glo-hover-mint {
+  transition: box-shadow .25s ease, transform .25s ease, filter .25s ease;
+}
+.glo-hover-mint:hover {
+  box-shadow: var(--shadow-glow-green-strong);
+  transform: translateY(-1px);
+}
+
+/* Glows persistentes */
+.glo-on      { box-shadow: var(--shadow-glow); }       /* BLUE */
+.glo-on-pink { box-shadow: var(--shadow-glow-red); }   /* RED  */
+
+/* ✅ NUEVO: mint/green persistente */
+.glo-on-mint { box-shadow: var(--shadow-glow-green); } /* GREEN */
+
+.glo-on-blue  { box-shadow: var(--shadow-glow-blue); }
+.glo-on-red   { box-shadow: var(--shadow-glow-red); }
+.glo-on-green { box-shadow: var(--shadow-glow-green); }
+
+/* Drop glows */
+.glo-drop       { filter: drop-shadow(0 0 18px rgba(0,131,253,.65)); }
+.glo-drop-pink  { filter: drop-shadow(0 0 18px rgba(255,69,103,.65)); }
+.glo-drop-green { filter: drop-shadow(0 0 18px rgba(35,255,17,.65)); }
+
+/* Glow overlay para video/imagen */
+.glo-video-glow       { filter: drop-shadow(0 0 26px rgba(0,131,253,.85)); }
+.glo-video-glow-red   { filter: drop-shadow(0 0 26px rgba(255,69,103,.85)); }
+.glo-video-glow-green { filter: drop-shadow(0 0 26px rgba(35,255,17,.85)); }
+
+/* -----------------------------
+   Hover suave para enlaces
+   ----------------------------- */
+.glo-hover-soft,
+.glo-hover-soft-pink,
+.glo-hover-soft-green {
+  transition: filter .25s ease, text-shadow .25s ease, transform .25s ease;
+  color: inherit;
+  text-decoration: none;
+  filter: none;
+}
+
+.glo-hover-soft:hover {
+  filter: drop-shadow(0 0 12px rgba(0,131,253,.75));
+  text-shadow: 0 0 6px var(--color-neon-blue), 0 0 12px rgba(0,131,253,.6);
+  transform: translateY(-1px);
+}
+.glo-hover-soft-pink:hover {
+  filter: drop-shadow(0 0 12px rgba(255,69,103,.80));
+  text-shadow: 0 0 6px var(--color-neon-red), 0 0 12px rgba(255,69,103,.6);
+  transform: translateY(-1px);
+}
+.glo-hover-soft-green:hover {
+  filter: drop-shadow(0 0 12px rgba(35,255,17,.80));
+  text-shadow: 0 0 6px var(--color-neon-green), 0 0 12px rgba(35,255,17,.6);
+  transform: translateY(-1px);
+}
+
+/* ---------------------------------------
+   Scope: solo superficies usan box-shadow
+   --------------------------------------- */
+.glo-scope button,
+.glo-scope [role="button"],
+.glo-scope .tile {
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.glo-scope button:hover,
+.glo-scope [role="button"]:hover,
+.glo-scope .tile:hover {
+  box-shadow: var(--shadow-glow-strong);
+  transform: translateY(-1px);
+}
+
+/* ✅ FIX ESPECÍFICO HEADER NAV BUTTONS */
+header .glo-scope a,
+header .glo-scope button {
+  color: inherit;
+}
+
+/* Evita “text-fill” raro en Safari / anchors */
+header nav a,
+header nav button {
+  -webkit-text-fill-color: currentColor;
+  color: #e5e7eb; /* default text-gray-200 */
+}
+
+/* Hace que CTAs del header no se vean aplastados */
+header nav .glass,
+header nav a,
+header nav button {
+  line-height: 1;
+}
+header nav a,
+header nav button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  white-space: nowrap;
+}
+
+/* --------------------
+   Letrero estilo neón
+   -------------------- */
+.neon-sign {
+  font-family: var(--font-display);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* compat: cyan->BLUE, pink->RED (para NeonSign existente) */
+.neon-sign.cyan {
+  color: #eaf2ff;
+  text-shadow:
+    0 0 2px var(--color-neon-blue),
+    0 0 12px var(--color-neon-blue),
+    0 0 28px rgba(0,131,253,.75);
+}
+.neon-sign.pink {
+  color: #ffecef;
+  text-shadow:
+    0 0 2px var(--color-neon-red),
+    0 0 12px var(--color-neon-red),
+    0 0 28px rgba(255,69,103,.75);
+}
+
+.neon-sign.white {
+  color: #ffffff;
+  text-shadow:
+    0 0 2px  rgba(255,255,255,0.95),
+    0 0 8px  rgba(255,255,255,0.85),
+    0 0 18px rgba(255,255,255,0.65),
+    0 0 32px rgba(255,255,255,0.45);
+}
+
+/* Override: si usas Bungee Outline, siempre ROJO aunque NeonSign agregue "cyan" */
+.neon-sign.neon-sign-bungee-outline {
+  color: #fff1f3;
+  text-shadow:
+    0 0 2px  var(--color-neon-red),
+    0 0 10px var(--color-neon-red),
+    0 0 22px rgba(255,69,103,.75),
+    0 0 44px rgba(255,69,103,.55),
+    0 0 72px rgba(255,69,103,.35);
+}
+
+/* ---------------------------------------
+   BUNGEE OUTLINE Sign (RED BRAND)
+   Uso: className="neon-sign-bungee-outline"
+   --------------------------------------- */
+.neon-sign-bungee-outline {
+  font-family: "Bungee Outline", cursive;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #fff1f3;
+  text-shadow:
+    0 0 2px  var(--color-neon-red),
+    0 0 10px var(--color-neon-red),
+    0 0 22px rgba(255,69,103,.75),
+    0 0 44px rgba(255,69,103,.55),
+    0 0 72px rgba(255,69,103,.35);
+}
+
+/* Flicker accesible */
+@keyframes neon-flicker {
+  0%, 18%, 20%, 63%, 65%, 100% { opacity: 1; }
+  19%, 19.5%, 64%              { opacity: .82; }
+}
+.flicker-slow { animation: neon-flicker 3.2s linear infinite; }
+.flicker-fast { animation: neon-flicker 1.6s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flicker-slow, .flicker-fast { animation: none !important; }
+}
+
+/* Accesibilidad de motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ---------------------------------
+   Glows por color para OurWork cards
+   --------------------------------- */
+.glo-hover-red    { transition: box-shadow .25s ease, transform .25s ease; }
+.glo-hover-red:hover    { box-shadow: var(--shadow-glow-red-strong); transform: translateY(-1px); }
+
+.glo-hover-blue   { transition: box-shadow .25s ease, transform .25s ease; }
+.glo-hover-blue:hover   { box-shadow: var(--shadow-glow-blue-strong); transform: translateY(-1px); }
+
+.glo-hover-green  { transition: box-shadow .25s ease, transform .25s ease; }
+.glo-hover-green:hover  { box-shadow: var(--shadow-glow-green-strong); transform: translateY(-1px); }
+
+/* compat */
+.glo-hover-cyan   { transition: box-shadow .25s ease, transform .25s ease; }
+.glo-hover-cyan:hover   { box-shadow: var(--shadow-glow-blue-strong); transform: translateY(-1px); }
+
+.glo-hover-purple { transition: box-shadow .25s ease, transform .25s ease; }
+.glo-hover-purple:hover { box-shadow: 0 0 56px rgba(138, 43, 226, .75); transform: translateY(-1px); }
+
+/* --- TrustedBy marquee --- */
+@keyframes trustedby-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.trustedby-marquee {
+  animation: trustedby-marquee var(--marquee-duration, 40s) linear infinite;
+  will-change: transform;
+}
+.trustedby-paused { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .trustedby-marquee { animation: none !important; transform: none !important; }
+}
+
+
+/* -----------------------------
+   3D Image Carousel (3 faces)
+-------------------------------- */
+.ic3d {
+  position: relative;
+  width: min(70vw, var(--ic-maxw, 420px));
+  height: min(46vw, var(--ic-maxh, 280px));
+  margin: 0 auto;
+  perspective: 1000px;
+  transform-origin: center;
+}
+
+.ic3d__content {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(-1 * (min(35vw, 240px)))) rotateY(0);
+  animation: ic3d-carousel var(--ic-duration, 10s) infinite
+    cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  will-change: transform;
+}
+
+.ic3d__item {
+  position: absolute;
+  inset: 0;
+  width: min(70vw, var(--ic-maxw, 420px));
+  height: min(46vw, var(--ic-maxh, 280px));
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  transform-origin: center;
+}
+
+.ic3d__item:nth-child(1) {
+  transform: rotateY(0) translateZ(min(35vw, 240px));
+}
+.ic3d__item:nth-child(2) {
+  transform: rotateY(120deg) translateZ(min(35vw, 240px));
+}
+.ic3d__item:nth-child(3) {
+  transform: rotateY(240deg) translateZ(min(35vw, 240px));
+}
+
+.ic3d__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* animation */
+@keyframes ic3d-carousel {
+  0%,
+  17.5% {
+    transform: translateZ(calc(-1 * (min(35vw, 240px)))) rotateY(0);
+  }
+  27.5%,
+  45% {
+    transform: translateZ(calc(-1 * (min(35vw, 240px)))) rotateY(-120deg);
+  }
+  55%,
+  72.5% {
+    transform: translateZ(calc(-1 * (min(35vw, 240px)))) rotateY(-240deg);
+  }
+  82.5%,
+  100% {
+    transform: translateZ(calc(-1 * (min(35vw, 240px)))) rotateY(-360deg);
+  }
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ic3d__content {
+    animation: none;
+    transform: translateZ(calc(-1 * (min(35vw, 240px)))) rotateY(0);
+  }
+}
+
+/* HomeGallery/Testimonials hover aliases */
+.hover-red,
+.hover-blue,
+.hover-green {
+  transition: box-shadow .25s ease, transform .25s ease, filter .25s ease;
+}
+
+.hover-red:hover {
+  box-shadow: var(--shadow-glow-red-strong);
+  transform: translateY(-1px);
+}
+.hover-blue:hover {
+  box-shadow: var(--shadow-glow-blue-strong);
+  transform: translateY(-1px);
+}
+.hover-green:hover {
+  box-shadow: var(--shadow-glow-green-strong);
+  transform: translateY(-1px);
+}
