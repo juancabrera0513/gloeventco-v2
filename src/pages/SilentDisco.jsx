@@ -31,21 +31,22 @@ export default function SilentDisco() {
 
   // ✅ Buttons (prevent overflow + allow wrapping)
   const glowBtnBase = `
-    inline-flex items-center justify-center
-    px-4 py-1.5 md:px-5 md:py-2
-    text-base md:text-lg
-    font-body font-semibold
-    tracking-normal
-    rounded-none
-    bg-transparent
-    border
-    hover:bg-white/5
-    transition-[box-shadow,background-color,transform] duration-200
-    min-h-[44px]
-    text-center
-    whitespace-normal
-    break-words
-  `;
+  inline-flex items-center justify-center
+  px-5 py-2
+  text-base md:text-lg
+  font-body font-semibold
+  tracking-normal
+  rounded-xl
+  bg-transparent
+  border
+  hover:bg-white/5
+  transition-[box-shadow,background-color,transform] duration-200
+  min-h-[44px]
+  text-center
+  whitespace-normal
+  break-words
+`;
+
 
   // ✅ Connect button (GREEN)
   const glowBtnMint =

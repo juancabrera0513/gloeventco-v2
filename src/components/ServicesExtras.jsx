@@ -232,10 +232,11 @@ export default function ServicesExtras({
             </div>
           </div>
 
-      <div className="mt-10 flex flex-col items-center gap-3">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
   <PricingGlowButton
     href={BOOK_BASE}
     className="
+      w-full sm:w-auto
       !text-[var(--color-neon-red)]
       !border !border-[var(--color-neon-red)]
       bg-transparent
@@ -250,6 +251,7 @@ export default function ServicesExtras({
   <CtaLink
     href={connectHref}
     className="
+      w-full sm:w-auto
       inline-flex items-center justify-center
       px-4 py-1.5 md:px-6 md:py-2
       text-base md:text-lg
@@ -267,6 +269,7 @@ export default function ServicesExtras({
     Connect with Our Team
   </CtaLink>
 </div>
+
 
         </div>
       </section>
