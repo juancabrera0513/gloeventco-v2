@@ -139,9 +139,24 @@ export default function Footer({
 
         {/* Bottom bar */}
         <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-xs text-gray-500">
-            {new Date().getFullYear()} © Glo Event Co. All rights reserved. | Privacy Policy | Terms and Conditions
-          </div>
+        <div className="text-xs text-gray-500 flex flex-wrap gap-1">
+  <span>{new Date().getFullYear()} © Glo Event Co. All rights reserved.</span>
+  <span>|</span>
+  <Link
+    to="/privacy"
+    className="underline underline-offset-4 hover:text-white"
+  >
+    Privacy Policy
+  </Link>
+  <span>|</span>
+  <Link
+    to="/terms"
+    className="underline underline-offset-4 hover:text-white"
+  >
+    Terms and Conditions
+  </Link>
+</div>
+
 
           <div className="text-xs text-gray-500">
             Site by{" "}

@@ -6,23 +6,18 @@ import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
 import Services from "./pages/Services";
-// import Portfolio from "./pages/Portfolio";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import SilentDisco from "./pages/SilentDisco";
 import PhotoBooth from "./pages/PhotoBooth";
 
-import Availability from "./pages/Availability";
-
-import Showcase from "./pages/Showcase";
-
-
-
+import About from "./pages/About";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms"; // ✅ ADD
 
 export default function App() {
   return (
     <div className="min-h-dvh flex flex-col">
-      {/* Default head tags (puedes sobreescribir en cada página) */}
       <title>Glo Event Co | St. Louis Parties</title>
       <meta
         name="description"
@@ -30,8 +25,6 @@ export default function App() {
       />
 
       <Header />
-
-      {/* Debe ir dentro del Router (App ya está envuelto por BrowserRouter en main.jsx) */}
       <ScrollToTop behavior="auto" />
 
       <main className="flex-1">
@@ -40,15 +33,12 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/services/silent-disco" element={<SilentDisco />} />
           <Route path="/services/photo-booth" element={<PhotoBooth />} />
-
-          {/* <Route path="/portfolio" element={<Portfolio />} /> */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
-          
-          <Route path="/availability" element={<Availability />} />
-          <Route path="/showcase" element={<Showcase />} />
 
-
+          <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} /> {/* ✅ ADD */}
         </Routes>
       </main>
 
