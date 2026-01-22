@@ -25,7 +25,6 @@ export const PB_ATTENDANCE = `${BOOK_BASE}/reservation/user_info?event_type_id=6
 
 // ==================
 // Our Work (Cases)
-// Served from /public/images/cases
 // ==================
 const CASES_BASE = '/images/cases'
 
