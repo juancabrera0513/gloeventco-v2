@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
-import { BOOK_BASE } from "../lib/constants";
+import GlowButton from "../components/GlowButton";
 import MiniVideoGallery from "../components/MiniVideoGallery";
 
 export default function SilentDisco() {
@@ -13,60 +13,40 @@ export default function SilentDisco() {
   const QUOTE_DJ = `${PRICING}/reservation/event_type?package_group_id=13678`;
   const QUOTE_RENTAL_BASE = `${PRICING}/reservation/package_group?service_id=9587`;
 
-  // ✅ Add your video here (public/videos/...)
-  const videoSrc = "/videos/silent-disco.webm"; // <-- change to your real file
+  // ✅ Video (public/videos/...)
+  const videoSrc = "/videos/silent-disco.webm";
 
   const isInternal = (href = "") => href.startsWith("/");
 
-  const BtnLink = ({ href, className = "", children }) =>
-    isInternal(href) ? (
-      <Link to={href} className={className}>
+  // ✅ Standard CTA: internal -> <Link>, external -> GlowButton external
+  // ✅ Centered by default (mobile + desktop)
+  const ActionBtn = ({ href, variant, children, className = "" }) => {
+    const btnClass =
+      (className ? className + " " : "") + "w-full sm:w-auto justify-center mx-auto";
+
+    if (isInternal(href)) {
+      return (
+        <Link to={href} className="inline-flex justify-center">
+          <GlowButton appearance="outline" variant={variant} size="lg" className={btnClass}>
+            {children}
+          </GlowButton>
+        </Link>
+      );
+    }
+
+    return (
+      <GlowButton
+        href={href}
+        external
+        appearance="outline"
+        variant={variant}
+        size="lg"
+        className={btnClass}
+      >
         {children}
-      </Link>
-    ) : (
-      <a href={href} className={className} target="_blank" rel="noreferrer">
-        {children}
-      </a>
+      </GlowButton>
     );
-
-  // ✅ Buttons (prevent overflow + allow wrapping)
-  const glowBtnBase = `
-  inline-flex items-center justify-center
-  px-5 py-2
-  text-base md:text-lg
-  font-body font-semibold
-  tracking-normal
-  rounded-xl
-  bg-transparent
-  border
-  hover:bg-white/5
-  transition-[box-shadow,background-color,transform] duration-200
-  min-h-[44px]
-  text-center
-  whitespace-normal
-  break-words
-`;
-
-
-  // ✅ Connect button (GREEN)
-  const glowBtnMint =
-    glowBtnBase +
-    `
-    !text-[#23ff11]
-    !border-[#23ff11]
-    [box-shadow:0_0_12px_rgba(35,255,17,.35)]
-    hover:[box-shadow:0_0_18px_rgba(35,255,17,.55)]
-  `;
-
-  // ✅ Pricing button (RED)
-  const glowBtnPink =
-    glowBtnBase +
-    `
-    !text-[#ff4567]
-    !border-[#ff4567]
-    [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-    hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-  `;
+  };
 
   // ✅ Typography
   const sectionTitle =
@@ -122,7 +102,6 @@ export default function SilentDisco() {
       textColor: "var(--color-neon-green)",
     },
   ];
-  
 
   const greatFor = [
     {
@@ -178,8 +157,6 @@ export default function SilentDisco() {
     },
   ];
 
-  const connectHref = "/contact";
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
       <title>Silent Disco | Glo Event Co</title>
@@ -190,11 +167,7 @@ export default function SilentDisco() {
 
       {/* ✅ Page Hero */}
       <header className="max-w-5xl mx-auto text-center">
-        <NeonTitle
-          title="Silent Disco"
-          id="silent-disco-heading"
-          className="uppercase"
-        />
+        <NeonTitle title="Silent Disco" id="silent-disco-heading" className="uppercase" />
 
         <p className="mt-3 text-gray-400 text-center text-base md:text-lg max-w-3xl mx-auto">
           A silent disco is a dance party where guests wear wireless headphones
@@ -202,87 +175,82 @@ export default function SilentDisco() {
           is loud.
         </p>
 
-        {/* ✅ Center video below the hero text */}
+        {/* Video */}
         <div className="mt-10 max-w-4xl mx-auto">
-  <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black aspect-video">
-    <video
-      className="absolute inset-0 w-full h-full object-cover"
-      src={videoSrc}
-      controls
-      playsInline
-      preload="metadata"
-    />
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black aspect-video">
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              src={videoSrc}
+              controls
+              playsInline
+              preload="metadata"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0" />
+          </div>
+        </div>
 
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0" />
-  </div>
-</div>
-
-
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <BtnLink href={QUOTE_RENTAL_BASE} className={glowBtnPink}>
+        {/* ✅ Buttons centered on mobile */}
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <ActionBtn href={QUOTE_RENTAL_BASE} variant="red">
             See Pricing + Book Online
-          </BtnLink>
-          <BtnLink href={connectHref} className={glowBtnMint}>
+          </ActionBtn>
+          <ActionBtn href={CONNECT} variant="green">
             Connect with Our Team
-          </BtnLink>
+          </ActionBtn>
         </div>
       </header>
 
-      {/* ✅ MAIN CONTENT (removed "On this page" sidebar) */}
+      {/* ✅ MAIN CONTENT */}
       <main className="mt-14 min-w-0">
         {/* Section 1: How it works */}
         <section id="how-it-works" className={anchorOffset}>
           <h2 className={sectionTitle}>What is Silent Disco and How Does it Work?</h2>
           <p className={sectionSub}>
-          A Silent Disco is a dance party where guests listen to music through wireless headphones instead of speakers. Everyone dances together, but each person can choose what they want to hear.         
+            A Silent Disco is a dance party where guests listen to music through wireless
+            headphones instead of speakers. Everyone dances together, but each person can
+            choose what they want to hear.
           </p>
 
           <div className="mt-10 grid gap-8 md:grid-cols-3">
-  {STEPS.map((s) => (
-    <article
-      key={s.number}
-      className="bg-black rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1"
-      style={{
-        borderColor: s.border,
-        boxShadow: `0 0 18px ${s.glow}`,
-      }}
-    >
-      {/* GRID INTERNO */}
-      <div className="grid grid-cols-[48px_1fr] gap-x-5 gap-y-3">
-        {/* NUMBER */}
-        <div
-          className="w-12 h-12 flex items-center justify-center font-extrabold text-xl border-2"
-          style={{
-            color: s.textColor,
-            borderColor: s.border,
-            boxShadow: `0 0 14px ${s.glow}`,
-          }}
-        >
-          {s.number}
-        </div>
+            {STEPS.map((s) => (
+              <article
+                key={s.number}
+                className="bg-black rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1"
+                style={{
+                  borderColor: s.border,
+                  boxShadow: `0 0 18px ${s.glow}`,
+                }}
+              >
+                <div className="grid grid-cols-[48px_1fr] gap-x-5 gap-y-3">
+                  <div
+                    className="w-12 h-12 flex items-center justify-center font-extrabold text-xl border-2 rounded-xl"
+                    style={{
+                      color: s.textColor,
+                      borderColor: s.border,
+                      boxShadow: `0 0 14px ${s.glow}`,
+                    }}
+                  >
+                    {s.number}
+                  </div>
 
-        {/* TITLE */}
-        <h3
-          className="text-lg font-semibold leading-tight"
-          style={{ color: s.textColor }}
-        >
-          {s.title}
-        </h3>
+                  <h3 className="text-lg font-semibold leading-tight" style={{ color: s.textColor }}>
+                    {s.title}
+                  </h3>
 
-        {/* TEXT — spans FULL width starting under the box */}
-        {s.text && (
-          <p className="col-span-2 text-sm text-gray-300 leading-relaxed text-justify">
-            {s.text}
-          </p>
-        )}
-      </div>
-    </article>
-  ))}
-</div>
+                  {s.text && (
+                    <p className="col-span-2 text-sm text-gray-300 leading-relaxed text-justify">
+                      {s.text}
+                    </p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
 
           <p className="mt-8 text-gray-300">
             <span className="text-white/80 font-semibold">Perfect for:</span>{" "}
-            Venues with noise limits, mixed age groups, outdoor events, corporate events, school events, and guests with different music tastes.
+            Venues with noise limits, mixed age groups, outdoor events, corporate events,
+            school events, and guests with different music tastes.
           </p>
         </section>
 
@@ -290,8 +258,7 @@ export default function SilentDisco() {
         <section id="why" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Why Silent Disco Works</h2>
           <p className={sectionSub}>
-            It keeps the energy high while giving guests control over what they
-            hear.
+            It keeps the energy high while giving guests control over what they hear.
           </p>
 
           <div className="mt-10 glass rounded-2xl p-6 border border-white/5">
@@ -322,17 +289,13 @@ export default function SilentDisco() {
           <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
             {/* LEFT CARD */}
             <GlowCard
-              title={
-                <span className="text-center block">
-                  Silent Disco Headphone Rentals
-                </span>
-              }
+              title={<span className="text-center block">Silent Disco Headphone Rentals</span>}
               variant="mint"
             >
               <div className="w-full flex flex-col">
                 <p className="text-gray-300">
-                  DIY friendly headphone rentals with clear instructions and local
-                  support. Pick up and return locally, or choose delivery.
+                  DIY friendly headphone rentals with clear instructions and local support.
+                  Pick up and return locally, or choose delivery.
                 </p>
 
                 <ul className="list-disc pl-6 mt-4 text-gray-300 space-y-2 marker:text-[#23ff11]">
@@ -343,31 +306,27 @@ export default function SilentDisco() {
                   <li>Local support available if you need help</li>
                 </ul>
 
-                {/* ✅ Buttons — stacked */}
-                <div className="mt-auto pt-6 flex flex-col gap-3">
-                  <BtnLink href={QUOTE_RENTALS} className={glowBtnPink}>
+                {/* ✅ Side-by-side on desktop, stacked on mobile, centered always */}
+                <div className="mt-auto pt-6 flex flex-col sm:flex-row justify-center items-center gap-3 w-full">
+                  <ActionBtn href={QUOTE_RENTALS} variant="red">
                     See Pricing + Book Online
-                  </BtnLink>
-                  <BtnLink href={connectHref} className={glowBtnMint}>
+                  </ActionBtn>
+                  <ActionBtn href={CONNECT} variant="green">
                     Connect with Our Team
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </GlowCard>
 
             {/* RIGHT CARD */}
             <GlowCard
-              title={
-                <span className="text-center block">
-                  Silent Disco DJ Experience
-                </span>
-              }
+              title={<span className="text-center block">Silent Disco DJ Experience</span>}
               variant="pink"
             >
               <div className="w-full flex flex-col">
                 <p className="text-gray-300">
-                  Full service silent disco with a DJ team and attendants. We manage
-                  setup, music flow, and guest support from start to finish.
+                  Full service silent disco with a DJ team and attendants. We manage setup,
+                  music flow, and guest support from start to finish.
                 </p>
 
                 <ul className="list-disc pl-6 mt-4 text-gray-300 space-y-2 marker:text-[#ff4567]">
@@ -378,14 +337,14 @@ export default function SilentDisco() {
                   <li>Ideal for large and high energy events</li>
                 </ul>
 
-                {/* ✅ Buttons — stacked */}
-                <div className="mt-auto pt-6 flex flex-col gap-3">
-                  <BtnLink href={QUOTE_DJ} className={glowBtnPink}>
+                {/* ✅ Side-by-side on desktop, stacked on mobile, centered always */}
+                <div className="mt-auto pt-6 flex flex-col sm:flex-row justify-center items-center gap-3 w-full">
+                  <ActionBtn href={QUOTE_DJ} variant="red">
                     See Pricing + Book Online
-                  </BtnLink>
-                  <BtnLink href={connectHref} className={glowBtnMint}>
+                  </ActionBtn>
+                  <ActionBtn href={CONNECT} variant="green">
                     Connect with Our Team
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </GlowCard>
@@ -396,8 +355,8 @@ export default function SilentDisco() {
         <section id="great-for" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Great For</h2>
           <p className={sectionSub}>
-            Schools + PTO events, churches + youth groups, corporate events,
-            weddings, fundraisers, birthdays, and community festivals.
+            Schools + PTO events, churches + youth groups, corporate events, weddings,
+            fundraisers, birthdays, and community festivals.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
@@ -418,15 +377,12 @@ export default function SilentDisco() {
         {/* Section 5: FAQs */}
         <section id="faqs" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Silent Disco FAQs</h2>
-          <p className={sectionSub}>
-            Quick answers to help you plan the right setup.
-          </p>
+          <p className={sectionSub}>Quick answers to help you plan the right setup.</p>
 
           <div className="mt-10 grid md:grid-cols-2 gap-6">
             {faqs.map((f, i) => {
               const id = `sd-faq-${slug(f.q)}`;
-              const hoverClass =
-                i % 2 === 0 ? "glo-hover-green" : "glo-hover-pink";
+              const hoverClass = i % 2 === 0 ? "glo-hover-green" : "glo-hover-pink";
 
               return (
                 <div key={id} className={`${faqCardBase} ${hoverClass}`}>
@@ -435,20 +391,13 @@ export default function SilentDisco() {
                       id={id}
                       className="flex items-center justify-between cursor-pointer list-none px-5 py-4"
                     >
-                      <span className="font-semibold pr-4 text-gray-100">
-                        {f.q}
-                      </span>
+                      <span className="font-semibold pr-4 text-gray-100">{f.q}</span>
 
                       <span
                         className="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/5 neon-border transition-transform group-open:rotate-45"
                         aria-hidden="true"
                       >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M12 5v14M5 12h14"
                             stroke="currentColor"
@@ -459,9 +408,7 @@ export default function SilentDisco() {
                       </span>
                     </summary>
 
-                    <div className="px-5 pb-5 pt-1 space-y-3">
-                      {renderAnswer(f.a)}
-                    </div>
+                    <div className="px-5 pb-5 pt-1 space-y-3">{renderAnswer(f.a)}</div>
                   </details>
                 </div>
               );
@@ -476,17 +423,17 @@ export default function SilentDisco() {
               Ready to bring the Glo to your event
             </h2>
             <p className="mt-3 text-gray-300 max-w-2xl mx-auto">
-              See pricing and book online, or connect with our team if you want
-              help choosing the best fit.
+              See pricing and book online, or connect with our team if you want help choosing
+              the best fit.
             </p>
 
-            <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
-              <BtnLink href={QUOTE_RENTAL_BASE} className={glowBtnPink}>
+            <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <ActionBtn href={QUOTE_RENTAL_BASE} variant="red">
                 See Pricing + Book Online
-              </BtnLink>
-              <BtnLink href={connectHref} className={glowBtnMint}>
+              </ActionBtn>
+              <ActionBtn href={CONNECT} variant="green">
                 Connect with Our Team
-              </BtnLink>
+              </ActionBtn>
             </div>
           </div>
         </section>

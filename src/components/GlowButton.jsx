@@ -5,12 +5,14 @@ export default function GlowButton({
   onClick,
   external = false,
 
-  // ✅ Nuevos: blue | red | green
-  // ✅ Compat: cyan -> blue, pink -> red, mint -> green
+  // blue | red | green (compat: cyan/pink/mint)
   variant = "blue",
 
   // solid | glass | outline
   appearance = "solid",
+
+  // sm | md | lg
+  size = "md",
 
   alwaysOn = false,
   className = "",
@@ -24,7 +26,7 @@ export default function GlowButton({
       ? "green"
       : variant;
 
-  // ✅ Gradientes usando colores reales de tu marca
+  // Gradientes (solid)
   const solidGrad =
     v === "red"
       ? "bg-gradient-to-br from-[var(--color-neon-red)] to-[var(--color-neon-blue)]"
@@ -32,7 +34,7 @@ export default function GlowButton({
       ? "bg-gradient-to-br from-[var(--color-neon-green)] to-[var(--color-neon-blue)]"
       : "bg-gradient-to-br from-[var(--color-neon-blue)] to-[var(--color-neon-green)]";
 
-  // ✅ Hover / always-on por color
+  // Glow hover
   const hoverCls =
     v === "red"
       ? alwaysOn
@@ -46,22 +48,40 @@ export default function GlowButton({
       ? "glo-on-blue"
       : "glo-hover-blue";
 
-  // ✅ Texto: en solid NO uses text-black (en neón se ve mal)
-  // Añadimos un micro text-shadow para legibilidad
+  // Tamaños consistentes
+  const sizeCls =
+    size === "lg"
+      ? "px-6 py-2 text-base md:text-lg"
+      : size === "sm"
+      ? "px-3 py-1.5 text-sm"
+      : "px-4 py-2 text-sm md:text-base";
+
+  // Outline color por variant (texto + borde)
+  const outlineColor =
+    v === "red"
+      ? "text-[var(--color-neon-red)] border-[var(--color-neon-red)]"
+      : v === "green"
+      ? "text-[var(--color-neon-green)] border-[var(--color-neon-green)]"
+      : "text-[var(--color-neon-blue)] border-[var(--color-neon-blue)]";
+
+  // Base por appearance
   const base =
     appearance === "solid"
       ? `text-white ${solidGrad} ${hoverCls} [text-shadow:0_1px_10px_rgba(0,0,0,.55)]`
       : appearance === "glass"
       ? `text-white bg-white/10 border border-white/20 backdrop-blur ${hoverCls}`
-      : /* outline */
-        `text-white border border-white/40 bg-transparent ${hoverCls}`;
+      : // outline
+        `bg-transparent border hover:bg-white/5 ${outlineColor} ${hoverCls}`;
 
   const inner = (
     <span
       className={[
-        "inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold",
+        "inline-flex items-center justify-center",
+        "font-body font-semibold tracking-normal",
         "whitespace-nowrap select-none",
+        "rounded-xl", // ✅ SIEMPRE redondeado
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/30",
+        sizeCls,
         base,
         className,
       ].join(" ")}

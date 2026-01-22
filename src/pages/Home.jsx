@@ -139,26 +139,21 @@ export default function Home() {
               </p>
 
               <div className="mt-8 flex justify-center md:justify-start">
-  <GlowButton
-    href={PRICING}
-    external
-    appearance="outline"
-    className="
-      px-4 py-1.5 md:px-6 md:py-2
-      text-base md:text-lg
-      font-body font-semibold
-      tracking-normal
-      !text-[var(--color-neon-red)]
-      !border !border-[var(--color-neon-red)]
-      rounded-none
-      bg-transparent
-      [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-      hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-      hover:bg-white/5
-    "
-  >
-    See Pricing + Book Online
-  </GlowButton>
+              <GlowButton
+  href={PRICING}
+  external
+  appearance="outline"
+  variant="red"
+  size="lg"
+  tone="square"
+>
+  See Pricing + Book Online
+</GlowButton>
+
+
+
+
+
 </div>
 
 

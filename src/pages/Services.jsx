@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import ServicesExtras from "../components/ServicesExtras";
+import GlowButton from "../components/GlowButton";
 import { DJAT, SDHR, SFA } from "../lib/constants";
 
 export default function Services() {
@@ -18,20 +19,32 @@ export default function Services() {
   const LEARN_SILENT_DJ = "/services/silent-disco";
   const LEARN_BOOTH_DROPOFF = "/services/photo-booth";
   const LEARN_BOOTH_FULL = "/services/photo-booth";
-  
 
   const isInternal = (href = "") => href.startsWith("/");
 
-  const BtnLink = ({ href, className = "", children }) =>
-    isInternal(href) ? (
-      <Link to={href} className={className}>
+  // ✅ Un solo wrapper: interno => <Link>, externo => <GlowButton external>
+  const ActionBtn = ({ href, variant, children }) => {
+    if (isInternal(href)) {
+      return (
+        <Link to={href} className="inline-flex">
+          <GlowButton appearance="outline" variant={variant} size="lg">
+            {children}
+          </GlowButton>
+        </Link>
+      );
+    }
+    return (
+      <GlowButton
+        href={href}
+        external
+        appearance="outline"
+        variant={variant}
+        size="lg"
+      >
         {children}
-      </Link>
-    ) : (
-      <a href={href} className={className} target="_blank" rel="noreferrer">
-        {children}
-      </a>
+      </GlowButton>
     );
+  };
 
   // Section headings
   const sectionTitle =
@@ -40,56 +53,23 @@ export default function Services() {
 
   const cardTitleCenter = "text-center";
 
-  // Button base (keep original visual sizing)
-  const glowBtnBase = `
-  inline-flex items-center justify-center
-  px-5 py-2
-  text-base md:text-lg
-  font-body font-semibold
-  tracking-normal
-  rounded-xl
-  bg-transparent
-  border
-  hover:bg-white/5
-  transition-[box-shadow,background-color,transform] duration-200
-  min-h-[44px]
-`;
+  // ✅ FIX: en mobile centrado (cross-axis) sin tocar desktop
+  const actionRowCenter =
+    "mt-5 flex flex-col sm:flex-row gap-3 justify-center items-center";
 
-
-  const glowBtnMint =
-    glowBtnBase +
-    `
-    !text-[#23ff11]
-    !border-[#23ff11]
-    [box-shadow:0_0_12px_rgba(35,255,17,.35)]
-    hover:[box-shadow:0_0_18px_rgba(35,255,17,.55)]
-  `;
-
-  const glowBtnPink =
-    glowBtnBase +
-    `
-    !text-[#ff4567]
-    !border-[#ff4567]
-    [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-    hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-  `;
-
-  // Keep buttons same width behavior as before (no stretching)
-  const actionRowCenter = "mt-5 flex flex-col sm:flex-row gap-3 justify-center";
-
-      const CardImage = ({ src, alt }) => (
-        <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
-          <img
-            src={src}
-            alt={alt}
-            className="w-full h-56 md:h-64 object-cover"
-            loading="lazy"
-            decoding="async"
-            draggable={false}
-          />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
-        </div>
-      );
+  const CardImage = ({ src, alt }) => (
+    <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-56 md:h-64 object-cover"
+        loading="lazy"
+        decoding="async"
+        draggable={false}
+      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
+    </div>
+  );
 
   /**
    * ✅ FIX:
@@ -121,16 +101,13 @@ export default function Services() {
         content="Two crowd favorites. Choose Silent Disco or Digital Photo Booth, then pick drop off or full service."
       />
 
-      {/* ✅ PAGE HEADING (same as HowItWorks / OurWork) */}
+      {/* ✅ PAGE HEADING */}
       <header className="max-w-5xl mx-auto">
-        {/* (optional) kicker like other sections, leave empty for now */}
-        {/* <div className="text-center text-xs tracking-widest text-gray-400">KICKER</div> */}
-
         <NeonTitle title="Services" id="services-heading" className="uppercase" />
 
         <p className="mt-3 text-gray-400 text-center text-base md:text-lg">
-          Two crowd favorites. Choose Silent Disco or Digital Photo Booth, then pick
-          drop off or full service.
+          Two crowd favorites. Choose Silent Disco or Digital Photo Booth, then
+          pick drop off or full service.
         </p>
       </header>
 
@@ -143,7 +120,7 @@ export default function Services() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
-          {/* MINT card */}
+          {/* GREEN card */}
           <GlowCard
             title={
               <span className={cardTitleCenter}>
@@ -180,22 +157,24 @@ export default function Services() {
               <div className={footerArea}>
                 <p className={priceRow}>
                   <span className="text-white/60">Starting at:</span>{" "}
-                  <strong className="text-[#23ff11]">From $5 per headphone</strong>
+                  <strong className="text-[#23ff11]">
+                    From $5 per headphone
+                  </strong>
                 </p>
 
                 <div className={actionRowCenter}>
-                  <BtnLink href={LEARN_SILENT_RENTALS} className={glowBtnMint}>
+                  <ActionBtn href={LEARN_SILENT_RENTALS} variant="green">
                     Learn More
-                  </BtnLink>
-                  <BtnLink href={SDHR} className={glowBtnMint}>
+                  </ActionBtn>
+                  <ActionBtn href={SDHR} variant="green">
                     See Pricing + Book Online
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </div>
           </GlowCard>
 
-          {/* PINK card */}
+          {/* RED card */}
           <GlowCard
             title={
               <span className={cardTitleCenter}>
@@ -244,12 +223,12 @@ export default function Services() {
                 </p>
 
                 <div className={actionRowCenter}>
-                  <BtnLink href={LEARN_SILENT_DJ} className={glowBtnPink}>
+                  <ActionBtn href={LEARN_SILENT_DJ} variant="red">
                     Learn More
-                  </BtnLink>
-                  <BtnLink href={DJAT} className={glowBtnPink}>
+                  </ActionBtn>
+                  <ActionBtn href={DJAT} variant="red">
                     See Pricing + Book Online
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </div>
@@ -308,23 +287,26 @@ export default function Services() {
                 </p>
 
                 <div className={actionRowCenter}>
-                  <BtnLink href={LEARN_BOOTH_DROPOFF} className={glowBtnMint}>
+                  <ActionBtn href={LEARN_BOOTH_DROPOFF} variant="green">
                     Learn More
-                  </BtnLink>
-                  <BtnLink href={SFA} className={glowBtnMint}>
+                  </ActionBtn>
+                  <ActionBtn href={SFA} variant="green">
                     See Pricing + Book Online
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </div>
           </GlowCard>
 
           {/* RED */}
-          <GlowCard title="Full Service Photo Booth With Attendant" variant="pink">
+          <GlowCard
+            title="Full Service Photo Booth With Attendant"
+            variant="pink"
+          >
             <div className={cardLayout}>
               <div className={contentArea}>
                 <CardImage
-                  src="/images/photo-booth-attendant.jpg" 
+                  src="/images/photo-booth-attendant.jpg"
                   alt="Full Service Photo Booth With Attendant"
                 />
 
@@ -358,12 +340,12 @@ export default function Services() {
                 </p>
 
                 <div className={actionRowCenter}>
-                  <BtnLink href={LEARN_BOOTH_FULL} className={glowBtnPink}>
+                  <ActionBtn href={LEARN_BOOTH_FULL} variant="red">
                     Learn More
-                  </BtnLink>
-                  <BtnLink href={SFA} className={glowBtnPink}>
+                  </ActionBtn>
+                  <ActionBtn href={SFA} variant="red">
                     See Pricing + Book Online
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </div>
@@ -376,10 +358,7 @@ export default function Services() {
         </p>
       </section>
 
-      <ServicesExtras
-        quoteHref={QUOTE_HUB}
-        connectHref={CONNECT_HREF}
-      />
+      <ServicesExtras quoteHref={QUOTE_HUB} connectHref={CONNECT_HREF} />
     </div>
   );
 }

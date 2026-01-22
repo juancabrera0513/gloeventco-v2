@@ -8,50 +8,42 @@ export default function ServicesExtras({
   quoteHref = "/pricing",
   connectHref = "/contact",
 
-  // ✅ NEW: single centered video (replaces the 2 images)
+  // ✅ single centered video
   videoSrc = "/videos/Combined Services Video.webm",
   videoPoster = "",
   videoAlt = "Silent Disco and Photo Booth highlight video",
 }) {
   const isInternal = (href = "") => href.startsWith("/");
 
-  const CtaLink = ({ href, className, children }) => {
+  // ✅ Standard CTA: internal -> <Link> wrapper, external -> GlowButton external
+  const CTA = ({ href, variant, children, className = "" }) => {
+    const btnClass =
+      (className ? className + " " : "") +
+      "w-full sm:w-auto justify-center mx-auto";
+
     if (isInternal(href)) {
       return (
-        <Link to={href} className={className}>
-          {children}
+        <Link to={href} className="inline-flex justify-center">
+          <GlowButton appearance="outline" variant={variant} size="lg" className={btnClass}>
+            {children}
+          </GlowButton>
         </Link>
       );
     }
+
     return (
-      <a href={href} className={className} target="_blank" rel="noreferrer">
+      <GlowButton
+        href={href}
+        external
+        appearance="outline"
+        variant={variant}
+        size="lg"
+        className={btnClass}
+      >
         {children}
-      </a>
+      </GlowButton>
     );
   };
-
-  // ✅ Exact button style you sent (same color + shape)
-  const glowOutlineRed = `
-      px-4 py-1.5 md:px-6 md:py-2
-      text-base md:text-lg
-      font-body font-semibold
-      tracking-normal
-      !text-[var(--color-neon-red)]
-      !border !border-[var(--color-neon-red)]
-      rounded-none
-      bg-transparent
-      [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-      hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-      hover:bg-white/5
-    `.trim();
-
-  const secondaryBtn =
-    "inline-flex items-center justify-center h-11 px-5 rounded-xl font-semibold " +
-    "bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-colors " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20";
-
-  const card =
-    "glass rounded-2xl neon-border overflow-hidden glo-hover-green bg-white/5 border border-white/10";
 
   const sectionWrap = "bg-black border-b border-white/5";
   const kicker = "text-xs tracking-widest text-gray-400 text-center";
@@ -88,20 +80,8 @@ export default function ServicesExtras({
     },
   ];
 
-  // ✅ Helper that renders the exact GlowButton style, but works for internal/external
-  const PricingGlowButton = ({ href, children }) => {
-    const internal = isInternal(href);
-    return (
-      <GlowButton
-        href={href}
-        external={!internal}
-        appearance="outline"
-        className={glowOutlineRed}
-      >
-        {children}
-      </GlowButton>
-    );
-  };
+  const faqCard =
+    "glass rounded-2xl neon-border overflow-hidden glo-hover-green bg-white/5 border border-white/10";
 
   return (
     <div className="space-y-0">
@@ -117,7 +97,7 @@ export default function ServicesExtras({
             </p>
           </div>
 
-          {/* ✅ NEW: single centered video */}
+          {/* Video */}
           <div className="mt-10 max-w-5xl mx-auto">
             <figure className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
               <video
@@ -145,42 +125,21 @@ export default function ServicesExtras({
                 applied automatically.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-  <PricingGlowButton
-    href={BOOK_BASE}
-    className="
-      !text-[var(--color-neon-red)]
-      !border !border-[var(--color-neon-red)]
-      bg-transparent
-      [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-      hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-      hover:bg-white/5
-    "
-  >
-                    See Pricing + Book Online
-                    </PricingGlowButton>
+              {/* ✅ centered on mobile */}
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <CTA href={BOOK_BASE} variant="red">
+                  See Pricing + Book Online
+                </CTA>
 
-  <CtaLink
-    href={connectHref}
-    className="
-      inline-flex items-center justify-center
-      px-4 py-1.5 md:px-6 md:py-2
-      text-base md:text-lg
-      font-body font-semibold
-      tracking-normal
-      !text-[var(--color-neon-green)]
-      !border !border-[var(--color-neon-green)]
-      rounded-xl
-      bg-transparent
-      [box-shadow:0_0_12px_rgba(35,255,17,.35)]
-      hover:[box-shadow:0_0_18px_rgba(35,255,17,.55)]
-      hover:bg-white/5
-    "
-  >
-    Connect with Our Team
-  </CtaLink>
-</div>
+                <CTA href={connectHref} variant="green">
+                  Connect with Our Team
+                </CTA>
+              </div>
 
+              <p className="mt-4 text-sm text-gray-400 text-center">
+                Not sure what fits your event?{" "}
+                <span className="text-white/80">Connect with our team.</span>
+              </p>
             </div>
           </div>
         </div>
@@ -232,45 +191,16 @@ export default function ServicesExtras({
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
-  <PricingGlowButton
-    href={BOOK_BASE}
-    className="
-      w-full sm:w-auto
-      !text-[var(--color-neon-red)]
-      !border !border-[var(--color-neon-red)]
-      bg-transparent
-      [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-      hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-      hover:bg-white/5
-    "
-  >
-    See Pricing + Book Online
-  </PricingGlowButton>
+          {/* ✅ centered on mobile */}
+          <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-3">
+            <CTA href={BOOK_BASE} variant="red">
+              See Pricing + Book Online
+            </CTA>
 
-  <CtaLink
-    href={connectHref}
-    className="
-      w-full sm:w-auto
-      inline-flex items-center justify-center
-      px-4 py-1.5 md:px-6 md:py-2
-      text-base md:text-lg
-      font-body font-semibold
-      tracking-normal
-      !text-[var(--color-neon-green)]
-      !border !border-[var(--color-neon-green)]
-      rounded-xl
-      bg-transparent
-      [box-shadow:0_0_12px_rgba(35,255,17,.35)]
-      hover:[box-shadow:0_0_18px_rgba(35,255,17,.55)]
-      hover:bg-white/5
-    "
-  >
-    Connect with Our Team
-  </CtaLink>
-</div>
-
-
+            <CTA href={connectHref} variant="green">
+              Connect with Our Team
+            </CTA>
+          </div>
         </div>
       </section>
 
@@ -289,7 +219,7 @@ export default function ServicesExtras({
           <div className="mt-10 max-w-4xl mx-auto">
             <div className="space-y-4">
               {faqs.map((f) => (
-                <div key={f.q} className={card}>
+                <div key={f.q} className={faqCard}>
                   <details className="group open:rounded-b-none">
                     <summary className="flex items-center justify-between cursor-pointer list-none px-5 py-4">
                       <span className="font-semibold pr-4 text-gray-100">
@@ -320,53 +250,21 @@ export default function ServicesExtras({
             </div>
 
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
-            <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
-  {/* Buttons: side-by-side on desktop, stacked on mobile */}
-  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-    <PricingGlowButton
-      href={BOOK_BASE}
-      className="
-        w-full sm:w-auto
-        !text-[var(--color-neon-red)]
-        !border !border-[var(--color-neon-red)]
-        bg-transparent
-        [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-        hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-        hover:bg-white/5
-      "
-    >
-      See Pricing + Book Online
-    </PricingGlowButton>
+              {/* ✅ centered on mobile */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <CTA href={BOOK_BASE} variant="red">
+                  See Pricing + Book Online
+                </CTA>
 
-    <CtaLink
-      href={connectHref}
-      className="
-        w-full sm:w-auto
-        inline-flex items-center justify-center
-        px-4 py-1.5 md:px-6 md:py-2
-        text-base md:text-lg
-        font-body font-semibold
-        tracking-normal
-        !text-[var(--color-neon-green)]
-        !border !border-[var(--color-neon-green)]
-        rounded-xl
-        bg-transparent
-        [box-shadow:0_0_12px_rgba(35,255,17,.35)]
-        hover:[box-shadow:0_0_18px_rgba(35,255,17,.55)]
-        hover:bg-white/5
-      "
-    >
-      Connect with Our Team
-    </CtaLink>
-  </div>
+                <CTA href={connectHref} variant="green">
+                  Connect with Our Team
+                </CTA>
+              </div>
 
-  {/* Text below buttons */}
-  <div className="mt-4 text-sm text-gray-400">
-    Not sure what fits your event?{" "}
-    <span className="text-white/80">Connect with our team.</span>
-  </div>
-</div>
-
+              <div className="mt-4 text-sm text-gray-400">
+                Not sure what fits your event?{" "}
+                <span className="text-white/80">Connect with our team.</span>
+              </div>
             </div>
           </div>
         </div>

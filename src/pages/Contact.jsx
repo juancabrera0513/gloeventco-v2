@@ -1,11 +1,182 @@
 // src/pages/Contact.jsx
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import NeonTitle from "../components/NeonTitle";
-import GlowButton from "../components/GlowButton";
 import { EMAIL, PHONE, ADDRESS_HTML } from "../lib/constants";
 
 export default function Contact() {
-  const [preferred, setPreferred] = useState("Email");
+  // ✅ CheckCherry form config (must match your Cherry form fields)
+  const CHECKCHERRY_HOST = "https://glo-event-co.checkcherry.com";
+  const CHECKCHERRY_API_KEY = "N7K-KDWT-CHT";
+  const CHECKCHERRY_CONTACT_FORM_ID = 5681;
+
+  /**
+   * phase:
+   * - loading: initial load attempt (DOM embed)
+   * - fallback: we switch to iframe mode (more reliable)
+   * - ready: iframe finished loading (swap skeleton -> form)
+   * - error: script failed or too many attempts
+   */
+  const [phase, setPhase] = useState("loading");
+  const [attempt, setAttempt] = useState(0);
+  const [useIframe, setUseIframe] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  const containerRef = useRef(null);
+
+  // data-props must be a string
+  const widgetProps = useMemo(
+    () =>
+      JSON.stringify({
+        apiKey: CHECKCHERRY_API_KEY,
+        contactFormId: CHECKCHERRY_CONTACT_FORM_ID,
+        iframe: useIframe, // ✅ fallback = true
+        host: CHECKCHERRY_HOST,
+      }),
+    [CHECKCHERRY_API_KEY, CHECKCHERRY_CONTACT_FORM_ID, CHECKCHERRY_HOST, useIframe]
+  );
+
+  // 1) Load the CheckCherry script once (and wait for it)
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadScriptOnce = () =>
+      new Promise((resolve, reject) => {
+        // already loaded
+        if (window.__checkcherry_loaded) return resolve(true);
+
+        const existing = document.getElementById("checkcherry-script");
+        if (existing) {
+          existing.addEventListener("load", () => resolve(true), { once: true });
+          existing.addEventListener("error", reject, { once: true });
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.id = "checkcherry-script";
+        script.src = `${CHECKCHERRY_HOST}/api/checkcherry_widgets`;
+        script.type = "text/javascript";
+        script.async = true;
+        script.charset = "utf-8";
+
+        script.onload = () => {
+          window.__checkcherry_loaded = true;
+          resolve(true);
+        };
+        script.onerror = reject;
+
+        document.body.appendChild(script);
+      });
+
+    loadScriptOnce()
+      .then(() => {
+        if (cancelled) return;
+        // Kick the first render
+        setAttempt((n) => n + 1);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPhase("error");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [CHECKCHERRY_HOST]);
+
+  // 2) Observe: detect when the iframe is injected, then wait for iframe.onload
+  useEffect(() => {
+    const host = containerRef.current;
+    if (!host) return;
+
+    setIframeLoaded(false); // new attempt => reset
+    let done = false;
+
+    const attach = (iframe) => {
+      if (!iframe || done) return;
+      done = true;
+
+      const handleLoad = () => {
+        setIframeLoaded(true);
+        setPhase("ready");
+      };
+
+      // attach load listener
+      iframe.addEventListener("load", handleLoad, { once: true });
+
+      // safety: if load never fires, still show after 8s
+      setTimeout(() => {
+        if (!done) return; // if attach never happened
+        // if still not loaded, unfreeze UI anyway
+        setIframeLoaded((v) => {
+          if (!v) {
+            setPhase("ready");
+            return true;
+          }
+          return v;
+        });
+      }, 8000);
+    };
+
+    // if iframe already there
+    attach(host.querySelector("iframe"));
+
+    const obs = new MutationObserver(() => {
+      const iframe = host.querySelector("iframe");
+      if (iframe) attach(iframe);
+    });
+
+    obs.observe(host, { childList: true, subtree: true });
+
+    return () => obs.disconnect();
+  }, [attempt, useIframe]);
+
+  // 3) Retry / fallback: if nothing shows after a short time, remount; then switch to iframe mode
+  useEffect(() => {
+    if (phase === "error" || phase === "ready") return;
+
+    const t = setTimeout(() => {
+      const host = containerRef.current;
+
+      // Detect “rendered enough”: either iframe exists, or widget created form elements
+      const hasIframe = !!host?.querySelector("iframe");
+      const hasInputs =
+        !!host?.querySelector("input") || !!host?.querySelector("textarea");
+
+      if (hasIframe || hasInputs) {
+        // wait for iframe load handler to swap (or inputs exist already)
+        if (hasInputs && !hasIframe) {
+          // DOM-render mode: show immediately
+          setIframeLoaded(true);
+          setPhase("ready");
+        }
+        return;
+      }
+
+      // not rendered → retry / fallback
+      if (!useIframe) {
+        // first: 1 retry in DOM mode
+        if (attempt < 2) {
+          setAttempt((n) => n + 1);
+          return;
+        }
+        // then: switch to iframe mode (more reliable)
+        setUseIframe(true);
+        setPhase("fallback");
+        setAttempt((n) => n + 1);
+        return;
+      }
+
+      // already in iframe mode: one more retry
+      if (attempt < 4) {
+        setAttempt((n) => n + 1);
+        return;
+      }
+
+      setPhase("error");
+    }, 2200);
+
+    return () => clearTimeout(t);
+  }, [attempt, useIframe, phase]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
@@ -18,7 +189,6 @@ export default function Contact() {
       {/* Hero */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle title="You + Us = Awesome" id="contact-heading" />
-
         <p className="mt-3 text-gray-400 text-base md:text-lg max-w-3xl mx-auto">
           Reach out for availability and quotes.
         </p>
@@ -57,98 +227,175 @@ export default function Contact() {
             </li>
             <li className="flex gap-2">
               <span className="text-[var(--color-neon-green)]">✔</span>
-              Transparent pricing & no hidden fees
+              Transparent pricing &amp; no hidden fees
             </li>
             <li className="flex gap-2">
               <span className="text-[var(--color-neon-blue)]">✔</span>
-              Professional setup & on-site support available
+              Professional setup &amp; on-site support available
             </li>
           </ul>
         </div>
 
-        {/* RIGHT */}
-        <form
-          className="glass rounded-2xl p-6 space-y-4"
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <div>
-            <label className="text-sm">Name</label>
-            <input
-              className="mt-1 w-full rounded-md bg-white/5 border-white/10"
-              required
-            />
-          </div>
+        {/* RIGHT — CheckCherry Form */}
+        <div className="glass rounded-2xl p-6">
+          <h3 className="font-display text-xl text-[var(--color-neon-blue)]">
+            Send us a message
+          </h3>
+          <p className="mt-2 text-sm text-gray-400">
+            Fill out the form and we’ll get back to you soon.
+          </p>
 
-          <div>
-            <label className="text-sm">Email</label>
-            <input
-              type="email"
-              className="mt-1 w-full rounded-md bg-white/5 border-white/10"
-              required
-            />
-          </div>
+          {/* Skeleton while the iframe is injecting/loading */}
+          {!iframeLoaded && phase !== "error" && (
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="text-sm text-gray-400">
+                {phase === "fallback" ? "Loading secure form…" : "Loading form…"}
+              </div>
 
-          <div>
-            <label className="text-sm">Phone Number</label>
-            <input
-              type="tel"
-              placeholder="(314) 123-4567"
-              className="mt-1 w-full rounded-md bg-white/5 border-white/10"
-            />
-          </div>
+              <div className="mt-3 space-y-3">
+                <div className="h-11 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+                <div className="h-11 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+                <div className="h-11 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+                <div className="h-11 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+                <div className="h-28 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+                <div className="h-11 w-44 rounded-none bg-white/5 border border-white/10 animate-pulse" />
+              </div>
+            </div>
+          )}
 
-          <div>
-            <label className="text-sm">Preferred contact method</label>
-            <select
-  value={preferred}
-  onChange={(e) => setPreferred(e.target.value)}
-  className="
-    mt-1 w-full rounded-md
-    bg-white/5 text-white
-    border border-white/10
-    focus:outline-none
-    focus:ring-2 focus:ring-[var(--color-neon-blue)]/60
-    focus:bg-black
-    appearance-none
-  "
->
-  <option className="bg-black text-white">Email</option>
-  <option className="bg-black text-white">Phone</option>
-</select>
-
-            <p className="text-xs text-gray-500 mt-1">
-              Choose how you want us to reach you.
-            </p>
-          </div>
-
-          <div>
-            <label className="text-sm">Message</label>
-            <textarea
-              rows="4"
-              className="mt-1 w-full rounded-md bg-white/5 border-white/10"
-              required
-            />
-          </div>
-
-          <GlowButton
-            appearance="outline"
-            className="
-              mt-2
-              px-6 py-2
-              text-base md:text-lg
-              font-body font-semibold
-              !text-[var(--color-neon-cyan)]
-              !border !border-[var(--color-neon-cyan)]
-              rounded-none
-              bg-transparent
-              [box-shadow:0_0_12px_rgba(0,200,255,.35)]
-              hover:[box-shadow:0_0_18px_rgba(0,200,255,.55)]
-              hover:bg-white/5
-            "
+          {/* Widget mount point (fade in only when loaded) */}
+          <div
+            ref={containerRef}
+            className={`mt-6 transition-opacity duration-300 ${
+              iframeLoaded
+                ? "opacity-100"
+                : "opacity-0 pointer-events-none h-0 overflow-hidden"
+            }`}
           >
-            Send Message
-          </GlowButton>
-        </form>
+            <div
+              key={`cc-${attempt}-${useIframe ? "iframe" : "dom"}`}
+              className="checkcherry__widget__contact-form"
+              data-props={widgetProps}
+            />
+          </div>
+
+          {/* Error state (no "Reload form" UX) */}
+          {phase === "error" && (
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="text-sm text-gray-300">
+                The form is taking longer than expected.
+              </div>
+              <div className="mt-2 text-xs text-gray-500">
+                You can email us at{" "}
+                <a className="underline" href={`mailto:${EMAIL}`}>
+                  {EMAIL}
+                </a>{" "}
+                or call{" "}
+                <a className="underline" href={`tel:${PHONE}`}>
+                  {PHONE}
+                </a>
+                .
+              </div>
+            </div>
+          )}
+
+          {/* Styling: make embedded form match your dark theme (and hide any reload link if it appears) */}
+          <style>{`
+            /* Container */
+            .checkcherry__widget__contact-form { color: rgba(255,255,255,.9); }
+
+            /* Inputs / textarea */
+            .checkcherry__widget__contact-form input,
+            .checkcherry__widget__contact-form textarea,
+            .checkcherry__widget__contact-form select {
+              width: 100% !important;
+              background: rgba(255,255,255,.06) !important;
+              color: rgba(255,255,255,.92) !important;
+              border: 1px solid rgba(255,255,255,.12) !important;
+              border-radius: 12px !important;
+              padding: 12px 14px !important;
+              outline: none !important;
+              box-shadow: none !important;
+            }
+
+            .checkcherry__widget__contact-form textarea {
+              min-height: 140px !important;
+              resize: vertical !important;
+            }
+
+            /* Placeholders */
+            .checkcherry__widget__contact-form input::placeholder,
+            .checkcherry__widget__contact-form textarea::placeholder {
+              color: rgba(255,255,255,.55) !important;
+            }
+
+            /* Focus ring */
+            .checkcherry__widget__contact-form input:focus,
+            .checkcherry__widget__contact-form textarea:focus,
+            .checkcherry__widget__contact-form select:focus {
+              border-color: rgba(0,131,253,.55) !important;
+              box-shadow: 0 0 0 3px rgba(0,131,253,.25) !important;
+              background: rgba(0,0,0,.35) !important;
+            }
+
+            /* Labels */
+            .checkcherry__widget__contact-form label {
+              color: rgba(255,255,255,.82) !important;
+              font-size: 14px !important;
+            }
+
+            /* Submit button — match your Glow outline */
+            .checkcherry__widget__contact-form button,
+            .checkcherry__widget__contact-form input[type="submit"] {
+              display: inline-flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              width: auto !important;
+
+              margin-top: 10px !important;
+              padding: 10px 18px !important;
+              min-height: 44px !important;
+
+              font-weight: 700 !important;
+              font-size: 18px !important;
+
+              color: var(--color-neon-cyan) !important;
+              background: transparent !important;
+              border: 1px solid var(--color-neon-cyan) !important;
+              border-radius: 0px !important;
+
+              box-shadow: 0 0 12px rgba(0,200,255,.35) !important;
+              transition: box-shadow .2s ease, background-color .2s ease, transform .2s ease !important;
+              cursor: pointer !important;
+            }
+
+            .checkcherry__widget__contact-form button:hover,
+            .checkcherry__widget__contact-form input[type="submit"]:hover {
+              background: rgba(255,255,255,.05) !important;
+              box-shadow: 0 0 18px rgba(0,200,255,.55) !important;
+            }
+
+            /* Hide any auto "Reload form" link if CheckCherry injects it */
+            .checkcherry__widget__contact-form a {
+              display: none !important;
+            }
+
+            /* Helper texts */
+            .checkcherry__widget__contact-form small,
+            .checkcherry__widget__contact-form .help,
+            .checkcherry__widget__contact-form .error {
+              color: rgba(255,255,255,.7) !important;
+            }
+          `}</style>
+
+          <p className="mt-4 text-xs text-gray-500">
+            Prefer email? Reach us at{" "}
+            <a className="underline" href={`mailto:${EMAIL}`}>
+              {EMAIL}
+            </a>
+            .
+          </p>
+        </div>
       </div>
     </div>
   );

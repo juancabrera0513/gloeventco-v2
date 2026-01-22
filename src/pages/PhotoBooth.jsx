@@ -2,7 +2,8 @@
 import { Link } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
-import { BOOK_BASE, SFA, DROP_OFF, PB_ATTENDANCE } from "../lib/constants";
+import GlowButton from "../components/GlowButton";
+import { SFA, DROP_OFF, PB_ATTENDANCE } from "../lib/constants";
 
 const isVideoSrc = (src = "") =>
   typeof src === "string" && /\.(mp4|webm|mov)(\?.*)?$/i.test(src || "");
@@ -43,141 +44,86 @@ function Media({
 }
 
 export default function PhotoBooth() {
-  const PRICING = "/pricing";
-  const CONNECT = "/contact";
-
-  // Pricing anchors (ajusta si tus ids son diferentes)
+  // Pricing anchors (si luego los usas)
   const QUOTE_HUB = "/pricing";
   const QUOTE_BOOTH_DROPOFF = `${QUOTE_HUB}#photo-booth-dropoff`;
   const QUOTE_BOOTH_FULL = `${QUOTE_HUB}#photo-booth-full-service`;
 
+  const connectHref = "/contact";
   const isInternal = (href = "") => href.startsWith("/");
 
-  const BtnLink = ({ href, className = "", children }) =>
-    isInternal(href) ? (
-      <Link to={href} className={className}>
+  // ✅ Standard CTA: internal -> <Link>, external -> GlowButton external
+  // ✅ Centered by default (mobile + desktop)
+  const ActionBtn = ({ href, variant, children, className = "" }) => {
+    const btnClass =
+      (className ? className + " " : "") + "w-full sm:w-auto justify-center mx-auto";
+
+    if (isInternal(href)) {
+      return (
+        <Link to={href} className="inline-flex justify-center">
+          <GlowButton appearance="outline" variant={variant} size="lg" className={btnClass}>
+            {children}
+          </GlowButton>
+        </Link>
+      );
+    }
+
+    return (
+      <GlowButton
+        href={href}
+        external
+        appearance="outline"
+        variant={variant}
+        size="lg"
+        className={btnClass}
+      >
         {children}
-      </Link>
-    ) : (
-      <a href={href} className={className} target="_blank" rel="noreferrer">
-        {children}
-      </a>
+      </GlowButton>
     );
+  };
 
-  // =========================
-  // Buttons (mismo sistema)
-  // =========================
-  const glowBtnBase = `
-  inline-flex items-center justify-center
-  px-5 py-2
-  text-base md:text-lg
-  font-body font-semibold
-  tracking-normal
-  rounded-xl
-  bg-transparent
-  border
-  hover:bg-white/5
-  transition-[box-shadow,background-color,transform] duration-200
-  min-h-[44px]
-  text-center
-  whitespace-normal
-  break-words
-`;
-
-
-  const glowBtnMint =
-    glowBtnBase +
-    `
-    !text-[#23ff11]
-    !border-[#23ff11]
-    [box-shadow:0_0_12px_rgba(35,255,17,.35)]
-    hover:[box-shadow:0_0_18px_rgba(35,255,17,.55)]
-  `;
-
-  const glowBtnPink =
-    glowBtnBase +
-    `
-    !text-[#ff4567]
-    !border-[#ff4567]
-    [box-shadow:0_0_12px_rgba(255,69,103,.35)]
-    hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
-  `;
-
-  // Typography (igual a Services)
+  // Typography
   const sectionTitle =
     "text-left text-2xl md:text-3xl font-semibold text-[var(--color-neon-blue)]";
   const sectionSub = "mt-3 text-left text-gray-400 max-w-3xl";
 
-  // =========================
   // WHAT IT IS (RIGHT SIDE) video vertical
-  // =========================
-  const whatIsVideoSrc = "/videos/photo-booth-action-vertical.mp4"; // <-- vertical video
-  const whatIsVideoPoster = "/images/photo-booth-action-poster.jpg"; // optional
+  const whatIsVideoSrc = "/videos/photo-booth-action-vertical.mp4";
+  const whatIsVideoPoster = "/images/photo-booth-action-poster.jpg";
 
-  // =========================
-  // WHAT'S INCLUDED (3 visibles + 3 hover)
-  // front = visible, back = hover
-  // (pueden ser .jpg o .mp4)
-  // =========================
+  // WHAT'S INCLUDED (hover swap)
   const includedMedia = [
     {
       front: "/images/whatsIncluded/overlay-sample-hover.jpg",
-      back: "/images/whatsIncluded/overlay-sample.jpg", // <-- cambia a tu media (img o video)
+      back: "/images/whatsIncluded/overlay-sample.jpg",
       alt: "Overlay example",
     },
     {
       front: "/images/whatsIncluded/backdrop-sample-hover.jpg",
-      back: "/images/whatsIncluded/backdrop-sample.jpg", // <-- cambia a tu media (img o video)
+      back: "/images/whatsIncluded/backdrop-sample.jpg",
       alt: "Digital backdrop example",
     },
     {
       front: "/images/whatsIncluded/gif-moment-hover.mp4",
-      back: "/images/whatsIncluded/gif-moment-hover.mp4", // <-- cambia a tu media (img o video)
+      back: "/images/whatsIncluded/gif-moment-hover.mp4",
       alt: "GIF or boomerang moment",
     },
   ];
 
-  
-
   const cardImgDropoff = "/images/DropOffDigitalBooth.jpg";
   const cardImgFull = "/images/photo-booth-attendant.jpg";
 
-  const brandOverlayImg = "/images/branding-overlay.jpg";
-  const brandBackdropImg = "/images/branding-backdrop.jpg";
-
-  // =========================
   // Great for
-  // =========================
   const greatFor = [
-    {
-      title: "Weddings",
-      text: "Keeps guests engaged with shareable moments and a polished setup.",
-    },
-    {
-      title: "Corporate Events",
-      text: "Branded overlays + gallery links for instant team content.",
-    },
-    {
-      title: "Schools + PTO",
-      text: "High participation, easy flow, and tons of fun group shots.",
-    },
-    {
-      title: "Fundraisers",
-      text: "Sponsor logos + shareable moments to boost visibility.",
-    },
-    {
-      title: "Birthdays",
-      text: "GIFs, boomerangs, and instant sharing make it a highlight.",
-    },
-    {
-      title: "Churches + Youth",
-      text: "Venue friendly, easy to run, and creates keepsakes.",
-    },
+    { title: "Weddings", text: "Keeps guests engaged with shareable moments and a polished setup." },
+    { title: "Corporate Events", text: "Branded overlays + gallery links for instant team content." },
+    { title: "Schools + PTO", text: "High participation, easy flow, and tons of fun group shots." },
+    { title: "Fundraisers", text: "Sponsor logos + shareable moments to boost visibility." },
+    { title: "Birthdays", text: "GIFs, boomerangs, and instant sharing make it a highlight." },
+    { title: "Churches + Youth", text: "Venue friendly, easy to run, and creates keepsakes." },
   ];
 
-  // =========================
-  // FAQ (accordion)
-  // =========================
+  // FAQ
   const faqs = [
     {
       q: "What is included with the Digital Photo Booth",
@@ -221,9 +167,7 @@ export default function PhotoBooth() {
       .trim()
       .replace(/\s+/g, "-");
 
-  // =========================
-  // Mini gallery (algunos pueden ser video)
-  // =========================
+  // Mini gallery
   const galleryItems = [
     "/images/galleryHighlights/booth-g-1.jpg",
     "/images/galleryHighlights/booth-g-2.jpg",
@@ -239,8 +183,6 @@ export default function PhotoBooth() {
     "/images/galleryHighlights/booth-g-12.mp4",
   ];
 
-  const connectHref = "/contact";
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
       <title>Digital Photo Booth Rental | Glo Event Co</title>
@@ -249,25 +191,16 @@ export default function PhotoBooth() {
         content="Digital Photo Booth rentals in St. Louis. Fully digital booth with shareable gallery, custom branded overlays, digital backdrops, and optional AI face swapping."
       />
 
-      {/* =========================
-          1) HERO
-         ========================= */}
+      {/* 1) HERO */}
       <header className="max-w-5xl mx-auto">
-        <NeonTitle
-          title="Digital Photo Booth Rental"
-          id="photo-booth-heading"
-          className="uppercase"
-        />
+        <NeonTitle title="Digital Photo Booth Rental" id="photo-booth-heading" className="uppercase" />
         <p className="mt-3 text-gray-400 text-center text-base md:text-lg">
-          A modern, fully digital photo booth experience with instant sharing,
-          custom branded overlays, digital backdrops, and optional AI face
-          swapping.
+          A modern, fully digital photo booth experience with instant sharing, custom branded overlays,
+          digital backdrops, and optional AI face swapping.
         </p>
       </header>
 
-      {/* =========================
-          2) WHAT IT IS
-         ========================= */}
+      {/* 2) WHAT IT IS */}
       <section className="mt-20">
         <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8 items-stretch">
           {/* LEFT */}
@@ -275,14 +208,11 @@ export default function PhotoBooth() {
             <h2 className={sectionTitle}>What is a Digital Photo Booth</h2>
 
             <p className={sectionSub}>
-              A Digital Photo Booth is a selfie station style photo booth that
-              runs completely digitally. Guests take photos, GIFs, and
-              boomerangs, then share instantly. After your event, you have
-              access to a complete, shareable gallery—plus branding options that
-              make it feel premium and personalized.
+              A Digital Photo Booth is a selfie station style photo booth that runs completely digitally.
+              Guests take photos, GIFs, and boomerangs, then share instantly. After your event, you have
+              access to a complete, shareable gallery—plus branding options that make it feel premium and personalized.
             </p>
 
-            {/* ✅ sin flex-1 para quitar el “gris/vacio” abajo */}
             <div className="mt-6 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
               <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
                 <li>Fully digital experience with instant sharing</li>
@@ -291,14 +221,14 @@ export default function PhotoBooth() {
                 <li>Optional AI face swapping enhancements</li>
               </ul>
 
-              {/* ✅ botones SIEMPRE uno arriba del otro (desktop + mobile) */}
-              <div className="mt-10 flex flex-col gap-4 items-center md:items-start">
-                <BtnLink href={SFA} className={glowBtnPink}>
+              {/* ✅ Buttons side-by-side when possible, centered on mobile */}
+              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 items-center justify-center md:justify-start w-full">
+                <ActionBtn href={SFA} variant="red">
                   See Pricing + Book Online
-                </BtnLink>
-                <BtnLink href={connectHref} className={glowBtnMint}>
+                </ActionBtn>
+                <ActionBtn href={connectHref} variant="green">
                   Connect with Our Team
-                </BtnLink>
+                </ActionBtn>
               </div>
             </div>
           </div>
@@ -324,14 +254,11 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* =========================
-          3) WHAT'S INCLUDED
-         ========================= */}
+      {/* 3) WHAT'S INCLUDED */}
       <section className="mt-24">
         <h2 className={sectionTitle}>What’s Included</h2>
         <p className={sectionSub}>
-          Everything you need for a smooth, premium booth experience—plus
-          branding options that look amazing in the final media.
+          Everything you need for a smooth, premium booth experience—plus branding options that look amazing in the final media.
         </p>
 
         <div className="mt-10 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
@@ -340,22 +267,16 @@ export default function PhotoBooth() {
             <li>Instant sharing + post event gallery</li>
             <li>Custom branded overlay (name/date/logo available)</li>
             <li>Digital backdrops to match your theme</li>
-            <li>
-              Optional add ons: data capture, email collection, AI face swapping,
-              and more
-            </li>
+            <li>Optional add ons: data capture, email collection, AI face swapping, and more</li>
           </ul>
 
-          {/* ✅ 3 visibles + hover swap (cada una cambia individual) */}
           <div className="mt-8 grid sm:grid-cols-3 gap-4">
             {includedMedia.map((it, idx) => (
               <figure
                 key={`${it.front}-${idx}`}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
               >
-                {/* frame */}
                 <div className="relative w-full aspect-[4/3] bg-black/40">
-                  {/* FRONT */}
                   <div className="absolute inset-0 transition-opacity duration-300 opacity-100 group-hover:opacity-0">
                     <Media
                       src={it.front}
@@ -366,7 +287,6 @@ export default function PhotoBooth() {
                     />
                   </div>
 
-                  {/* BACK (HOVER) */}
                   <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
                     <Media
                       src={it.back}
@@ -385,26 +305,16 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* =========================
-          4) TWO WAYS TO BOOK
-         ========================= */}
+      {/* 4) TWO WAYS TO BOOK */}
       <section className="mt-24">
         <h2 className={sectionTitle}>Two Ways to Book</h2>
         <p className={sectionSub}>
-          Choose a simple drop off option, or go full service with an attendant
-          to guide guests and keep the flow smooth.
+          Choose a simple drop off option, or go full service with an attendant to guide guests and keep the flow smooth.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
           {/* Drop Off */}
-          <GlowCard
-            title={
-              <span className="text-center block">
-                Drop Off Digital Photo Booth
-              </span>
-            }
-            variant="mint"
-          >
+          <GlowCard title={<span className="text-center block">Drop Off Digital Photo Booth</span>} variant="mint">
             <div className="grid h-full grid-rows-[auto_1fr_auto]">
               <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
                 <img
@@ -420,8 +330,7 @@ export default function PhotoBooth() {
 
               <div className="min-h-0">
                 <p className="text-gray-300">
-                  Delivered ready to use with instant sharing and custom branding
-                  options. We set it up and show you exactly how it works.
+                  Delivered ready to use with instant sharing and custom branding options. We set it up and show you exactly how it works.
                 </p>
 
                 <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#23ff11]">
@@ -435,13 +344,13 @@ export default function PhotoBooth() {
               </div>
 
               <div className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <BtnLink href={DROP_OFF} className={glowBtnPink}>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <ActionBtn href={DROP_OFF} variant="red">
                     See Pricing + Book Online
-                  </BtnLink>
-                  <BtnLink href={connectHref} className={glowBtnMint}>
+                  </ActionBtn>
+                  <ActionBtn href={connectHref} variant="green">
                     Connect with Our Team
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </div>
@@ -449,11 +358,7 @@ export default function PhotoBooth() {
 
           {/* Full Service */}
           <GlowCard
-            title={
-              <span className="text-center block">
-                Full Service Photo Booth With Attendant
-              </span>
-            }
+            title={<span className="text-center block">Full Service Photo Booth With Attendant</span>}
             variant="pink"
           >
             <div className="grid h-full grid-rows-[auto_1fr_auto]">
@@ -471,9 +376,7 @@ export default function PhotoBooth() {
 
               <div className="min-h-0">
                 <p className="text-gray-300">
-                  A fully supported photo booth experience. We set it up and an
-                  attendant guides guests during your event for a smooth flow
-                  and premium feel.
+                  A fully supported photo booth experience. We set it up and an attendant guides guests during your event for a smooth flow and premium feel.
                 </p>
 
                 <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#ff4567]">
@@ -487,13 +390,13 @@ export default function PhotoBooth() {
               </div>
 
               <div className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <BtnLink href={PB_ATTENDANCE} className={glowBtnPink}>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <ActionBtn href={PB_ATTENDANCE} variant="red">
                     See Pricing + Book Online
-                  </BtnLink>
-                  <BtnLink href={connectHref} className={glowBtnMint}>
+                  </ActionBtn>
+                  <ActionBtn href={connectHref} variant="green">
                     Connect with Our Team
-                  </BtnLink>
+                  </ActionBtn>
                 </div>
               </div>
             </div>
@@ -501,16 +404,11 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* =========================
-          Gallery Highlights
-         ========================= */}
+      {/* Gallery Highlights */}
       <section className="mt-24">
         <h2 className={sectionTitle}>Gallery Highlights</h2>
-        <p className={sectionSub}>
-          A quick look at recent booth moments and branding examples.
-        </p>
+        <p className={sectionSub}>A quick look at recent booth moments and branding examples.</p>
 
-        {/* ✅ cajas más GRANDES y más VERTICALES para que quepan retratos (como tu screenshot) */}
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {galleryItems.slice(0, 12).map((src, i) => (
             <figure
@@ -531,22 +429,13 @@ export default function PhotoBooth() {
             </figure>
           ))}
         </div>
-
-        <div className="mt-8 flex justify-center md:justify-start">
-          {/* <BtnLink href="/portfolio" className={glowBtnPink}>
-            View Full Gallery
-          </BtnLink> */}
-        </div>
       </section>
 
-      {/* =========================
-          5) GREAT FOR
-         ========================= */}
+      {/* GREAT FOR */}
       <section className="mt-24">
         <h2 className={sectionTitle}>Great For</h2>
         <p className={sectionSub}>
-          Weddings, corporate events, schools, fundraisers, birthdays, and
-          community events.
+          Weddings, corporate events, schools, fundraisers, birthdays, and community events.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
@@ -564,42 +453,29 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-
-      {/* =========================
-          7) FAQ
-         ========================= */}
+      {/* FAQ */}
       <section className="mt-24" aria-labelledby="photo-booth-faqs">
         <h2 id="photo-booth-faqs" className={sectionTitle}>
           Photo Booth FAQs
         </h2>
-        <p className={sectionSub}>
-          Quick answers to help you choose the right option.
-        </p>
+        <p className={sectionSub}>Quick answers to help you choose the right option.</p>
 
         <div className="mt-10 grid md:grid-cols-2 gap-6">
           {faqs.map((f, i) => {
             const id = `pb-faq-${slug(f.q)}`;
-            const hoverClass =
-              i % 2 === 0 ? "glo-hover-green" : "glo-hover-pink";
+            const hoverClass = i % 2 === 0 ? "glo-hover-green" : "glo-hover-pink";
 
             return (
               <div key={id} className={`${faqCardBase} ${hoverClass}`}>
                 <details className="group open:rounded-b-none">
                   <summary className="flex items-center justify-between cursor-pointer list-none px-5 py-4">
-                    <span className="font-semibold pr-4 text-gray-100">
-                      {f.q}
-                    </span>
+                    <span className="font-semibold pr-4 text-gray-100">{f.q}</span>
 
                     <span
                       className="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/5 neon-border transition-transform group-open:rotate-45"
                       aria-hidden="true"
                     >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path
                           d="M12 5v14M5 12h14"
                           stroke="currentColor"
@@ -610,9 +486,7 @@ export default function PhotoBooth() {
                     </span>
                   </summary>
 
-                  <div className="px-5 pb-5 pt-1 space-y-3">
-                    {renderAnswer(f.a)}
-                  </div>
+                  <div className="px-5 pb-5 pt-1 space-y-3">{renderAnswer(f.a)}</div>
                 </details>
               </div>
             );
@@ -620,9 +494,7 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* =========================
-          8) FINAL CTA
-         ========================= */}
+      {/* FINAL CTA */}
       <section className="mt-24">
         <div
           className="
@@ -636,21 +508,19 @@ export default function PhotoBooth() {
             Ready to bring the Glo to your event
           </h2>
           <p className="mt-2 text-gray-300 max-w-2xl mx-auto">
-            See pricing and book online, or connect with our team if you want
-            help choosing the best fit.
+            See pricing and book online, or connect with our team if you want help choosing the best fit.
           </p>
 
-          <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
-            <BtnLink href={SFA} className={glowBtnPink}>
+          <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <ActionBtn href={SFA} variant="red">
               See Pricing + Book Online
-            </BtnLink>
-            <BtnLink href={connectHref} className={glowBtnMint}>
+            </ActionBtn>
+            <ActionBtn href={connectHref} variant="green">
               Connect with Our Team
-            </BtnLink>
+            </ActionBtn>
           </div>
         </div>
       </section>
     </div>
   );
 }
-
