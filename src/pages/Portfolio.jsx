@@ -131,7 +131,6 @@ export default function Gallery() {
     };
   });
 
-  // ✅ Cube images (public/images/cube/001.png ... 020.png)
   const cubeImages20 = Array.from({ length: 20 }).map(
     (_, i) => `/images/cube/${String(i + 1).padStart(3, "0")}.png`
   );

@@ -1,4 +1,5 @@
 // src/pages/Privacy.jsx
+import { Helmet } from "react-helmet-async";
 import NeonTitle from "../components/NeonTitle";
 
 export default function Privacy() {
@@ -16,13 +17,18 @@ export default function Privacy() {
 
   const metaLine = "text-left text-sm text-gray-400 leading-relaxed";
 
+  const CANONICAL = "https://www.gloeventco.com/privacy";
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      <title>Privacy Policy | Glo Event Co</title>
-      <meta
-        name="description"
-        content="Privacy Policy for Glo Event Co (Silent Night Events, LLC)."
-      />
+      <Helmet>
+        <title>Privacy Policy | Glo Event Co</title>
+        <meta
+          name="description"
+          content="Privacy Policy for Glo Event Co (Silent Night Events, LLC)."
+        />
+        <link rel="canonical" href={CANONICAL} />
+      </Helmet>
 
       {/* HERO */}
       <header className="max-w-5xl mx-auto text-center">
@@ -196,7 +202,7 @@ export default function Privacy() {
             <div className="text-gray-200">
               Silent Night Events, LLC doing business as Glo Event Co
             </div>
-            <div>11123 South Towne Square, St. Louis, MO 63123</div>
+            <div>11123 South Towne Sq. Suite B, St. Louis, MO 63123</div>
             <div>
               Email: <span className="text-gray-200">info@gloeventco.com</span>
             </div>

@@ -1,4 +1,5 @@
 // src/pages/PhotoBooth.jsx
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
@@ -44,24 +45,24 @@ function Media({
 }
 
 export default function PhotoBooth() {
-  // Pricing anchors (si luego los usas)
-  const QUOTE_HUB = "/pricing";
-  const QUOTE_BOOTH_DROPOFF = `${QUOTE_HUB}#photo-booth-dropoff`;
-  const QUOTE_BOOTH_FULL = `${QUOTE_HUB}#photo-booth-full-service`;
-
   const connectHref = "/contact";
   const isInternal = (href = "") => href.startsWith("/");
 
   // ✅ Standard CTA: internal -> <Link>, external -> GlowButton external
-  // ✅ Centered by default (mobile + desktop)
   const ActionBtn = ({ href, variant, children, className = "" }) => {
     const btnClass =
-      (className ? className + " " : "") + "w-full sm:w-auto justify-center mx-auto";
+      (className ? className + " " : "") +
+      "w-full sm:w-auto justify-center mx-auto";
 
     if (isInternal(href)) {
       return (
         <Link to={href} className="inline-flex justify-center">
-          <GlowButton appearance="outline" variant={variant} size="lg" className={btnClass}>
+          <GlowButton
+            appearance="outline"
+            variant={variant}
+            size="lg"
+            className={btnClass}
+          >
             {children}
           </GlowButton>
         </Link>
@@ -96,7 +97,7 @@ export default function PhotoBooth() {
     {
       front: "/images/whatsIncluded/overlay-sample-hover.jpg",
       back: "/images/whatsIncluded/overlay-sample.jpg",
-      alt: "Overlay example",
+      alt: "Custom branded overlay example",
     },
     {
       front: "/images/whatsIncluded/backdrop-sample-hover.jpg",
@@ -106,7 +107,7 @@ export default function PhotoBooth() {
     {
       front: "/images/whatsIncluded/gif-moment-hover.mp4",
       back: "/images/whatsIncluded/gif-moment-hover.mp4",
-      alt: "GIF or boomerang moment",
+      alt: "GIF or boomerang moment example",
     },
   ];
 
@@ -115,12 +116,30 @@ export default function PhotoBooth() {
 
   // Great for
   const greatFor = [
-    { title: "Weddings", text: "Keeps guests engaged with shareable moments and a polished setup." },
-    { title: "Corporate Events", text: "Branded overlays + gallery links for instant team content." },
-    { title: "Schools + PTO", text: "High participation, easy flow, and tons of fun group shots." },
-    { title: "Fundraisers", text: "Sponsor logos + shareable moments to boost visibility." },
-    { title: "Birthdays", text: "GIFs, boomerangs, and instant sharing make it a highlight." },
-    { title: "Churches + Youth", text: "Venue friendly, easy to run, and creates keepsakes." },
+    {
+      title: "Weddings",
+      text: "Keeps guests engaged with shareable moments and a polished setup.",
+    },
+    {
+      title: "Corporate Events",
+      text: "Branded overlays + gallery links for instant team content.",
+    },
+    {
+      title: "Schools + PTO",
+      text: "High participation, easy flow, and tons of fun group shots.",
+    },
+    {
+      title: "Fundraisers",
+      text: "Sponsor logos + shareable moments to boost visibility.",
+    },
+    {
+      title: "Birthdays",
+      text: "GIFs, boomerangs, and instant sharing make it a highlight.",
+    },
+    {
+      title: "Churches + Youth",
+      text: "Venue friendly, easy to run, and creates keepsakes.",
+    },
   ];
 
   // FAQ
@@ -183,344 +202,442 @@ export default function PhotoBooth() {
     "/images/galleryHighlights/booth-g-12.mp4",
   ];
 
+  // ✅ JSON-LD: Service (Photo Booth)
+  const photoBoothServiceLD = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "Digital Photo Booth Rental",
+    alternateName: ["Selfie Station", "Photo Booth"],
+    provider: {
+      "@type": "LocalBusiness",
+      name: "Glo Event Co",
+      telephone: "314-282-7888",
+      email: "info@gloeventco.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "11123 South Towne Sq. Suite B",
+        addressLocality: "St. Louis",
+        addressRegion: "MO",
+        postalCode: "63123",
+        addressCountry: "US",
+      },
+      url: "https://www.gloeventco.com/",
+    },
+    areaServed: { "@type": "Place", name: "St. Louis, MO" },
+    keywords: [
+      "digital photo booth",
+      "photo booth rental",
+      "selfie station",
+      "photo booth St. Louis",
+      "digital photo booth St. Louis",
+      "AI face swapping photo booth",
+    ],
+    url: "https://www.gloeventco.com/services/photo-booth",
+  };
+
+  // ✅ JSON-LD: FAQPage
+  const photoBoothFaqLD = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-16">
-      <title>Digital Photo Booth Rental | Glo Event Co</title>
-      <meta
-        name="description"
-        content="Digital Photo Booth rentals in St. Louis. Fully digital booth with shareable gallery, custom branded overlays, digital backdrops, and optional AI face swapping."
-      />
+    <>
+      <Helmet>
+        <title>Digital Photo Booth Rentals in St. Louis | Glo Event Co</title>
+        <meta
+          name="description"
+          content="Digital Photo Booth rentals in St. Louis. Fully digital booth with shareable gallery, custom branded overlays, digital backdrops, and optional AI face swapping."
+        />
+        <link
+          rel="canonical"
+          href="https://www.gloeventco.com/services/photo-booth"
+        />
 
-      {/* 1) HERO */}
-      <header className="max-w-5xl mx-auto">
-        <NeonTitle title="Digital Photo Booth Rental" id="photo-booth-heading" className="uppercase" />
-        <p className="mt-3 text-gray-400 text-center text-base md:text-lg">
-          A modern, fully digital photo booth experience with instant sharing, custom branded overlays,
-          digital backdrops, and optional AI face swapping.
-        </p>
-      </header>
+        <script type="application/ld+json">
+          {JSON.stringify(photoBoothServiceLD)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(photoBoothFaqLD)}
+        </script>
+      </Helmet>
 
-      {/* 2) WHAT IT IS */}
-      <section className="mt-20">
-        <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8 items-stretch">
-          {/* LEFT */}
-          <div className="flex flex-col">
-            <h2 className={sectionTitle}>What is a Digital Photo Booth</h2>
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        {/* 1) HERO */}
+        <header className="max-w-5xl mx-auto">
+          <NeonTitle
+            title="Digital Photo Booth Rental"
+            id="photo-booth-heading"
+            className="uppercase"
+          />
+          <p className="mt-3 text-gray-400 text-center text-base md:text-lg">
+            A modern, fully digital photo booth experience with instant sharing,
+            custom branded overlays, digital backdrops, and optional AI face
+            swapping.
+          </p>
+        </header>
 
-            <p className={sectionSub}>
-              A Digital Photo Booth is a selfie station style photo booth that runs completely digitally.
-              Guests take photos, GIFs, and boomerangs, then share instantly. After your event, you have
-              access to a complete, shareable gallery—plus branding options that make it feel premium and personalized.
-            </p>
+        {/* 2) WHAT IT IS */}
+        <section className="mt-20">
+          <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8 items-stretch">
+            {/* LEFT */}
+            <div className="flex flex-col">
+              <h2 className={sectionTitle}>What is a Digital Photo Booth</h2>
 
-            <div className="mt-6 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
-                <li>Fully digital experience with instant sharing</li>
-                <li>Shareable gallery for you and your guests</li>
-                <li>Custom overlays + digital backdrops</li>
-                <li>Optional AI face swapping enhancements</li>
-              </ul>
+              <p className={sectionSub}>
+                A Digital Photo Booth is a selfie station style photo booth that
+                runs completely digitally. Guests take photos, GIFs, and
+                boomerangs, then share instantly. After your event, you have
+                access to a complete, shareable gallery—plus branding options
+                that make it feel premium and personalized.
+              </p>
 
-              {/* ✅ Buttons side-by-side when possible, centered on mobile */}
-              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 items-center justify-center md:justify-start w-full">
-                <ActionBtn href={SFA} variant="red">
-                  See Pricing + Book Online
-                </ActionBtn>
-                <ActionBtn href={connectHref} variant="green">
-                  Connect with Our Team
-                </ActionBtn>
+              <div className="mt-6 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+                <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
+                  <li>Fully digital experience with instant sharing</li>
+                  <li>Shareable gallery for you and your guests</li>
+                  <li>Custom overlays + digital backdrops</li>
+                  <li>Optional AI face swapping enhancements</li>
+                </ul>
+
+                <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 items-center justify-center md:justify-start w-full">
+                  <ActionBtn href={SFA} variant="red">
+                    See Pricing + Book Online
+                  </ActionBtn>
+                  <ActionBtn href={connectHref} variant="green">
+                    Connect with Our Team
+                  </ActionBtn>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT (VIDEO vertical) */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="w-full max-w-[320px]">
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-transparent aspect-[9/16]">
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={whatIsVideoSrc}
+                    poster={whatIsVideoPoster}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0" />
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* RIGHT (VIDEO vertical) */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-[320px]">
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-transparent aspect-[9/16]">
-                <video
-                  className="absolute inset-0 w-full h-full object-cover"
-                  src={whatIsVideoSrc}
-                  poster={whatIsVideoPoster}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0" />
-              </div>
+        {/* 3) WHAT'S INCLUDED */}
+        <section className="mt-24">
+          <h2 className={sectionTitle}>What’s Included</h2>
+          <p className={sectionSub}>
+            Everything you need for a smooth, premium booth experience—plus
+            branding options that look amazing in the final media.
+          </p>
+
+          <div className="mt-10 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+            <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
+              <li>Photos, GIFs, and boomerangs</li>
+              <li>Instant sharing + post event gallery</li>
+              <li>Custom branded overlay (name/date/logo available)</li>
+              <li>Digital backdrops to match your theme</li>
+              <li>
+                Optional add ons: data capture, email collection, AI face
+                swapping, and more
+              </li>
+            </ul>
+
+            <div className="mt-8 grid sm:grid-cols-3 gap-4">
+              {includedMedia.map((it, idx) => (
+                <figure
+                  key={`${it.front}-${idx}`}
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+                >
+                  <div className="relative w-full aspect-[4/3] bg-black/40">
+                    <div className="absolute inset-0 transition-opacity duration-300 opacity-100 group-hover:opacity-0">
+                      <Media
+                        src={it.front}
+                        alt={it.alt}
+                        className="absolute inset-0 w-full h-full"
+                        object="object-contain"
+                        autoPlay
+                      />
+                    </div>
+
+                    <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                      <Media
+                        src={it.back}
+                        alt={it.alt}
+                        className="absolute inset-0 w-full h-full"
+                        object="object-contain"
+                        autoPlay
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/0 to-black/0" />
+                </figure>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 3) WHAT'S INCLUDED */}
-      <section className="mt-24">
-        <h2 className={sectionTitle}>What’s Included</h2>
-        <p className={sectionSub}>
-          Everything you need for a smooth, premium booth experience—plus branding options that look amazing in the final media.
-        </p>
+        {/* 4) TWO WAYS TO BOOK */}
+        <section className="mt-24">
+          <h2 className={sectionTitle}>Two Ways to Book</h2>
+          <p className={sectionSub}>
+            Choose a simple drop off option, or go full service with an attendant
+            to guide guests and keep the flow smooth.
+          </p>
 
-        <div className="mt-10 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
-            <li>Photos, GIFs, and boomerangs</li>
-            <li>Instant sharing + post event gallery</li>
-            <li>Custom branded overlay (name/date/logo available)</li>
-            <li>Digital backdrops to match your theme</li>
-            <li>Optional add ons: data capture, email collection, AI face swapping, and more</li>
-          </ul>
-
-          <div className="mt-8 grid sm:grid-cols-3 gap-4">
-            {includedMedia.map((it, idx) => (
-              <figure
-                key={`${it.front}-${idx}`}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
-              >
-                <div className="relative w-full aspect-[4/3] bg-black/40">
-                  <div className="absolute inset-0 transition-opacity duration-300 opacity-100 group-hover:opacity-0">
-                    <Media
-                      src={it.front}
-                      alt={it.alt}
-                      className="absolute inset-0 w-full h-full"
-                      object="object-contain"
-                      autoPlay
-                    />
-                  </div>
-
-                  <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                    <Media
-                      src={it.back}
-                      alt={it.alt}
-                      className="absolute inset-0 w-full h-full"
-                      object="object-contain"
-                      autoPlay
-                    />
-                  </div>
+          <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
+            <GlowCard
+              title={
+                <span className="text-center block">
+                  Drop Off Digital Photo Booth
+                </span>
+              }
+              variant="mint"
+            >
+              <div className="grid h-full grid-rows-[auto_1fr_auto]">
+                <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
+                  <img
+                    src={cardImgDropoff}
+                    alt="Drop off digital photo booth setup"
+                    className="w-full h-56 md:h-64 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
                 </div>
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/0 to-black/0" />
+                <div className="min-h-0">
+                  <p className="text-gray-300">
+                    Delivered ready to use with instant sharing and custom
+                    branding options. We set it up and show you exactly how it
+                    works.
+                  </p>
+
+                  <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#23ff11]">
+                    <li>We deliver, set it up, and show you how to use it</li>
+                    <li>Custom branded overlays included</li>
+                    <li>4x6 digital downloads, GIFs, and boomerangs included</li>
+                    <li>Digital backdrops to match any theme</li>
+                    <li>Digital props included</li>
+                    <li>Optional enhancements available upon request</li>
+                  </ul>
+                </div>
+
+                <div className="pt-6">
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                    <ActionBtn href={DROP_OFF} variant="red">
+                      See Pricing + Book Online
+                    </ActionBtn>
+                    <ActionBtn href={connectHref} variant="green">
+                      Connect with Our Team
+                    </ActionBtn>
+                  </div>
+                </div>
+              </div>
+            </GlowCard>
+
+            <GlowCard
+              title={
+                <span className="text-center block">
+                  Full Service Photo Booth With Attendant
+                </span>
+              }
+              variant="pink"
+            >
+              <div className="grid h-full grid-rows-[auto_1fr_auto]">
+                <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
+                  <img
+                    src={cardImgFull}
+                    alt="Photo booth attendant helping guests"
+                    className="w-full h-56 md:h-64 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
+                </div>
+
+                <div className="min-h-0">
+                  <p className="text-gray-300">
+                    A fully supported photo booth experience. We set it up and an
+                    attendant guides guests during your event for a smooth flow
+                    and premium feel.
+                  </p>
+
+                  <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#ff4567]">
+                    <li>Delivery + setup included</li>
+                    <li>Attendant guides guests and manages the flow</li>
+                    <li>Custom branded overlays included</li>
+                    <li>Photos, GIFs, and boomerangs included</li>
+                    <li>Digital backdrops + props included</li>
+                    <li>Optional enhancements available upon request</li>
+                  </ul>
+                </div>
+
+                <div className="pt-6">
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                    <ActionBtn href={PB_ATTENDANCE} variant="red">
+                      See Pricing + Book Online
+                    </ActionBtn>
+                    <ActionBtn href={connectHref} variant="green">
+                      Connect with Our Team
+                    </ActionBtn>
+                  </div>
+                </div>
+              </div>
+            </GlowCard>
+          </div>
+        </section>
+
+        {/* Gallery Highlights */}
+        <section className="mt-24">
+          <h2 className={sectionTitle}>Gallery Highlights</h2>
+          <p className={sectionSub}>
+            A quick look at recent booth moments and branding examples.
+          </p>
+
+          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {galleryItems.slice(0, 12).map((src, i) => (
+              <figure
+                key={`${src}-${i}`}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              >
+                <div className="relative w-full aspect-[4/5] md:aspect-[3/4] bg-black">
+                  <Media
+                    src={src}
+                    alt="Digital photo booth highlight"
+                    className="absolute inset-0 w-full h-full"
+                    object="object-contain"
+                    autoPlay
+                  />
+                </div>
+
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0" />
               </figure>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 4) TWO WAYS TO BOOK */}
-      <section className="mt-24">
-        <h2 className={sectionTitle}>Two Ways to Book</h2>
-        <p className={sectionSub}>
-          Choose a simple drop off option, or go full service with an attendant to guide guests and keep the flow smooth.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
-          {/* Drop Off */}
-          <GlowCard title={<span className="text-center block">Drop Off Digital Photo Booth</span>} variant="mint">
-            <div className="grid h-full grid-rows-[auto_1fr_auto]">
-              <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
-                <img
-                  src={cardImgDropoff}
-                  alt="Drop off digital photo booth setup"
-                  className="w-full h-56 md:h-64 object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
-              </div>
-
-              <div className="min-h-0">
-                <p className="text-gray-300">
-                  Delivered ready to use with instant sharing and custom branding options. We set it up and show you exactly how it works.
-                </p>
-
-                <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#23ff11]">
-                  <li>We deliver, set it up, and show you how to use it</li>
-                  <li>Custom branded overlays included</li>
-                  <li>4x6 digital downloads, GIFs, and boomerangs included</li>
-                  <li>Digital backdrops to match any theme</li>
-                  <li>Digital props included</li>
-                  <li>Optional enhancements available upon request</li>
-                </ul>
-              </div>
-
-              <div className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  <ActionBtn href={DROP_OFF} variant="red">
-                    See Pricing + Book Online
-                  </ActionBtn>
-                  <ActionBtn href={connectHref} variant="green">
-                    Connect with Our Team
-                  </ActionBtn>
-                </div>
-              </div>
-            </div>
-          </GlowCard>
-
-          {/* Full Service */}
-          <GlowCard
-            title={<span className="text-center block">Full Service Photo Booth With Attendant</span>}
-            variant="pink"
-          >
-            <div className="grid h-full grid-rows-[auto_1fr_auto]">
-              <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
-                <img
-                  src={cardImgFull}
-                  alt="Photo booth attendant helping guests"
-                  className="w-full h-56 md:h-64 object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
-              </div>
-
-              <div className="min-h-0">
-                <p className="text-gray-300">
-                  A fully supported photo booth experience. We set it up and an attendant guides guests during your event for a smooth flow and premium feel.
-                </p>
-
-                <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#ff4567]">
-                  <li>Delivery + setup included</li>
-                  <li>Attendant guides guests and manages the flow</li>
-                  <li>Custom branded overlays included</li>
-                  <li>Photos, GIFs, and boomerangs included</li>
-                  <li>Digital backdrops + props included</li>
-                  <li>Optional enhancements available upon request</li>
-                </ul>
-              </div>
-
-              <div className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  <ActionBtn href={PB_ATTENDANCE} variant="red">
-                    See Pricing + Book Online
-                  </ActionBtn>
-                  <ActionBtn href={connectHref} variant="green">
-                    Connect with Our Team
-                  </ActionBtn>
-                </div>
-              </div>
-            </div>
-          </GlowCard>
-        </div>
-      </section>
-
-      {/* Gallery Highlights */}
-      <section className="mt-24">
-        <h2 className={sectionTitle}>Gallery Highlights</h2>
-        <p className={sectionSub}>A quick look at recent booth moments and branding examples.</p>
-
-        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {galleryItems.slice(0, 12).map((src, i) => (
-            <figure
-              key={`${src}-${i}`}
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
-            >
-              <div className="relative w-full aspect-[4/5] md:aspect-[3/4] bg-black">
-                <Media
-                  src={src}
-                  alt="Photo booth highlight"
-                  className="absolute inset-0 w-full h-full"
-                  object="object-contain"
-                  autoPlay
-                />
-              </div>
-
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/0" />
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      {/* GREAT FOR */}
-      <section className="mt-24">
-        <h2 className={sectionTitle}>Great For</h2>
-        <p className={sectionSub}>
-          Weddings, corporate events, schools, fundraisers, birthdays, and community events.
-        </p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {greatFor.map((t, idx) => (
-            <GlowCard
-              key={t.title}
-              title={<span className="text-center block">{t.title}</span>}
-              variant={idx % 3 === 0 ? "mint" : idx % 3 === 1 ? "blue" : "pink"}
-            >
-              <div className="w-full">
-                <p className="text-gray-300">{t.text}</p>
-              </div>
-            </GlowCard>
-          ))}
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="mt-24" aria-labelledby="photo-booth-faqs">
-        <h2 id="photo-booth-faqs" className={sectionTitle}>
-          Photo Booth FAQs
-        </h2>
-        <p className={sectionSub}>Quick answers to help you choose the right option.</p>
-
-        <div className="mt-10 grid md:grid-cols-2 gap-6">
-          {faqs.map((f, i) => {
-            const id = `pb-faq-${slug(f.q)}`;
-            const hoverClass = i % 2 === 0 ? "glo-hover-green" : "glo-hover-pink";
-
-            return (
-              <div key={id} className={`${faqCardBase} ${hoverClass}`}>
-                <details className="group open:rounded-b-none">
-                  <summary className="flex items-center justify-between cursor-pointer list-none px-5 py-4">
-                    <span className="font-semibold pr-4 text-gray-100">{f.q}</span>
-
-                    <span
-                      className="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/5 neon-border transition-transform group-open:rotate-45"
-                      aria-hidden="true"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path
-                          d="M12 5v14M5 12h14"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </span>
-                  </summary>
-
-                  <div className="px-5 pb-5 pt-1 space-y-3">{renderAnswer(f.a)}</div>
-                </details>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="mt-24">
-        <div
-          className="
-            rounded-2xl px-6 py-10 text-white
-            bg-gradient-to-br from-[#0b0b12] via-[#0a1020] to-[#06121e]
-            shadow-[0_0_36px_rgba(0,131,253,.45)] glo-hover
-            text-center
-          "
-        >
-          <h2 className="text-2xl md:text-3xl font-semibold text-white/90">
-            Ready to bring the Glo to your event
-          </h2>
-          <p className="mt-2 text-gray-300 max-w-2xl mx-auto">
-            See pricing and book online, or connect with our team if you want help choosing the best fit.
+        {/* GREAT FOR */}
+        <section className="mt-24">
+          <h2 className={sectionTitle}>Great For</h2>
+          <p className={sectionSub}>
+            Weddings, corporate events, schools, fundraisers, birthdays, and
+            community events.
           </p>
 
-          <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <ActionBtn href={SFA} variant="red">
-              See Pricing + Book Online
-            </ActionBtn>
-            <ActionBtn href={connectHref} variant="green">
-              Connect with Our Team
-            </ActionBtn>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            {greatFor.map((t, idx) => (
+              <GlowCard
+                key={t.title}
+                title={<span className="text-center block">{t.title}</span>}
+                variant={idx % 3 === 0 ? "mint" : idx % 3 === 1 ? "blue" : "pink"}
+              >
+                <div className="w-full">
+                  <p className="text-gray-300">{t.text}</p>
+                </div>
+              </GlowCard>
+            ))}
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="mt-24" aria-labelledby="photo-booth-faqs">
+          <h2 id="photo-booth-faqs" className={sectionTitle}>
+            Photo Booth FAQs
+          </h2>
+          <p className={sectionSub}>
+            Quick answers to help you choose the right option.
+          </p>
+
+          <div className="mt-10 grid md:grid-cols-2 gap-6">
+            {faqs.map((f, i) => {
+              const id = `pb-faq-${slug(f.q)}`;
+              const hoverClass = i % 2 === 0 ? "glo-hover-green" : "glo-hover-pink";
+
+              return (
+                <div key={id} className={`${faqCardBase} ${hoverClass}`}>
+                  <details className="group open:rounded-b-none">
+                    <summary className="flex items-center justify-between cursor-pointer list-none px-5 py-4">
+                      <span className="font-semibold pr-4 text-gray-100">
+                        {f.q}
+                      </span>
+
+                      <span
+                        className="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/5 neon-border transition-transform group-open:rotate-45"
+                        aria-hidden="true"
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M12 5v14M5 12h14"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+
+                    <div className="px-5 pb-5 pt-1 space-y-3">
+                      {renderAnswer(f.a)}
+                    </div>
+                  </details>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="mt-24">
+          <div
+            className="
+              rounded-2xl px-6 py-10 text-white
+              bg-gradient-to-br from-[#0b0b12] via-[#0a1020] to-[#06121e]
+              shadow-[0_0_36px_rgba(0,131,253,.45)] glo-hover
+              text-center
+            "
+          >
+            <h2 className="text-2xl md:text-3xl font-semibold text-white/90">
+              Ready to bring the Glo to your event
+            </h2>
+            <p className="mt-2 text-gray-300 max-w-2xl mx-auto">
+              See pricing and book online, or connect with our team if you want
+              help choosing the best fit.
+            </p>
+
+            <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <ActionBtn href={SFA} variant="red">
+                See Pricing + Book Online
+              </ActionBtn>
+              <ActionBtn href={connectHref} variant="green">
+                Connect with Our Team
+              </ActionBtn>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

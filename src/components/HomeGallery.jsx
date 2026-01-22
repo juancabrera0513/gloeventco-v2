@@ -10,7 +10,6 @@ export default function HomeGallery({
   images = Array.from({ length: 9 }).map(
     (_, i) => `/images/homegallery/sample-${i + 1}.png`
   ),
-  ctaHref = "/portfolio",
 }) {
   const hoverClassByColor = (c) => {
     if (c === "red") return "hover-red";

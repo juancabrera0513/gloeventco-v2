@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 // videos importados aquí
 import video1 from "/videos/silent-clip-1.mp4";
@@ -9,9 +9,21 @@ import video4 from "/videos/silent-clip-4.mp4";
 export default function MiniVideoGallery({
   title = "What Does It Feel Like",
   subtitle = "A quick look at the energy, movement, and vibe guests experience on the dance floor.",
-  aspect = "aspect-video", // 16:9 (1920×1080)
+  aspect = "aspect-video", // 16:9
 }) {
   const videos = [video1, video2, video3, video4];
+
+  // 👇 refs para todos los videos
+  const videoRefs = useRef([]);
+
+  const handlePlay = (index) => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      if (i !== index && !video.paused) {
+        video.pause();
+      }
+    });
+  };
 
   return (
     <section className="mt-24">
@@ -34,11 +46,13 @@ export default function MiniVideoGallery({
           >
             <div className={`relative w-full ${aspect}`}>
               <video
+                ref={(el) => (videoRefs.current[i] = el)}
                 className="absolute inset-0 w-full h-full object-cover"
                 src={src}
                 controls
                 playsInline
                 preload="metadata"
+                onPlay={() => handlePlay(i)} // ✅ clave
               />
             </div>
 

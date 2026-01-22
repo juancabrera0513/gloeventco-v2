@@ -3,7 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { LOGO_TEXT } from "../lib/constants";
 
-const logoSrc = "/images/glo-event-co-logo.webp ";
+const logoSrc = "/images/glo-event-co-logo.webp";
 const CLIENT_PORTAL_URL = "https://glo-event-co.checkcherry.com/users/sign_in";
 
 export default function Header() {
@@ -121,14 +121,6 @@ export default function Header() {
                 Photo Booth
               </NavLink>
 
-              {/* <NavLink
-                to="/portfolio"
-                className={({ isActive }) => linkClasses(isActive)}
-                onClick={scrollTop}
-              >
-                Gallery
-              </NavLink> */}
-
               <NavLink
                 to="/contact"
                 className={({ isActive }) => linkClasses(isActive)}
@@ -199,17 +191,7 @@ export default function Header() {
               >
                 Photo Booth
               </NavLink>
-{/* 
-              <NavLink
-                to="/portfolio"
-                className={({ isActive }) => linkClasses(isActive)}
-                onClick={() => {
-                  closeMobile();
-                  scrollTop();
-                }}
-              >
-                Gallery
-              </NavLink> */}
+
 
               <NavLink
                 to="/contact"

@@ -36,7 +36,6 @@ export const OUR_WORK = [
       'Silent disco setup for a school event in St. Louis with wireless LED headphones and students dancing',
     title: 'School Events & PTO Nights',
     blurb: 'High energy silent disco plus a selfie station for instant fun',
-    href: '/portfolio',
   },
   {
     src: `${CASES_BASE}/case-silent-disco-church-youth-event-st-louis.png`,
@@ -44,7 +43,6 @@ export const OUR_WORK = [
       'Silent disco for a church youth group in St. Louis with venue friendly wireless headphones',
     title: 'Churches & Youth Groups',
     blurb: 'Venue friendly entertainment plus a digital booth for keepsakes',
-    href: '/portfolio',
   },
   {
     src: `${CASES_BASE}/case-silent-disco-photo-booth-corporate-event-st-louis.png`,
@@ -53,7 +51,6 @@ export const OUR_WORK = [
     title: 'Corporate Events',
     blurb:
       'Silent Disco for energy plus digital photo booth for shareable moments',
-    href: '/portfolio',
   },
   {
     src: `${CASES_BASE}/case-photo-booth-silent-disco-fundraiser-st-louis.png`,
@@ -62,7 +59,6 @@ export const OUR_WORK = [
     title: 'Fundraisers & Galas',
     blurb:
       'A photo booth for sponsor branding plus silent disco for the crowd',
-    href: '/portfolio',
   },
   {
     src: `${CASES_BASE}/case-silent-disco-birthday-party-st-louis.png`,
@@ -71,7 +67,6 @@ export const OUR_WORK = [
     title: 'Birthdays & Celebrations',
     blurb:
       'Dance your way with silent disco and capture it with the photo booth',
-    href: '/portfolio',
   },
   {
     src: `${CASES_BASE}/case-silent-disco-photo-booth-wedding-st-louis.png`,
@@ -80,7 +75,6 @@ export const OUR_WORK = [
     title: 'Weddings & Receptions',
     blurb:
       'Noise friendly dancing plus a photo booth guests love all night',
-    href: '/portfolio',
   },
 ]
 

@@ -1,5 +1,6 @@
 // src/pages/Terms.jsx
 import NeonTitle from "../components/NeonTitle";
+import { Helmet } from "react-helmet-async";
 
 export default function Terms() {
   // Match site styling (same as Privacy)
@@ -14,13 +15,19 @@ export default function Terms() {
   const bullets =
     "list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]";
 
+  const CANONICAL = "https://www.gloeventco.com/terms";
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      <title>Terms and Conditions | Glo Event Co</title>
-      <meta
-        name="description"
-        content="Terms and Conditions for using the Glo Event Co website and services."
-      />
+      <Helmet>
+        <title>Terms and Conditions | Glo Event Co</title>
+        <meta
+          name="description"
+          content="Terms and Conditions for using the Glo Event Co website and services."
+        />
+        <link rel="canonical" href={CANONICAL} />
+        <meta name="robots" content="index,follow" />
+      </Helmet>
 
       {/* HERO */}
       <header className="max-w-5xl mx-auto text-center">
@@ -179,6 +186,8 @@ export default function Terms() {
             <br />
             Phone: 314-282-7888
           </p>
+
+      
         </div>
       </section>
     </div>
