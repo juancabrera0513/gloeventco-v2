@@ -1,5 +1,5 @@
 // src/pages/Privacy.jsx
-import { Helmet } from "react-helmet-async";
+import { useEffect, useMemo } from "react";
 import NeonTitle from "../components/NeonTitle";
 
 export default function Privacy() {
@@ -19,20 +19,47 @@ export default function Privacy() {
 
   const CANONICAL = "https://www.gloeventco.com/privacy";
 
+  // ✅ Meta without Helmet (keeps Cloudflare build happy)
+  const meta = useMemo(
+    () => ({
+      title: "Privacy Policy | Glo Event Co",
+      description: "Privacy Policy for Glo Event Co (Silent Night Events, LLC).",
+      canonical: CANONICAL,
+    }),
+    [CANONICAL]
+  );
+
+  useEffect(() => {
+    document.title = meta.title;
+
+    // description
+    let desc = document.querySelector('meta[name="description"]');
+    if (!desc) {
+      desc = document.createElement("meta");
+      desc.setAttribute("name", "description");
+      document.head.appendChild(desc);
+    }
+    desc.setAttribute("content", meta.description);
+
+    // canonical
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      document.head.appendChild(link);
+    }
+    link.setAttribute("href", meta.canonical);
+  }, [meta]);
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      <Helmet>
-        <title>Privacy Policy | Glo Event Co</title>
-        <meta
-          name="description"
-          content="Privacy Policy for Glo Event Co (Silent Night Events, LLC)."
-        />
-        <link rel="canonical" href={CANONICAL} />
-      </Helmet>
-
       {/* HERO */}
       <header className="max-w-5xl mx-auto text-center">
-        <NeonTitle title="Privacy Policy" id="privacy-policy" className="uppercase" />
+        <NeonTitle
+          title="Privacy Policy"
+          id="privacy-policy"
+          className="uppercase"
+        />
       </header>
 
       {/* CONTENT */}
@@ -46,11 +73,13 @@ export default function Privacy() {
               (“Glo Event Co,” “we,” “us,” “our”)
             </div>
             <div>
-              Website: <span className="text-gray-300">www.gloeventco.com</span> (the
+              Website:{" "}
+              <span className="text-gray-300">www.gloeventco.com</span> (the
               “Site”)
             </div>
             <div>
-              Effective Date: <span className="text-gray-300">January 21, 2026</span>
+              Effective Date:{" "}
+              <span className="text-gray-300">January 21, 2026</span>
             </div>
           </div>
 
@@ -58,15 +87,17 @@ export default function Privacy() {
 
           <h2 className={sectionTitle}>1. Overview</h2>
           <p className={sectionSub}>
-            This Privacy Policy describes how Glo Event Co collects, uses, shares,
-            and protects information through our Site and Services. By using the
-            Site or Services, you consent to these practices.
+            This Privacy Policy describes how Glo Event Co collects, uses,
+            shares, and protects information through our Site and Services. By
+            using the Site or Services, you consent to these practices.
           </p>
 
           <hr className={hr} />
 
           <h2 className={sectionTitle}>2. Information We Collect</h2>
-          <p className={sectionSub}>We may collect information you provide, including:</p>
+          <p className={sectionSub}>
+            We may collect information you provide, including:
+          </p>
           <ul className={`${bullets} mt-5`}>
             <li>Name</li>
             <li>Mailing or billing address</li>
@@ -80,9 +111,9 @@ export default function Privacy() {
             Payment Information
           </h3>
           <p className={sectionSub}>
-            If you purchase Services, we collect information necessary to process
-            payment through third party payment processors. We do not store full
-            credit card numbers on our servers.
+            If you purchase Services, we collect information necessary to
+            process payment through third party payment processors. We do not
+            store full credit card numbers on our servers.
           </p>
 
           <h3 className="mt-8 text-left text-lg md:text-xl font-semibold text-white/90">
@@ -90,16 +121,16 @@ export default function Privacy() {
           </h3>
           <p className={sectionSub}>
             We may collect IP address, browser and device information, access
-            times, referring pages, pages visited, and similar usage data for site
-            operations, analytics, and security.
+            times, referring pages, pages visited, and similar usage data for
+            site operations, analytics, and security.
           </p>
 
           <hr className={hr} />
 
           <h2 className={sectionTitle}>3. How We Use Information</h2>
           <p className={sectionSub}>
-            We use information to provide Services, communicate about bookings and
-            support, process transactions, improve the Site, prevent fraud,
+            We use information to provide Services, communicate about bookings
+            and support, process transactions, improve the Site, prevent fraud,
             maintain records, enforce agreements, and send marketing
             communications where permitted.
           </p>
@@ -109,8 +140,8 @@ export default function Privacy() {
           <h2 className={sectionTitle}>4. Marketing Communications</h2>
           <p className={sectionSub}>
             You can opt out of marketing emails by using the unsubscribe link in
-            our emails or by contacting us. Transactional emails may still be sent
-            as needed.
+            our emails or by contacting us. Transactional emails may still be
+            sent as needed.
           </p>
 
           <hr className={hr} />
@@ -122,11 +153,11 @@ export default function Privacy() {
             portfolio use.
           </p>
           <p className="mt-5 text-left text-gray-300 leading-relaxed">
-            To opt out, email <span className="text-gray-200">info@gloeventco.com</span>{" "}
-            before the event with the event date, location, and the name on the
-            booking. We will make reasonable efforts to honor opt out requests,
-            but cannot guarantee exclusion from all background or incidental
-            capture.
+            To opt out, email{" "}
+            <span className="text-gray-200">info@gloeventco.com</span> before the
+            event with the event date, location, and the name on the booking. We
+            will make reasonable efforts to honor opt out requests, but cannot
+            guarantee exclusion from all background or incidental capture.
           </p>
 
           <hr className={hr} />
@@ -156,24 +187,25 @@ export default function Privacy() {
 
           <h2 className={sectionTitle}>8. Links to Other Websites</h2>
           <p className={sectionSub}>
-            We are not responsible for the privacy practices of third party sites
-            linked from our Site.
+            We are not responsible for the privacy practices of third party
+            sites linked from our Site.
           </p>
 
           <hr className={hr} />
 
           <h2 className={sectionTitle}>9. Data Storage and Security</h2>
           <p className={sectionSub}>
-            We use reasonable safeguards to protect information, but no system is
-            perfectly secure. Data may be stored with third party hosting vendors.
+            We use reasonable safeguards to protect information, but no system
+            is perfectly secure. Data may be stored with third party hosting
+            vendors.
           </p>
 
           <hr className={hr} />
 
           <h2 className={sectionTitle}>10. Deletion Requests and Legal Retention</h2>
           <p className={sectionSub}>
-            You may request deletion of personal information, subject to legal and
-            operational exceptions such as fulfilling Services, maintaining
+            You may request deletion of personal information, subject to legal
+            and operational exceptions such as fulfilling Services, maintaining
             records, preventing fraud, and enforcing agreements. We may need to
             verify your identity before processing requests.
           </p>
@@ -191,8 +223,8 @@ export default function Privacy() {
           <h2 className={sectionTitle}>12. Changes to This Privacy Policy</h2>
           <p className={sectionSub}>
             We may update this policy from time to time and will revise the
-            Effective Date accordingly. Continued use means you accept the updated
-            policy.
+            Effective Date accordingly. Continued use means you accept the
+            updated policy.
           </p>
 
           <hr className={hr} />
