@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 
 // videos importados aquí
-import video1 from "/videos/silent-clip-1.mp4";
-import video2 from "/videos/silent-clip-2.mp4";
-import video3 from "/videos/silent-clip-3.mp4";
-import video4 from "/videos/silent-clip-4.mp4";
+import video1 from "/videos/silent-clip-1.webm";
+import video2 from "/videos/silent-clip-2.webm";
+import video3 from "/videos/silent-clip-3.webm";
+import video4 from "/videos/silent-clip-4.webm";
 
 export default function MiniVideoGallery({
   title = "What Does It Feel Like",

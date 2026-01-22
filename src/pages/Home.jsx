@@ -178,7 +178,7 @@ export default function Home() {
                 type="video/webm"
               />
               <source
-                src="/videos/silent-disco-st-louis-event-hero.mp4"
+                src="/videos/silent-disco-st-louis-event-hero.webm"
                 type="video/mp4"
               />
               Your browser does not support the video tag.
