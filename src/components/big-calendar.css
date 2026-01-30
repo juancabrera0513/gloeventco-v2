@@ -1,0 +1,230 @@
+/* ============================
+   Glo Neon Calendar (compact)
+   ============================ */
+
+   .caln {
+    width: min(980px, 96vw);
+    margin: 0 auto;
+    padding: 14px;
+    border-radius: 18px;
+  
+    /* glass base */
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.03)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+  }
+  
+  .caln__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0 12px;
+    justify-self: center; /* ⬅️ CLAVE */
+    text-align: center;
+  }
+  
+  .caln__title {
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  
+    /* smaller than printable */
+    font-size: clamp(26px, 3.6vw, 44px);
+    line-height: 1;
+  }
+  
+  /* DOW row */
+  .caln__dow {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .caln__dowcell {
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    font-size: 12px;
+    padding: 8px 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  
+  /* Grid */
+  .caln__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+  
+  /* Cell base */
+  .caln__cell {
+    position: relative;
+    border-radius: 16px;
+    padding: 10px 10px 10px;
+    min-height: 110px; /* ✅ compact */
+    overflow: hidden;
+  
+    background: rgba(15, 17, 23, 0.9); /* var(--color-base-surface) vibe */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .caln__cell:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Day number */
+  .caln__day {
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  /* Notes */
+  .caln__notes {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.25;
+    color: rgba(229, 231, 235, 0.9);
+  }
+  
+  .caln__line {
+    margin: 0 0 6px;
+    word-break: break-word;
+  }
+  
+  .caln__more {
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  
+  /* Textarea */
+  .caln__textarea {
+    width: 100%;
+    height: calc(100% - 26px);
+    margin-top: 8px;
+    resize: none;
+  
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.04);
+    color: #e5e7eb;
+  
+    padding: 8px;
+    font-size: 12px;
+    line-height: 1.25;
+  
+    outline: none;
+  }
+  
+  /* Out-of-month */
+  .caln__cell.is-out {
+    opacity: 0.45;
+    filter: grayscale(10%);
+  }
+  
+  /* Active */
+  .caln__cell.is-active {
+    transform: translateY(-1px);
+  }
+  
+  /* Accent system (uses your brand tokens) */
+  .caln--blue .caln__cell:hover {
+    box-shadow: var(--shadow-glow-blue-strong);
+    border-color: rgba(0, 131, 253, 0.45);
+  }
+  .caln--blue .caln__cell.is-active {
+    box-shadow: var(--shadow-glow-blue-strong);
+    border-color: rgba(0, 131, 253, 0.65);
+  }
+  .caln--blue .caln__dowcell {
+    box-shadow: 0 0 0 1px rgba(0, 131, 253, 0.25), 0 0 18px rgba(0, 131, 253, 0.18);
+  }
+  
+  .caln--red .caln__cell:hover {
+    box-shadow: var(--shadow-glow-red-strong);
+    border-color: rgba(255, 69, 103, 0.45);
+  }
+  .caln--red .caln__cell.is-active {
+    box-shadow: var(--shadow-glow-red-strong);
+    border-color: rgba(255, 69, 103, 0.65);
+  }
+  .caln--red .caln__dowcell {
+    box-shadow: 0 0 0 1px rgba(255, 69, 103, 0.25), 0 0 18px rgba(255, 69, 103, 0.18);
+  }
+  
+  .caln--green .caln__cell:hover {
+    box-shadow: var(--shadow-glow-green-strong);
+    border-color: rgba(35, 255, 17, 0.38);
+  }
+  .caln--green .caln__cell.is-active {
+    box-shadow: var(--shadow-glow-green-strong);
+    border-color: rgba(35, 255, 17, 0.58);
+  }
+  .caln--green .caln__dowcell {
+    box-shadow: 0 0 0 1px rgba(35, 255, 17, 0.22), 0 0 18px rgba(35, 255, 17, 0.16);
+  }
+  
+  /* Responsive: tighten on small screens */
+  @media (max-width: 720px) {
+    .caln__dow {
+      gap: 6px;
+    }
+    .caln__grid {
+      gap: 6px;
+    }
+    .caln__cell {
+      min-height: 88px;
+      padding: 8px;
+      border-radius: 14px;
+    }
+    .caln__dowcell {
+      font-size: 10px;
+      padding: 7px 0;
+      border-radius: 10px;
+      letter-spacing: 0.16em;
+    }
+  }
+
+  /* Header with nav arrows */
+.caln__header--nav {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+}
+
+.caln__navbtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: rgba(229,231,235,0.95);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.caln__navbtn:focus-visible {
+  outline: 2px solid rgba(0,131,253,.65);
+  outline-offset: 3px;
+}
+
+
+
+  

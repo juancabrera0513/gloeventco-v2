@@ -465,3 +465,502 @@ header nav button {
   box-shadow: var(--shadow-glow-green-strong);
   transform: translateY(-1px);
 }
+
+/* ============================
+   Glo Neon Calendar (compact) — STABLE
+   ============================ */
+
+   .caln {
+    width: min(980px, 96vw);
+    margin: 0 auto;
+    padding: 14px;
+    border-radius: 18px;
+  
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.03)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+  }
+  
+  .caln__header {
+    padding: 6px 0 12px;
+  }
+  
+  .caln__header--nav {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .caln__navbtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(229, 231, 235, 0.95);
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .caln__title {
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: clamp(22px, 3.4vw, 42px);
+    line-height: 1;
+    justify-self: center;
+    text-align: center;
+  }
+  
+  .caln__dow {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .caln__dowcell {
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    font-size: 12px;
+    padding: 8px 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  
+  .caln__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+  
+  /* ✅ stable cell size */
+  .caln__cell {
+    position: relative;
+    border-radius: 16px;
+    padding: 10px;
+    overflow: hidden;
+  
+    height: 184px;
+    min-height: 184px;
+  
+    background: rgba(15, 17, 23, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .caln__cell:hover {
+    transform: translateY(-1px);
+  }
+  
+  .caln__cell.is-out {
+    opacity: 0.22;
+    filter: grayscale(15%);
+  }
+  
+  .caln__dayRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .caln__day {
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .caln__pill {
+    min-width: 26px;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(229, 231, 235, 0.95);
+  }
+  
+  /* ✅ lock area for cards so layout doesn't shift */
+  .caln__events {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* ✅ cards fixed size */
+  :root {
+    --cal-evt-h: 44px;
+    --cal-evt-r: 14px;
+  }
+  
+  .cal-evt {
+    width: 100%;
+    height: var(--cal-evt-h);
+    border-radius: var(--cal-evt-r);
+    padding: 8px 10px;
+  
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(229, 231, 235, 0.95);
+  
+    cursor: pointer;
+    user-select: none;
+  
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .cal-evt:hover {
+    transform: translateY(-1px);
+  }
+  
+  .cal-evt__title {
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    max-height: calc(2 * 1.15em);
+  }
+  
+  .cal-evt--confirmed {
+    background: rgba(35, 255, 17, 0.22);
+    border-color: rgba(35, 255, 17, 0.28);
+  }
+  
+  .cal-evt--more {
+    justify-content: center;
+    text-align: center;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Accent hover */
+  .caln--blue .caln__cell:hover {
+    box-shadow: var(--shadow-glow-blue-strong);
+    border-color: rgba(0, 131, 253, 0.45);
+  }
+  .caln--blue .caln__dowcell {
+    box-shadow: 0 0 0 1px rgba(0, 131, 253, 0.25),
+      0 0 18px rgba(0, 131, 253, 0.18);
+  }
+  
+  .caln--red .caln__cell:hover {
+    box-shadow: var(--shadow-glow-red-strong);
+    border-color: rgba(255, 69, 103, 0.45);
+  }
+  .caln--red .caln__dowcell {
+    box-shadow: 0 0 0 1px rgba(255, 69, 103, 0.25),
+      0 0 18px rgba(255, 69, 103, 0.18);
+  }
+  
+  .caln--green .caln__cell:hover {
+    box-shadow: var(--shadow-glow-green-strong);
+    border-color: rgba(35, 255, 17, 0.38);
+  }
+  .caln--green .caln__dowcell {
+    box-shadow: 0 0 0 1px rgba(35, 255, 17, 0.22),
+      0 0 18px rgba(35, 255, 17, 0.16);
+  }
+  
+  /* ============================
+     Modal (Neon)
+     ============================ */
+  .calm__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+  }
+  
+  .calm__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.62);
+    border: none;
+  }
+  
+  .calm {
+    position: relative;
+    width: min(980px, 96vw);
+    max-height: min(78vh, 760px);
+    overflow: hidden;
+    border-radius: 18px;
+  
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+  
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    z-index: 10000;
+  }
+  
+  .calm--blue {
+    box-shadow: var(--shadow-glow-blue-strong), 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+  .calm--red {
+    box-shadow: var(--shadow-glow-red-strong), 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+  .calm--green {
+    box-shadow: var(--shadow-glow-green-strong), 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+  
+  .calm__top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .calm__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .calm__date {
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  
+  .calm__count {
+    font-size: 12px;
+    opacity: 0.75;
+  }
+  
+  .calm__close {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(229, 231, 235, 0.95);
+    cursor: pointer;
+  }
+  
+  .calm__body {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 420px;
+    max-height: calc(min(78vh, 760px) - 70px);
+  }
+  
+  .calm__list {
+    padding: 12px;
+    overflow: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .calm__item {
+    width: 100%;
+    text-align: left;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 10px;
+  
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(229, 231, 235, 0.95);
+  
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .calm__item:hover {
+    transform: translateY(-1px);
+  }
+  
+  .calm__item.is-active {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  
+  .calm__itemTitle {
+    font-weight: 900;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  
+  .calm__detail {
+    padding: 16px;
+    overflow: auto;
+  }
+  
+  .calm__imgWrap {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.25);
+  }
+  
+  .calm__img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .calm__title {
+    margin: 14px 0 8px;
+    font-size: 22px;
+    font-weight: 900;
+  }
+  
+  .calm__desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(229, 231, 235, 0.92);
+  }
+  
+  .calm__desc--muted {
+    opacity: 0.7;
+  }
+  
+  .calm__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  
+  .calm__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 14px;
+    font-weight: 800;
+  
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(229, 231, 235, 0.95);
+  }
+  
+  .calm__btn:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+  
+  .calm__btn--ghost {
+    background: transparent;
+  }
+  
+  /* Mobile */
+  @media (max-width: 720px) {
+    .caln {
+      padding: 10px;
+      border-radius: 16px;
+    }
+  
+    .caln__header--nav {
+      grid-template-columns: 40px 1fr 40px;
+      gap: 8px;
+    }
+  
+    .caln__navbtn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 24px;
+    }
+  
+    .caln__dow {
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+  
+    .caln__grid {
+      gap: 6px;
+    }
+  
+    .caln__dowcell {
+      font-size: 10px;
+      padding: 7px 0;
+      border-radius: 10px;
+      letter-spacing: 0.16em;
+    }
+  
+    .caln__cell {
+      padding: 8px;
+      border-radius: 14px;
+      height: 150px;
+      min-height: 150px;
+    }
+  
+    :root {
+      --cal-evt-h: 40px;
+      --cal-evt-r: 13px;
+    }
+  
+    .cal-evt {
+      padding: 7px 9px;
+    }
+  
+    .cal-evt__title {
+      font-size: 10.5px;
+    }
+  
+    .caln__events {
+      gap: 8px;
+      margin-top: 8px;
+    }
+  
+    .calm__body {
+      grid-template-columns: 1fr;
+    }
+  
+    .calm__list {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      max-height: 220px;
+    }
+  }
+  
