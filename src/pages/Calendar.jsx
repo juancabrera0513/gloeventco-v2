@@ -1,4 +1,3 @@
-// src/pages/Calendar.jsx
 import { useEffect, useMemo, useState } from "react";
 import BigCalendar from "../components/BigCalendar";
 import { supabase } from "../lib/supabaseClient";
@@ -16,9 +15,10 @@ export default function Calendar() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  // ✅ Start view (optional)
-  const initialYear = 2026;
-  const initialMonthIndex = 1; // Feb = 1
+  // Start at current month
+  const now = new Date();
+  const initialYear = now.getFullYear();
+  const initialMonthIndex = now.getMonth();
 
   useEffect(() => {
     let alive = true;
@@ -36,21 +36,20 @@ export default function Calendar() {
 
         if (error) throw error;
 
-        const mapped =
-          (data || []).map((r) => ({
-            id: r.id,
-            date: r.event_date, // ✅ BigCalendar espera date: "YYYY-MM-DD"
-            title: r.title || "",
-            description: r.description || "",
-            url: r.url || "",
-            image_url: toPublicUrl(r.image_path || ""),
-          })) || [];
+        const mapped = (data || []).map((r) => ({
+          id: r.id,
+          date: r.event_date,
+          title: r.title || "",
+          description: r.description || "",
+          url: r.url || "",
+          image_url: toPublicUrl(r.image_path || ""),
+        }));
 
         if (!alive) return;
         setEvents(mapped);
       } catch (e) {
         if (!alive) return;
-        setErr(e?.message || "Failed to load calendar events.");
+        setErr(e?.message || "Failed to load events.");
       } finally {
         if (!alive) return;
         setLoading(false);
@@ -73,6 +72,16 @@ export default function Calendar() {
   return (
     <section className="bg-[color:var(--color-base-bg)]">
       <div className="mx-auto max-w-7xl px-4 py-10">
+        {/* Page header */}
+        <div className="mb-6">
+          <h1 className="neon-sign cyan text-3xl md:text-4xl font-extrabold tracking-widest uppercase">
+            Events
+          </h1>
+          <p className="mt-2 text-gray-400 max-w-2xl">
+            Upcoming events and bookings. Tap an event to view details.
+          </p>
+        </div>
+
         {hint ? (
           <div className="mb-6 glass neon-border rounded-2xl p-4 text-sm text-gray-200">
             {hint}

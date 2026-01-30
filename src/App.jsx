@@ -36,8 +36,9 @@ export default function App() {
           <Route path="/services/photo-booth" element={<PhotoBooth />} />
           <Route path="/contact" element={<Contact />} />
 
-          {/* Calendar (public) */}
-          <Route path="/calendar" element={<CalendarPage />} />
+{/* ✅ Events (public) */}
+<Route path="/events" element={<CalendarPage />} />
+
 
           {/* 🔒 Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />
