@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import BigCalendar from "../components/BigCalendar";
 import { supabase } from "../lib/supabaseClient";
+import NeonTitle from "../components/NeonTitle";
+
 
 const BUCKET = "calendar";
 
@@ -74,13 +76,12 @@ export default function Calendar() {
       <div className="mx-auto max-w-7xl px-4 py-10">
         {/* Page header */}
         <div className="mb-6">
-          <h1 className="neon-sign cyan text-3xl md:text-4xl font-extrabold tracking-widest uppercase">
-            Events
-          </h1>
-          <p className="mt-2 text-gray-400 max-w-2xl">
-            Upcoming events and bookings. Tap an event to view details.
-          </p>
-        </div>
+  <NeonTitle title="Events" id="events-heading" className="uppercase" />
+  <p className="mt-3 text-gray-400 text-center text-base md:text-lg">
+  Upcoming events and bookings. Tap an event to view details.
+  </p>
+</div>
+
 
         {hint ? (
           <div className="mb-6 glass neon-border rounded-2xl p-4 text-sm text-gray-200">
@@ -88,13 +89,16 @@ export default function Calendar() {
           </div>
         ) : null}
 
-        <BigCalendar
-          initialYear={initialYear}
-          initialMonthIndex={initialMonthIndex}
-          accent="blue"
-          events={events}
-          maxVisiblePerDay={2}
-        />
+<BigCalendar
+  initialYear={initialYear}
+  initialMonthIndex={initialMonthIndex}
+  accent="blue"
+  events={events}
+  maxVisiblePerDay={1}
+  showMobileLegend
+  mobileLegendText="Green glo = events on that day (tap a date to view details)"
+/>
+
       </div>
     </section>
   );

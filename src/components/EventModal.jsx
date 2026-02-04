@@ -1,4 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+
+function normalizeUrl(url) {
+  if (!url) return "";
+  const u = String(url).trim();
+  if (!u) return "";
+  if (u.startsWith("/")) return `${window.location.origin}${u}`;
+  if (/^https?:\/\//i.test(u)) return u;
+  if (u.includes(".") && !u.includes(" ")) return `https://${u}`;
+  return u;
+}
 
 export default function EventModal({
   open,
@@ -7,17 +17,38 @@ export default function EventModal({
   events = [],
   activeId = null,
   onSelect,
-  accent = "blue", // blue | red | green
+  accent = "blue",
 }) {
-  const active = events.find((e) => e.id === activeId) || events[0];
+  const activeIndex = useMemo(() => {
+    const idx = events.findIndex((e) => e.id === activeId);
+    return idx >= 0 ? idx : 0;
+  }, [events, activeId]);
+
+  const active = events[activeIndex] || null;
+  const safeUrl = useMemo(
+    () => normalizeUrl(active?.url || ""),
+    [active?.url]
+  );
+
+  const hasMultiple = events.length > 1;
+  const hasPrev = activeIndex > 0;
+  const hasNext = activeIndex < events.length - 1;
 
   useEffect(() => {
     if (!open) return;
+
     const onKey = (e) => {
       if (e.key === "Escape") onClose?.();
     };
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [open, onClose]);
 
   if (!open) return null;
@@ -31,7 +62,7 @@ export default function EventModal({
         aria-label="Close modal"
       />
 
-      <div className={`calm calm--${accent}`}>
+      <div className={`calm calm--${accent}`} role="document">
         {/* Header */}
         <div className="calm__top">
           <div className="calm__meta">
@@ -41,17 +72,51 @@ export default function EventModal({
             </div>
           </div>
 
-          <button type="button" className="calm__close" onClick={onClose}>
+          <button
+            type="button"
+            className="calm__close"
+            onClick={onClose}
+            aria-label="Close"
+          >
             ✕
           </button>
         </div>
 
+        {/* Mobile navigator ONLY */}
+        {hasMultiple && (
+          <div className="calm__mobileNav">
+            <button
+              className="calm__navBtn"
+              disabled={!hasPrev}
+              onClick={() =>
+                hasPrev && onSelect(events[activeIndex - 1].id)
+              }
+            >
+              ‹ Prev
+            </button>
+
+            <span className="calm__navLabel">
+              {activeIndex + 1} / {events.length}
+            </span>
+
+            <button
+              className="calm__navBtn"
+              disabled={!hasNext}
+              onClick={() =>
+                hasNext && onSelect(events[activeIndex + 1].id)
+              }
+            >
+              Next ›
+            </button>
+          </div>
+        )}
+
         {/* Body */}
         <div className="calm__body">
-          {/* Left list */}
+          {/* Desktop list */}
           <aside className="calm__list">
             {events.map((ev) => {
-              const isActive = ev.id === (active?.id ?? null);
+              const isActive = ev.id === active?.id;
               return (
                 <button
                   key={ev.id}
@@ -65,18 +130,18 @@ export default function EventModal({
             })}
           </aside>
 
-          {/* Right detail */}
+          {/* Detail */}
           <section className="calm__detail">
-            {active?.image_url ? (
-              <div className="calm__imgWrap">
+            {active?.image_url && (
+              <div className="calm__hero">
                 <img
                   src={active.image_url}
-                  alt={active.title || "Event image"}
-                  className="calm__img"
-                  loading="lazy"
+                  alt={active.title}
+                  className="calm__heroImg"
                 />
+                <div className="calm__heroGlow" />
               </div>
-            ) : null}
+            )}
 
             <h3 className="calm__title">{active?.title}</h3>
 
@@ -89,16 +154,16 @@ export default function EventModal({
             )}
 
             <div className="calm__actions">
-              {active?.url ? (
+              {safeUrl && (
                 <a
-                  href={active.url}
+                  href={safeUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="calm__btn"
                 >
                   Open link
                 </a>
-              ) : null}
+              )}
 
               <button
                 type="button"

@@ -1,10 +1,21 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import EventModal from "./EventModal";
+import "./big-calendar.css"; // si ya lo importabas; si no, puedes borrarlo
 
 const DOW = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"];
 const MONTHS = [
-  "JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE",
-  "JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER",
+  "JANUARY",
+  "FEBRUARY",
+  "MARCH",
+  "APRIL",
+  "MAY",
+  "JUNE",
+  "JULY",
+  "AUGUST",
+  "SEPTEMBER",
+  "OCTOBER",
+  "NOVEMBER",
+  "DECEMBER",
 ];
 
 const pad2 = (n) => String(n).padStart(2, "0");
@@ -12,7 +23,7 @@ const isoKey = (y, mIndex, d) => `${y}-${pad2(mIndex + 1)}-${pad2(d)}`;
 
 /**
  * ✅ Month grid with dynamic weeks (4/5/6),
- * and blank out-of-month cells (no March numbers inside Feb view).
+ * out-of-month cells are blank (no March numbers inside Feb view).
  */
 function buildMonthMatrix(year, monthIndex) {
   const first = new Date(year, monthIndex, 1);
@@ -55,17 +66,45 @@ function formatDateLabel(iso) {
   });
 }
 
+function useIsMobile(breakpointPx = 720) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(`(max-width:${breakpointPx}px)`).matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia(`(max-width:${breakpointPx}px)`);
+    const onChange = () => setIsMobile(mq.matches);
+    onChange();
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else mq.addListener(onChange);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", onChange);
+      else mq.removeListener(onChange);
+    };
+  }, [breakpointPx]);
+
+  return isMobile;
+}
+
 export default function BigCalendar({
   initialYear = 2026,
   initialMonthIndex = 1,
   accent = "blue",
 
-  // ✅ events: { id, date:'YYYY-MM-DD', title, description?, url?, image_url? }
+  // events: { id, date:'YYYY-MM-DD', title, description?, url?, image_url? }
   events = [],
 
-  // ✅ show only N cards per day
+  // show only N cards per day (DESKTOP)
   maxVisiblePerDay = 2,
+
+  // mobile legend (CELLPHONES)
+  showMobileLegend = true,
+  mobileLegendText = "Green glow = events on that day (tap a date to view details)",
 }) {
+  const isMobile = useIsMobile(720);
+
   const [view, setView] = useState({
     year: initialYear,
     monthIndex: initialMonthIndex,
@@ -90,7 +129,7 @@ export default function BigCalendar({
       if (!ev?.date || !ev?.id) continue;
       (map[ev.date] ||= []).push(ev);
     }
-    // stable order by title (simple)
+    // stable order: by title
     for (const k of Object.keys(map)) {
       map[k].sort((a, b) =>
         String(a.title || "").localeCompare(String(b.title || ""))
@@ -101,6 +140,7 @@ export default function BigCalendar({
 
   const openDay = (dateKey, selectedId = null) => {
     const list = eventsByDate[dateKey] || [];
+    if (!list.length) return; // ✅ only open when there are events
     const fallbackId = list[0]?.id ?? null;
     setModalDate(dateKey);
     setActiveId(selectedId || fallbackId);
@@ -181,9 +221,41 @@ export default function BigCalendar({
         <div className="caln__grid">
           {cells.map((c, idx) => {
             const list = c.inMonth ? eventsByDate[c.key] || [] : [];
+            const hasEvents = c.inMonth && list.length > 0;
+
+            // ✅ desktop cards
             const visible = list.slice(0, maxVisiblePerDay);
             const extra = Math.max(0, list.length - visible.length);
 
+            // ✅ mobile behavior: NO cards, just green glow on days with events
+            if (isMobile) {
+              return (
+                <button
+                  key={`${c.key}-${idx}`}
+                  type="button"
+                  className={[
+                    "caln__cell",
+                    c.inMonth ? "" : "is-out",
+                    hasEvents ? "caln__cell--hasEvents" : "",
+                  ].join(" ")}
+                  onClick={() => openDay(c.key, list[0]?.id ?? null)}
+                  disabled={!hasEvents}
+                  aria-label={
+                    hasEvents
+                      ? `Open events for ${c.key}`
+                      : c.inMonth
+                      ? `No events for ${c.key}`
+                      : "Outside month"
+                  }
+                >
+                  <div className="caln__dayRow">
+                    <div className="caln__day">{c.day}</div>
+                  </div>
+                </button>
+              );
+            }
+
+            // ✅ desktop behavior: show cards + keep +n more
             return (
               <div
                 key={`${c.key}-${idx}`}
@@ -191,9 +263,7 @@ export default function BigCalendar({
               >
                 <div className="caln__dayRow">
                   <div className="caln__day">{c.day}</div>
-                  {c.inMonth && list.length > 0 ? (
-                    <div className="caln__pill">{list.length}</div>
-                  ) : null}
+                  {/* ✅ removed pill count completely */}
                 </div>
 
                 <div className="caln__events">
@@ -224,6 +294,14 @@ export default function BigCalendar({
             );
           })}
         </div>
+
+        {/* ✅ Mobile legend */}
+        {isMobile && showMobileLegend ? (
+          <div className="caln__legend">
+            <span className="caln__legendDot" aria-hidden="true" />
+            <span className="caln__legendText">{mobileLegendText}</span>
+          </div>
+        ) : null}
       </section>
 
       <EventModal
