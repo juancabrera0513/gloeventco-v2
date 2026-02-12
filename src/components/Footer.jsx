@@ -5,21 +5,18 @@ export default function Footer({
   logoSrc = "/images/glo-logo.webp",
   showTrustedBy = false,
 }) {
-  // Column titles — ✅ accesible + glow suave
   const title =
   "text-[15px] font-semibold tracking-wide " +
   "text-[#2f95ff] " +
   "[text-shadow:0_0_6px_rgba(0,131,253,.45)]";
 
 
-  // Base item link
   const itemLinkBase =
     "inline-flex items-center rounded-lg transition-all duration-300 " +
     "h-11 px-3 md:h-auto md:px-0 md:py-1.5 " +
     "text-white/90 hover:text-white " +
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20";
 
-  // Neon hover glows
   const glowGreen =
     "hover:text-[#23ff11] " +
     "hover:[filter:drop-shadow(0_0_14px_rgba(35,255,17,.9))_drop-shadow(0_0_34px_rgba(35,255,17,.65))_drop-shadow(0_0_60px_rgba(35,255,17,.35))]";
@@ -32,7 +29,6 @@ export default function Footer({
     "hover:text-[var(--color-neon-blue)] " +
     "hover:[filter:drop-shadow(0_0_14px_rgba(0,131,253,.9))_drop-shadow(0_0_34px_rgba(0,131,253,.65))_drop-shadow(0_0_60px_rgba(0,131,253,.35))]";
 
-  // Social buttons
   const socialBtnBase =
     "inline-flex items-center justify-center h-10 w-10 rounded-full " +
     "border bg-white/5 transition-all duration-300 " +
@@ -59,7 +55,6 @@ export default function Footer({
     <footer className="bg-black border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col gap-10 md:flex-row md:items-start">
-          {/* Logo */}
           <div className="shrink-0">
             <img
               src={logoSrc}
@@ -69,9 +64,7 @@ export default function Footer({
             />
           </div>
 
-          {/* Columns */}
           <div className="flex-1 grid gap-10 sm:grid-cols-2 md:grid-cols-4">
-            {/* Brand */}
             <div>
               <h4 className={title}>Brand</h4>
 
@@ -85,7 +78,6 @@ export default function Footer({
                   Locally owned and operated in St. Louis, Missouri.
                 </p>
 
-                {/* Social buttons */}
                 <div className="mt-4 flex gap-3">
                   <a
                     href="https://www.facebook.com/gloeventco"
@@ -114,7 +106,6 @@ export default function Footer({
               </div>
             </div>
 
-            {/* Services */}
             <div>
               <h4 className={title}>Services</h4>
               <ul className="mt-3 space-y-1">
@@ -136,7 +127,6 @@ export default function Footer({
               </ul>
             </div>
 
-            {/* Company */}
             <div>
               <h4 className={title}>Company</h4>
               <ul className="mt-3 space-y-1">
@@ -155,7 +145,6 @@ export default function Footer({
               </ul>
             </div>
 
-            {/* Contact */}
             <div>
               <h4 className={title}>Contact</h4>
               <ul className="mt-3 space-y-1">

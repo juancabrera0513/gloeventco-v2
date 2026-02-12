@@ -1,4 +1,3 @@
-// src/components/HomeGallery.jsx
 import NeonTitle from "./NeonTitle";
 import GlowButton from "./GlowButton";
 
@@ -24,7 +23,6 @@ export default function HomeGallery({
       aria-labelledby="home-gallery-heading"
     >
       <div className="max-w-7xl mx-auto px-4 py-20">
-        {/* Title */}
         <div className="max-w-5xl mx-auto text-center">
           <NeonTitle title={title} id="home-gallery-heading" />
 
@@ -35,7 +33,6 @@ export default function HomeGallery({
           )}
         </div>
 
-        {/* Gallery */}
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {images.map((src, i) => {
             const hoverColor = palette[i % palette.length];
@@ -46,8 +43,8 @@ export default function HomeGallery({
                 key={`${src}-${i}`}
                 className={[
                   "group relative overflow-hidden rounded-2xl glass w-full aspect-square",
-                  "neon-border", // keeps your subtle neon ring
-                  hoverClass,    // ✅ color hover per tile
+                  "neon-border", 
+                  hoverClass,   
                 ].join(" ")}
               >
                 <img

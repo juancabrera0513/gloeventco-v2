@@ -1,5 +1,4 @@
-// src/components/Header.jsx
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { LOGO_TEXT } from "../lib/constants";
 
@@ -9,13 +8,11 @@ const CLIENT_PORTAL_URL = "https://glo-event-co.checkcherry.com/users/sign_in";
 export default function Header() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   const scrollTop = () => {
-    try {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {}
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  
 
   const closeMobile = () => setOpen(false);
 
@@ -25,28 +22,21 @@ export default function Header() {
       isActive ? "text-white" : "text-gray-300"
     }`;
 
-  const onLogoClick = (e) => {
-    e.preventDefault();
-    // If already on home, just scroll up.
-    if (location.pathname === "/") {
-      scrollTop();
-      return;
-    }
-    // Otherwise go home, then scroll up.
-    navigate("/");
-    // allow route to render, then scroll
-    setTimeout(scrollTop, 0);
-  };
-
   return (
     <header className="sticky top-0 z-50 bg-[color:var(--color-base-bg)]/70 backdrop-blur border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 py-3">
-        {/* Top row */}
         <div className="flex items-center justify-between">
-          {/* ✅ Left: Logo (click -> home, if home -> top) */}
-          <a
-            href="/"
-            onClick={onLogoClick}
+          <NavLink
+            end
+            to="/"
+            onClick={(e) => {
+              if (location.pathname === "/") {
+                e.preventDefault();
+                scrollTop();
+              } else {
+                closeMobile();
+              }
+            }}
             className="flex items-center gap-3 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-lg"
             aria-label="Go to Home"
           >
@@ -58,16 +48,14 @@ export default function Header() {
               decoding="async"
               draggable={false}
             />
-          </a>
+          </NavLink>
 
-          {/* ✅ Center on mobile: GLO EVENT CO */}
           <div className="flex-1 lg:flex-none flex justify-center lg:justify-start px-2">
             <span className="font-display text-lg sm:text-xl md:text-2xl tracking-widest neon-text-cyan text-center">
               {LOGO_TEXT}
             </span>
           </div>
 
-          {/* ✅ Right: Mobile toggle */}
           <button
             className="lg:hidden p-2 rounded neon-border glo-hover shrink-0"
             onClick={() => setOpen((v) => !v)}
@@ -85,30 +73,19 @@ export default function Header() {
             </svg>
           </button>
 
-          {/* ✅ Desktop nav (right side) */}
           <div className="hidden lg:flex items-center gap-5">
             <nav className="flex items-center gap-5">
-              <NavLink
-                end
-                to="/"
-                className={({ isActive }) => linkClasses(isActive)}
-                onClick={scrollTop}
-              >
+              <NavLink end to="/" className={({ isActive }) => linkClasses(isActive)}>
                 Home
               </NavLink>
 
-              <NavLink
-                to="/services"
-                className={({ isActive }) => linkClasses(isActive)}
-                onClick={scrollTop}
-              >
+              <NavLink to="/services" className={({ isActive }) => linkClasses(isActive)}>
                 Services
               </NavLink>
 
               <NavLink
                 to="/services/silent-disco"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={scrollTop}
               >
                 Silent Disco
               </NavLink>
@@ -116,20 +93,14 @@ export default function Header() {
               <NavLink
                 to="/services/photo-booth"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={scrollTop}
               >
                 Photo Booth
               </NavLink>
 
-              <NavLink
-                to="/contact"
-                className={({ isActive }) => linkClasses(isActive)}
-                onClick={scrollTop}
-              >
+              <NavLink to="/contact" className={({ isActive }) => linkClasses(isActive)}>
                 Connect
               </NavLink>
 
-              {/* ✅ Client Portal (real link) */}
               <a
                 href={CLIENT_PORTAL_URL}
                 target="_blank"
@@ -143,7 +114,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* ✅ Mobile menu */}
         {open && (
           <div className="lg:hidden border-t border-white/5 pt-3 pb-4">
             <nav className="flex flex-col gap-4">
@@ -151,10 +121,7 @@ export default function Header() {
                 end
                 to="/"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={() => {
-                  closeMobile();
-                  scrollTop();
-                }}
+                onClick={() => closeMobile()}
               >
                 Home
               </NavLink>
@@ -162,10 +129,7 @@ export default function Header() {
               <NavLink
                 to="/services"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={() => {
-                  closeMobile();
-                  scrollTop();
-                }}
+                onClick={() => closeMobile()}
               >
                 Services
               </NavLink>
@@ -173,10 +137,7 @@ export default function Header() {
               <NavLink
                 to="/services/silent-disco"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={() => {
-                  closeMobile();
-                  scrollTop();
-                }}
+                onClick={() => closeMobile()}
               >
                 Silent Disco
               </NavLink>
@@ -184,32 +145,25 @@ export default function Header() {
               <NavLink
                 to="/services/photo-booth"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={() => {
-                  closeMobile();
-                  scrollTop();
-                }}
+                onClick={() => closeMobile()}
               >
                 Photo Booth
               </NavLink>
 
-
               <NavLink
                 to="/contact"
                 className={({ isActive }) => linkClasses(isActive)}
-                onClick={() => {
-                  closeMobile();
-                  scrollTop();
-                }}
+                onClick={() => closeMobile()}
               >
                 Connect
               </NavLink>
 
-              {/* ✅ Client Portal (mobile) */}
               <a
                 href={CLIENT_PORTAL_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="px-2 py-1 rounded text-gray-300 glo-hover-soft hover:underline"
+                onClick={() => closeMobile()}
               >
                 Client Portal
               </a>

@@ -82,7 +82,6 @@ export default function EventModal({
           </button>
         </div>
 
-        {/* Mobile navigator ONLY */}
         {hasMultiple && (
           <div className="calm__mobileNav">
             <button
@@ -111,9 +110,7 @@ export default function EventModal({
           </div>
         )}
 
-        {/* Body */}
         <div className="calm__body">
-          {/* Desktop list */}
           <aside className="calm__list">
             {events.map((ev) => {
               const isActive = ev.id === active?.id;
@@ -130,7 +127,6 @@ export default function EventModal({
             })}
           </aside>
 
-          {/* Detail */}
           <section className="calm__detail">
             {active?.image_url && (
               <div className="calm__hero">

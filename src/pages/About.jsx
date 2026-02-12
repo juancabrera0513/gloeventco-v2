@@ -1,4 +1,3 @@
-// src/pages/About.jsx
 import { Link } from "react-router-dom";
 import NeonTitle from "../components/NeonTitle";
 
@@ -20,7 +19,6 @@ export default function About() {
       </a>
     );
 
-  // ✅ Buttons (same system you’ve been using)
   const glowBtnBase = `
   inline-flex items-center justify-center
   px-5 py-2
@@ -39,7 +37,6 @@ export default function About() {
 `;
 
 
-  // ✅ Pricing button (RED)
   const glowBtnPink =
     glowBtnBase +
     `
@@ -49,7 +46,6 @@ export default function About() {
     hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
   `;
 
-  // ✅ Connect button (GREEN)
   const glowBtnMint =
     glowBtnBase +
     `
@@ -74,7 +70,6 @@ export default function About() {
         content="Locally owned and proudly based in St. Louis. Learn how Glo Event Co grew from a passion for Silent Disco into a full event experience company."
       />
 
-      {/* Hero */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle
           title="About Glo Event Co"
@@ -100,14 +95,9 @@ export default function About() {
         </p>
       </header>
 
-      {/* Content */}
       <main className="mt-16 grid gap-8">
-        {/* How it started */}
         <section className={cardBase} aria-labelledby="how-it-started">
-          {/* ✅ Change: items-start (no “empty” vertical centering) */}
-          {/* ✅ Change: slightly wider text column, smaller image column */}
           <div className="grid md:grid-cols-[1.35fr_0.65fr] gap-8 items-start">
-            {/* LEFT: Text */}
             <div className="min-w-0">
               <h2 id="how-it-started" className={sectionTitle}>
                 How it started
@@ -127,8 +117,6 @@ export default function About() {
               </p>
             </div>
 
-            {/* RIGHT: Image */}
-            {/* ✅ Change: make it more compact (shorter) but still not cropped */}
             <div className="w-full max-w-[220px] md:max-w-[240px] ml-auto">
   <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/40">
     <img
@@ -142,7 +130,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* From Silent Night Events to Glo Event Co */}
         <section className={cardBase} aria-labelledby="rebrand">
           <h2 id="rebrand" className={sectionTitle}>
             From Silent Night Events to Glo Event Co
@@ -163,7 +150,6 @@ export default function About() {
           </p>
         </section>
 
-        {/* What we believe */}
         <section className={cardBase} aria-labelledby="beliefs">
           <h2 id="beliefs" className={sectionTitle}>
             What we believe
@@ -200,7 +186,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* Ready to bring the Glo */}
         <section className={`${cardBase} text-center`} aria-labelledby="ready-to-glo">
           <h2 id="ready-to-glo" className="text-2xl md:text-3xl font-semibold text-white/90">
             Ready to bring the Glo

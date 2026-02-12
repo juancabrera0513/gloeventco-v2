@@ -1,21 +1,12 @@
-// src/pages/Contact.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
 import NeonTitle from "../components/NeonTitle";
 import { EMAIL, PHONE, ADDRESS_HTML } from "../lib/constants";
 
 export default function Contact() {
-  // ✅ CheckCherry form config (must match your Cherry form fields)
   const CHECKCHERRY_HOST = "https://glo-event-co.checkcherry.com";
   const CHECKCHERRY_API_KEY = "N7K-KDWT-CHT";
   const CHECKCHERRY_CONTACT_FORM_ID = 5681;
 
-  /**
-   * phase:
-   * - loading: initial load attempt (DOM embed)
-   * - fallback: we switch to iframe mode (more reliable)
-   * - ready: iframe finished loading (swap skeleton -> form)
-   * - error: script failed or too many attempts
-   */
   const [phase, setPhase] = useState("loading");
   const [attempt, setAttempt] = useState(0);
   const [useIframe, setUseIframe] = useState(false);
@@ -23,19 +14,17 @@ export default function Contact() {
 
   const containerRef = useRef(null);
 
-  // data-props must be a string
   const widgetProps = useMemo(
     () =>
       JSON.stringify({
         apiKey: CHECKCHERRY_API_KEY,
         contactFormId: CHECKCHERRY_CONTACT_FORM_ID,
-        iframe: useIframe, // ✅ fallback = true
+        iframe: useIframe, 
         host: CHECKCHERRY_HOST,
       }),
     [useIframe]
   );
 
-  // ✅ JSON-LD: ContactPage (good for SEO + clarity)
   const contactPageLD = useMemo(
     () => ({
       "@context": "https://schema.org",
@@ -62,11 +51,9 @@ export default function Contact() {
     []
   );
 
-  // ✅ Inject canonical + JSON-LD into <head> without Helmet
   useEffect(() => {
     const canonHref = "https://www.gloeventco.com/contact";
 
-    // canonical
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
@@ -75,7 +62,6 @@ export default function Contact() {
     }
     link.setAttribute("href", canonHref);
 
-    // JSON-LD
     const id = "ld-contactpage";
     const existing = document.getElementById(id);
     if (existing) existing.remove();
@@ -92,13 +78,11 @@ export default function Contact() {
     };
   }, [contactPageLD]);
 
-  // 1) Load the CheckCherry script once (and wait for it)
   useEffect(() => {
     let cancelled = false;
 
     const loadScriptOnce = () =>
       new Promise((resolve, reject) => {
-        // already loaded
         if (window.__checkcherry_loaded) return resolve(true);
 
         const existing = document.getElementById("checkcherry-script");
@@ -127,7 +111,6 @@ export default function Contact() {
     loadScriptOnce()
       .then(() => {
         if (cancelled) return;
-        // Kick the first render
         setAttempt((n) => n + 1);
       })
       .catch(() => {
@@ -140,12 +123,11 @@ export default function Contact() {
     };
   }, []);
 
-  // 2) Observe: detect when the iframe is injected, then wait for iframe.onload
   useEffect(() => {
     const host = containerRef.current;
     if (!host) return;
 
-    setIframeLoaded(false); // new attempt => reset
+    setIframeLoaded(false);
     let done = false;
 
     const attach = (iframe) => {
@@ -157,10 +139,8 @@ export default function Contact() {
         setPhase("ready");
       };
 
-      // attach load listener
       iframe.addEventListener("load", handleLoad, { once: true });
 
-      // safety: if load never fires, still show after 8s
       setTimeout(() => {
         if (!done) return;
         setIframeLoaded((v) => {
@@ -173,7 +153,6 @@ export default function Contact() {
       }, 8000);
     };
 
-    // if iframe already there
     attach(host.querySelector("iframe"));
 
     const obs = new MutationObserver(() => {
@@ -186,7 +165,6 @@ export default function Contact() {
     return () => obs.disconnect();
   }, [attempt, useIframe]);
 
-  // 3) Retry / fallback
   useEffect(() => {
     if (phase === "error" || phase === "ready") return;
 
@@ -229,7 +207,6 @@ export default function Contact() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      {/* Hero */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle title="You + Us = Awesome" id="contact-heading" />
         <p className="mt-3 text-gray-400 text-base md:text-lg max-w-3xl mx-auto">
@@ -237,9 +214,7 @@ export default function Contact() {
         </p>
       </header>
 
-      {/* Layout */}
       <div className="grid md:grid-cols-2 gap-8 mt-10 items-start">
-        {/* LEFT */}
         <div className="glass rounded-2xl p-6 self-start">
           <h3 className="font-display text-xl text-[var(--color-neon-blue)]">
             Contact Info
@@ -279,7 +254,6 @@ export default function Contact() {
           </ul>
         </div>
 
-        {/* RIGHT — CheckCherry Form */}
         <div className="glass rounded-2xl p-6">
           <h3 className="font-display text-xl text-[var(--color-neon-blue)]">
             Send us a message
@@ -288,7 +262,6 @@ export default function Contact() {
             Fill out the form and we’ll get back to you soon.
           </p>
 
-          {/* Skeleton */}
           {!iframeLoaded && phase !== "error" && (
             <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
               <div className="text-sm text-gray-400">
@@ -306,7 +279,6 @@ export default function Contact() {
             </div>
           )}
 
-          {/* Widget mount point */}
           <div
             ref={containerRef}
             className={`mt-6 transition-opacity duration-300 ${
@@ -322,7 +294,6 @@ export default function Contact() {
             />
           </div>
 
-          {/* Error */}
           {phase === "error" && (
             <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
               <div className="text-sm text-gray-300">
@@ -342,7 +313,6 @@ export default function Contact() {
             </div>
           )}
 
-          {/* Styling: match dark theme */}
           <style>{`
             .checkcherry__widget__contact-form { color: rgba(255,255,255,.9); }
 

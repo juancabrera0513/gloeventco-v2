@@ -17,7 +17,6 @@ export default function Calendar() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  // Start at current month
   const now = new Date();
   const initialYear = now.getFullYear();
   const initialMonthIndex = now.getMonth();
@@ -74,7 +73,6 @@ export default function Calendar() {
   return (
     <section className="bg-[color:var(--color-base-bg)]">
       <div className="mx-auto max-w-7xl px-4 py-10">
-        {/* Page header */}
         <div className="mb-6">
   <NeonTitle title="Events" id="events-heading" className="uppercase" />
   <p className="mt-3 text-gray-400 text-center text-base md:text-lg">

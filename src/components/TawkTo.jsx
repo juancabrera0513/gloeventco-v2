@@ -1,4 +1,3 @@
-// src/components/TawkTo.jsx
 import { useEffect } from "react";
 
 export default function TawkTo({
@@ -26,5 +25,5 @@ export default function TawkTo({
     };
   }, [propertyId, widgetId]);
 
-  return null; // no renderiza UI
+  return null; 
 }

@@ -1,11 +1,10 @@
-// src/components/GlowCard.jsx
 export default function GlowCard({
   title,
   eyebrow,
   children,
   cta,
   href,
-  variant = "blue", // blue | pink | mint
+  variant = "blue", 
   alwaysOn = false,
 }) {
   const hoverCls =
@@ -52,7 +51,6 @@ export default function GlowCard({
 
       <h3 className={`font-display text-xl mt-1 mb-3 ${titleCls}`}>{title}</h3>
 
-      {/* ✅ FIX: allow children layout to stretch */}
       <div className="prose prose-invert max-w-none text-gray-300 flex-1 flex">
         {children}
       </div>

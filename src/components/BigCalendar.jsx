@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import EventModal from "./EventModal";
-import "./big-calendar.css"; // si ya lo importabas; si no, puedes borrarlo
+import "./big-calendar.css"; 
 
 const DOW = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"];
 const MONTHS = [
@@ -21,18 +21,15 @@ const MONTHS = [
 const pad2 = (n) => String(n).padStart(2, "0");
 const isoKey = (y, mIndex, d) => `${y}-${pad2(mIndex + 1)}-${pad2(d)}`;
 
-/**
- * ✅ Month grid with dynamic weeks (4/5/6),
- * out-of-month cells are blank (no March numbers inside Feb view).
- */
+
 function buildMonthMatrix(year, monthIndex) {
   const first = new Date(year, monthIndex, 1);
   const last = new Date(year, monthIndex + 1, 0);
   const daysInMonth = last.getDate();
-  const startDow = first.getDay(); // 0=Sun
+  const startDow = first.getDay(); 
 
   const needed = startDow + daysInMonth;
-  const totalCells = Math.ceil(needed / 7) * 7; // 28/35/42
+  const totalCells = Math.ceil(needed / 7) * 7; 
 
   const cells = [];
   for (let i = 0; i < totalCells; i++) {
@@ -93,13 +90,10 @@ export default function BigCalendar({
   initialMonthIndex = 1,
   accent = "blue",
 
-  // events: { id, date:'YYYY-MM-DD', title, description?, url?, image_url? }
   events = [],
 
-  // show only N cards per day (DESKTOP)
   maxVisiblePerDay = 2,
 
-  // mobile legend (CELLPHONES)
   showMobileLegend = true,
   mobileLegendText = "Green glow = events on that day (tap a date to view details)",
 }) {
@@ -110,7 +104,6 @@ export default function BigCalendar({
     monthIndex: initialMonthIndex,
   });
 
-  // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDate, setModalDate] = useState("");
   const [activeId, setActiveId] = useState(null);
@@ -129,7 +122,6 @@ export default function BigCalendar({
       if (!ev?.date || !ev?.id) continue;
       (map[ev.date] ||= []).push(ev);
     }
-    // stable order: by title
     for (const k of Object.keys(map)) {
       map[k].sort((a, b) =>
         String(a.title || "").localeCompare(String(b.title || ""))
@@ -140,7 +132,7 @@ export default function BigCalendar({
 
   const openDay = (dateKey, selectedId = null) => {
     const list = eventsByDate[dateKey] || [];
-    if (!list.length) return; // ✅ only open when there are events
+    if (!list.length) return; 
     const fallbackId = list[0]?.id ?? null;
     setModalDate(dateKey);
     setActiveId(selectedId || fallbackId);
@@ -183,7 +175,6 @@ export default function BigCalendar({
   return (
     <>
       <section className={`caln caln--${accent}`} aria-label={monthTitle}>
-        {/* Header */}
         <header className="caln__header caln__header--nav">
           <button
             type="button"
@@ -208,7 +199,6 @@ export default function BigCalendar({
           </button>
         </header>
 
-        {/* DOW */}
         <div className="caln__dow">
           {DOW.map((d) => (
             <div key={d} className="caln__dowcell">
@@ -217,17 +207,14 @@ export default function BigCalendar({
           ))}
         </div>
 
-        {/* Grid */}
         <div className="caln__grid">
           {cells.map((c, idx) => {
             const list = c.inMonth ? eventsByDate[c.key] || [] : [];
             const hasEvents = c.inMonth && list.length > 0;
 
-            // ✅ desktop cards
             const visible = list.slice(0, maxVisiblePerDay);
             const extra = Math.max(0, list.length - visible.length);
 
-            // ✅ mobile behavior: NO cards, just green glow on days with events
             if (isMobile) {
               return (
                 <button
@@ -255,7 +242,6 @@ export default function BigCalendar({
               );
             }
 
-            // ✅ desktop behavior: show cards + keep +n more
             return (
               <div
                 key={`${c.key}-${idx}`}
@@ -263,7 +249,6 @@ export default function BigCalendar({
               >
                 <div className="caln__dayRow">
                   <div className="caln__day">{c.day}</div>
-                  {/* ✅ removed pill count completely */}
                 </div>
 
                 <div className="caln__events">
@@ -295,7 +280,6 @@ export default function BigCalendar({
           })}
         </div>
 
-        {/* ✅ Mobile legend */}
         {isMobile && showMobileLegend ? (
           <div className="caln__legend">
             <span className="caln__legendDot" aria-hidden="true" />

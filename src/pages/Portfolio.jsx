@@ -1,4 +1,3 @@
-// src/pages/Gallery.jsx
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ImageCarousel3D from "../components/ImageCarousel3D";
@@ -21,11 +20,8 @@ export default function Gallery() {
     meta.setAttribute("content", desc);
   }, []);
 
-  // Booking / links (match your SilentDisco page setup)
   const PRICING = "https://glo-event-co.checkcherry.com";
   const QUOTE_RENTAL_BASE = `${PRICING}/reservation/package_group?service_id=9587`;
-  // If you ever want to use BOOK_BASE instead:
-  // const QUOTE_RENTAL_BASE = BOOK_BASE;
 
   const connectHref = "/contact";
 
@@ -42,7 +38,6 @@ export default function Gallery() {
       </a>
     );
 
-  // ✅ EXACT same button styles/colors as SilentDisco.jsx
   const glowBtnBase = `
     inline-flex items-center justify-center
     px-4 py-1.5 md:px-5 md:py-2
@@ -78,7 +73,6 @@ export default function Gallery() {
     hover:[box-shadow:0_0_18px_rgba(255,69,103,.55)]
   `;
 
-  // Media (public/)
   const sdPhotos = Array.from({ length: 50 }).map(
     (_, i) =>
       `/carousel/silent-disco/photos/sd-photo-${String(i + 1).padStart(
@@ -116,9 +110,7 @@ export default function Gallery() {
       )}.mp4`
   );
 
-  // ✅ Split carousel slides (Silent Disco Photos)
-  // Importante: el Split usa left/right por slide, así que usamos tus /images/split/*
-  // (son tus fotos “curadas” para el split).
+  
   const splitSlides = Array.from({ length: 10 }).map((_, idx) => {
     const n = idx + 1;
     return {
@@ -137,7 +129,6 @@ export default function Gallery() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      {/* ✅ H1 (only NeonTitle) */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle title="Real Events. Raw Clips. Glo’n Moments." />
         <p className="mt-3 text-gray-400 text-base md:text-lg max-w-3xl mx-auto">
@@ -146,9 +137,6 @@ export default function Gallery() {
         </p>
       </header>
 
-      {/* =========================
-          SECTION 1: SILENT DISCO
-         ========================= */}
       <section className="mt-20 border-b border-white/5 pb-20">
         <p className="text-xs tracking-[0.3em] text-gray-400 text-center">
           SILENT DISCO
@@ -164,7 +152,6 @@ export default function Gallery() {
           along all night.
         </p>
 
-        {/* Subsection A */}
         <div className="mt-14 text-center">
           <h3 className="text-xl font-semibold text-white/90">
             Silent Disco Event Photos
@@ -175,7 +162,6 @@ export default function Gallery() {
             show the vibe.
           </p>
 
-          {/* ✅ Desktop (md+): SplitNeonCarousel */}
           <div className="mt-10 -mx-4 hidden md:flex justify-center">
             <div className="w-full">
               <section className="split-carousel-wrapper">
@@ -184,7 +170,6 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* ✅ Mobile (<md): CubeCarousel */}
           <div className="mt-10 flex md:hidden justify-center">
             <CubeCarousel
               images={cubeImages20}
@@ -197,7 +182,6 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Subsection B */}
         <div className="mt-20 text-center">
           <h3 className="text-xl font-semibold text-white/90">Raw Videos</h3>
           <p className="mt-1 text-gray-300">
@@ -214,9 +198,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* =========================
-          SECTION 2: SELFIE STATION
-         ========================= */}
+  
       <section className="mt-20 border-b border-white/5 pb-20">
         <p className="text-xs tracking-[0.3em] text-gray-400 text-center">
           SELFIE STATION
@@ -232,7 +214,6 @@ export default function Gallery() {
           guests will not stop posting.
         </p>
 
-        {/* Subsection 1 */}
         <div className="mt-14 text-center">
           <h3 className="text-xl font-semibold text-white/90">Photos</h3>
           <p className="mt-1 text-gray-300">Classic shots, modern booth.</p>
@@ -245,7 +226,6 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Subsection 2 */}
         <div className="mt-20 text-center">
           <h3 className="text-xl font-semibold text-white/90">GIFs</h3>
           <p className="mt-1 text-gray-300">
@@ -260,7 +240,6 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Subsection 3 */}
         <div className="mt-20 text-center">
           <h3 className="text-xl font-semibold text-white/90">Boomerangs</h3>
           <p className="mt-1 text-gray-300">The moment, on repeat.</p>
@@ -278,9 +257,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* =========================
-          CTA (same look + same colors as SilentDisco "ready")
-         ========================= */}
+    
       <section className="mt-24">
         <div className="glass rounded-2xl p-8 md:p-10 border border-white/5 text-center max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-semibold text-white/90">

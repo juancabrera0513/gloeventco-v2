@@ -1,6 +1,5 @@
-// src/pages/PhotoBooth.jsx
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import GlowButton from "../components/GlowButton";
@@ -13,7 +12,7 @@ function Media({
   src,
   alt = "",
   className = "",
-  object = "object-contain", // "object-contain" | "object-cover"
+  object = "object-contain", 
   autoPlay = true,
 }) {
   const vid = isVideoSrc(src);
@@ -48,7 +47,32 @@ export default function PhotoBooth() {
   const connectHref = "/contact";
   const isInternal = (href = "") => href.startsWith("/");
 
-  // ✅ Standard CTA: internal -> <Link>, external -> GlowButton external
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash !== "#gallery") return;
+
+    const targetId = "gallery";
+
+    const tryScroll = () => {
+      const el = document.getElementById(targetId);
+      if (!el) return false;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    };
+
+    if (tryScroll()) return;
+
+    let tries = 0;
+    const maxTries = 20; 
+    const t = setInterval(() => {
+      tries += 1;
+      if (tryScroll() || tries >= maxTries) clearInterval(t);
+    }, 50);
+
+    return () => clearInterval(t);
+  }, [hash]);
+
   const ActionBtn = ({ href, variant, children, className = "" }) => {
     const btnClass =
       (className ? className + " " : "") +
@@ -83,16 +107,13 @@ export default function PhotoBooth() {
     );
   };
 
-  // Typography
   const sectionTitle =
     "text-left text-2xl md:text-3xl font-semibold text-[var(--color-neon-blue)]";
   const sectionSub = "mt-3 text-left text-gray-400 max-w-3xl";
 
-  // WHAT IT IS (RIGHT SIDE) video vertical
   const whatIsVideoSrc = "/videos/photo-booth-action-vertical.mp4";
   const whatIsVideoPoster = "/images/photo-booth-action-poster.jpg";
 
-  // WHAT'S INCLUDED (hover swap)
   const includedMedia = [
     {
       front: "/images/whatsIncluded/overlay-sample-hover.jpg",
@@ -114,7 +135,6 @@ export default function PhotoBooth() {
   const cardImgDropoff = "/images/DropOffDigitalBooth.jpg";
   const cardImgFull = "/images/photo-booth-attendant.jpg";
 
-  // Great for
   const greatFor = [
     {
       title: "Weddings",
@@ -142,7 +162,6 @@ export default function PhotoBooth() {
     },
   ];
 
-  // FAQ
   const faqs = [
     {
       q: "What is included with the Digital Photo Booth",
@@ -186,7 +205,6 @@ export default function PhotoBooth() {
       .trim()
       .replace(/\s+/g, "-");
 
-  // Mini gallery
   const galleryItems = [
     "/images/galleryHighlights/booth-g-1.jpg",
     "/images/galleryHighlights/booth-g-2.jpg",
@@ -202,7 +220,6 @@ export default function PhotoBooth() {
     "/images/galleryHighlights/booth-g-12.mp4",
   ];
 
-  // ✅ JSON-LD: Service (Photo Booth)
   const photoBoothServiceLD = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -235,7 +252,6 @@ export default function PhotoBooth() {
     url: "https://www.gloeventco.com/services/photo-booth",
   };
 
-  // ✅ JSON-LD: FAQPage
   const photoBoothFaqLD = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -246,11 +262,9 @@ export default function PhotoBooth() {
     })),
   };
 
-  // ✅ Inject JSON-LD + canonical into <head> without Helmet
   useEffect(() => {
     const canonHref = "https://www.gloeventco.com/services/photo-booth";
 
-    // canonical
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
@@ -259,7 +273,6 @@ export default function PhotoBooth() {
     }
     link.setAttribute("href", canonHref);
 
-    // JSON-LD scripts
     const ids = ["ld-pb-service", "ld-pb-faq"];
     ids.forEach((id) => {
       const existing = document.getElementById(id);
@@ -284,12 +297,10 @@ export default function PhotoBooth() {
         if (el) el.remove();
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      {/* 1) HERO */}
       <header className="max-w-5xl mx-auto">
         <NeonTitle
           title="Digital Photo Booth Rental"
@@ -303,10 +314,8 @@ export default function PhotoBooth() {
         </p>
       </header>
 
-      {/* 2) WHAT IT IS */}
       <section className="mt-20">
         <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8 items-stretch">
-          {/* LEFT */}
           <div className="flex flex-col">
             <h2 className={sectionTitle}>What is a Digital Photo Booth</h2>
 
@@ -337,7 +346,6 @@ export default function PhotoBooth() {
             </div>
           </div>
 
-          {/* RIGHT (VIDEO vertical) */}
           <div className="flex justify-center lg:justify-end">
             <div className="w-full max-w-[320px]">
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-transparent aspect-[9/16]">
@@ -358,7 +366,6 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* 3) WHAT'S INCLUDED */}
       <section className="mt-24">
         <h2 className={sectionTitle}>What’s Included</h2>
         <p className={sectionSub}>
@@ -413,7 +420,6 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* 4) TWO WAYS TO BOOK */}
       <section className="mt-24">
         <h2 className={sectionTitle}>Two Ways to Book</h2>
         <p className={sectionSub}>
@@ -423,7 +429,11 @@ export default function PhotoBooth() {
 
         <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
           <GlowCard
-            title={<span className="text-center block">Drop Off Digital Photo Booth</span>}
+            title={
+              <span className="text-center block">
+                Drop Off Digital Photo Booth
+              </span>
+            }
             variant="mint"
           >
             <div className="grid h-full grid-rows-[auto_1fr_auto]">
@@ -522,8 +532,7 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* Gallery Highlights */}
-      <section className="mt-24">
+      <section className="mt-24" id="gallery">
         <h2 className={sectionTitle}>Gallery Highlights</h2>
         <p className={sectionSub}>
           A quick look at recent booth moments and branding examples.
@@ -551,7 +560,6 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* GREAT FOR */}
       <section className="mt-24">
         <h2 className={sectionTitle}>Great For</h2>
         <p className={sectionSub}>
@@ -574,12 +582,13 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mt-24" aria-labelledby="photo-booth-faqs">
         <h2 id="photo-booth-faqs" className={sectionTitle}>
           Photo Booth FAQs
         </h2>
-        <p className={sectionSub}>Quick answers to help you choose the right option.</p>
+        <p className={sectionSub}>
+          Quick answers to help you choose the right option.
+        </p>
 
         <div className="mt-10 grid md:grid-cols-2 gap-6">
           {faqs.map((f, i) => {
@@ -590,7 +599,9 @@ export default function PhotoBooth() {
               <div key={id} className={`${faqCardBase} ${hoverClass}`}>
                 <details className="group open:rounded-b-none">
                   <summary className="flex items-center justify-between cursor-pointer list-none px-5 py-4">
-                    <span className="font-semibold pr-4 text-gray-100">{f.q}</span>
+                    <span className="font-semibold pr-4 text-gray-100">
+                      {f.q}
+                    </span>
 
                     <span
                       className="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/5 neon-border transition-transform group-open:rotate-45"
@@ -607,7 +618,9 @@ export default function PhotoBooth() {
                     </span>
                   </summary>
 
-                  <div className="px-5 pb-5 pt-1 space-y-3">{renderAnswer(f.a)}</div>
+                  <div className="px-5 pb-5 pt-1 space-y-3">
+                    {renderAnswer(f.a)}
+                  </div>
                 </details>
               </div>
             );
@@ -615,7 +628,6 @@ export default function PhotoBooth() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
       <section className="mt-24">
         <div
           className="

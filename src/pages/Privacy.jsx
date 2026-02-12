@@ -1,9 +1,7 @@
-// src/pages/Privacy.jsx
 import { useEffect, useMemo } from "react";
 import NeonTitle from "../components/NeonTitle";
 
 export default function Privacy() {
-  // Match your site styling
   const sectionTitle =
     "text-left text-xl md:text-2xl font-semibold text-[var(--color-neon-blue)]";
   const sectionSub = "mt-3 text-left text-gray-300 leading-relaxed";
@@ -19,7 +17,6 @@ export default function Privacy() {
 
   const CANONICAL = "https://www.gloeventco.com/privacy";
 
-  // ✅ Meta without Helmet (keeps Cloudflare build happy)
   const meta = useMemo(
     () => ({
       title: "Privacy Policy | Glo Event Co",
@@ -32,7 +29,6 @@ export default function Privacy() {
   useEffect(() => {
     document.title = meta.title;
 
-    // description
     let desc = document.querySelector('meta[name="description"]');
     if (!desc) {
       desc = document.createElement("meta");
@@ -41,7 +37,6 @@ export default function Privacy() {
     }
     desc.setAttribute("content", meta.description);
 
-    // canonical
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
@@ -53,7 +48,6 @@ export default function Privacy() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      {/* HERO */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle
           title="Privacy Policy"
@@ -62,7 +56,6 @@ export default function Privacy() {
         />
       </header>
 
-      {/* CONTENT */}
       <section className="mt-12 max-w-5xl mx-auto">
         <div className={card}>
           <div className={metaLine}>

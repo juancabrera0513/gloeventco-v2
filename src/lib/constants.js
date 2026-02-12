@@ -1,17 +1,12 @@
-// src/lib/constants.js
 
-// ==================
-// Brand / Contact
-// ==================
+
 export const LOGO_TEXT = 'GLO EVENT CO'
 export const PHONE = '314-282-7888'
 export const EMAIL = 'info@gloeventco.com'
 export const ADDRESS_HTML =
   '11123 South Towne Sq. Suite B<br/>St. Louis, MO 63123'
 
-// ==================
-// Booking / Pricing (CheckCherry – URLs reales)
-// ==================
+
 export const BOOK_BASE = 'https://glo-event-co.checkcherry.com'
 export const BOOK_SELFIE = `${BOOK_BASE}/reservation/event_type?package_group_id=13666`
 export const BOOK_SILENT = `${BOOK_BASE}/reservation/package_group?service_id=9587`
@@ -23,9 +18,7 @@ export const DROP_OFF = `${BOOK_BASE}/reservation/user_info?event_type_id=37628`
 export const PB_ATTENDANCE = `${BOOK_BASE}/reservation/user_info?event_type_id=61522`
 
 
-// ==================
-// Our Work (Cases)
-// ==================
+
 const CASES_BASE = '/images/cases'
 
 export const OUR_WORK = [
@@ -77,9 +70,7 @@ export const OUR_WORK = [
   },
 ]
 
-// ==================
-// Testimonials
-// ==================
+
 export const TESTIMONIALS = [
   {
     name: 'Carrie S.',

@@ -1,10 +1,9 @@
-// src/components/NeonTitle.jsx
 export default function NeonTitle({
   title,
   as: Tag = "h2",
   id,
   className = "",
-  align = "center", // center | left
+  align = "center", 
 }) {
   const alignWrap = align === "left" ? "justify-start text-left" : "justify-center text-center";
 

@@ -1,4 +1,3 @@
-// src/pages/Services.jsx
 import { Link } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
@@ -10,7 +9,6 @@ import { useEffect } from "react";
 export default function Services() {
   const CONNECT_HREF = "/contact";
 
-  // 🔗 External pricing (CheckCherry)
   const QUOTE_HUB = PRICING;
 
   const LEARN_SILENT = "/services/silent-disco";
@@ -18,7 +16,6 @@ export default function Services() {
 
   const isInternal = (href = "") => href.startsWith("/");
 
-  // ✅ Wrapper correcto: interno => <Link>, externo => <GlowButton external>
   const ActionBtn = ({ href, variant, children }) => {
     if (isInternal(href)) {
       return (
@@ -42,7 +39,6 @@ export default function Services() {
     );
   };
 
-  // Headings
   const sectionTitle =
     "text-left text-2xl md:text-3xl font-semibold text-[var(--color-neon-blue)]";
   const sectionSub = "mt-3 text-left text-gray-400 max-w-3xl";
@@ -78,7 +74,6 @@ export default function Services() {
 
   const priceRow = "!m-0 text-sm text-white/80 min-h-[24px]";
 
-  // Optional: keep a lightweight canonical for crawlers without Helmet
   useEffect(() => {
     const href = "https://www.gloeventco.com/services";
     let link = document.querySelector('link[rel="canonical"]');

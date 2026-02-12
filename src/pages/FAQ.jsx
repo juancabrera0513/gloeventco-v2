@@ -1,4 +1,3 @@
-// src/pages/FAQ.jsx
 import NeonHeading from '../components/NeonHeading'
 import GlowButton from '../components/GlowButton'
 import { BOOK_SELFIE, BOOK_SILENT, PHONE, EMAIL } from '../lib/constants'
@@ -83,10 +82,9 @@ Staffing levels depend on event size.`,
   },
 ]
 
-// util: divide en párrafos por líneas en blanco
 const renderAnswer = (text) =>
   text
-    .split(/\n\s*\n/) // párrafos por double newline
+    .split(/\n\s*\n/) 
     .map((p, i) => (
       <p key={i} className="text-gray-300 text-justify leading-relaxed">
         {p}

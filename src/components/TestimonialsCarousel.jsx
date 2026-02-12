@@ -1,11 +1,9 @@
-// src/components/TestimonialsCarousel.jsx
 import React, { useMemo } from "react";
 import { TESTIMONIALS } from "../lib/constants";
 
 const isVideoSrc = (src = "") =>
   typeof src === "string" && /\.(mp4|webm|mov)(\?.*)?$/i.test(src || "");
 
-// ✅ Hover palette order (6 cards)
 const palette = ["red", "blue", "green", "blue", "green", "red"];
 
 export default function TestimonialsCarousel({
@@ -26,8 +24,7 @@ export default function TestimonialsCarousel({
     return (base || []).slice(0, 6);
   }, [items]);
 
-  // ✅ Map palette color -> hover class you already use in your CSS system
-  // Make sure these classes exist in your globals (examples below).
+  
   const hoverClassByColor = (c) => {
     if (c === "red") return "hover-red";
     if (c === "blue") return "hover-blue";
@@ -60,7 +57,6 @@ export default function TestimonialsCarousel({
         ? quoteHMd
         : quoteHSm;
 
-    // ✅ pick hover color by index
     const hoverColor = palette[i % palette.length];
     const hoverClass = hoverClassByColor(hoverColor);
 
@@ -72,9 +68,7 @@ export default function TestimonialsCarousel({
         ].join(" ")}
       >
         <div className="h-full flex flex-col" style={{ height: cardHeight }}>
-          {/* Media + Text */}
           <div className="grid grid-cols-[160px_1fr] flex-1 min-h-0 items-center">
-            {/* Media */}
             <div className="bg-black/20 flex items-center justify-center">
               <div className="w-[110px] h-[110px] sm:w-[120px] sm:h-[120px] lg:w-[130px] lg:h-[130px] rounded-full overflow-hidden flex items-center justify-center">
                 {isVideo ? (
@@ -100,7 +94,6 @@ export default function TestimonialsCarousel({
               </div>
             </div>
 
-            {/* Text */}
             <div className="p-4 min-w-0 flex flex-col">
               <div
                 className="text-gray-100 text-[15px] leading-snug overflow-auto pr-2"
@@ -111,7 +104,6 @@ export default function TestimonialsCarousel({
             </div>
           </div>
 
-          {/* Meta */}
           {metaParts.length ? (
             <div className="px-4 pb-3 pt-1">
               <div className="text-[9.5px] text-gray-400 leading-tight flex flex-wrap gap-x-1 gap-y-0.5 justify-center text-center">

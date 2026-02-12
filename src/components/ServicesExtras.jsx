@@ -1,4 +1,3 @@
-// src/components/ServicesExtras.jsx
 import { Link } from "react-router-dom";
 import NeonTitle from "./NeonTitle";
 import GlowButton from "./GlowButton";
@@ -8,14 +7,12 @@ export default function ServicesExtras({
   quoteHref = "/pricing",
   connectHref = "/contact",
 
-  // ✅ single centered video
   videoSrc = "/videos/Combined Services Video.webm",
   videoPoster = "",
   videoAlt = "Silent Disco and Photo Booth highlight video",
 }) {
   const isInternal = (href = "") => href.startsWith("/");
 
-  // ✅ Standard CTA: internal -> <Link> wrapper, external -> GlowButton external
   const CTA = ({ href, variant, children, className = "" }) => {
     const btnClass =
       (className ? className + " " : "") +
@@ -85,9 +82,7 @@ export default function ServicesExtras({
 
   return (
     <div className="space-y-0">
-      {/* =========================
-          Section: Combine Experiences
-         ========================= */}
+   
       <section className={sectionWrap} aria-labelledby="combine-experiences">
         <div className="max-w-7xl mx-auto px-4 py-20">
           <div className="max-w-5xl mx-auto">
@@ -97,7 +92,6 @@ export default function ServicesExtras({
             </p>
           </div>
 
-          {/* Video */}
           <div className="mt-10 max-w-5xl mx-auto">
             <figure className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
               <video
@@ -125,7 +119,6 @@ export default function ServicesExtras({
                 applied automatically.
               </p>
 
-              {/* ✅ centered on mobile */}
               <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <CTA href={BOOK_BASE} variant="red">
                   See Pricing + Book Online
@@ -145,9 +138,7 @@ export default function ServicesExtras({
         </div>
       </section>
 
-      {/* =========================
-          Section: How It Works (mini)
-         ========================= */}
+   
       <section className={sectionWrap} aria-labelledby="how-it-works-mini">
         <div className="max-w-7xl mx-auto px-4 py-20">
           <div className="max-w-5xl mx-auto">
@@ -191,7 +182,6 @@ export default function ServicesExtras({
             </div>
           </div>
 
-          {/* ✅ centered on mobile */}
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-3">
             <CTA href={BOOK_BASE} variant="red">
               See Pricing + Book Online
@@ -204,9 +194,7 @@ export default function ServicesExtras({
         </div>
       </section>
 
-      {/* =========================
-          Section: Services FAQ (Top 5)
-         ========================= */}
+    
       <section className={sectionWrap} aria-labelledby="services-faq-top5">
         <div className="max-w-7xl mx-auto px-4 py-20">
           <div className="max-w-5xl mx-auto">
@@ -250,7 +238,6 @@ export default function ServicesExtras({
             </div>
 
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
-              {/* ✅ centered on mobile */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <CTA href={BOOK_BASE} variant="red">
                   See Pricing + Book Online

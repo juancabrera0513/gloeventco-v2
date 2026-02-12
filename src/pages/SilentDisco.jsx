@@ -1,4 +1,3 @@
-// src/pages/SilentDisco.jsx
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
@@ -18,8 +17,6 @@ export default function SilentDisco() {
 
   const isInternal = (href = "") => href.startsWith("/");
 
-  // ✅ Standard CTA: internal -> <Link>, external -> GlowButton external
-  // ✅ Centered by default (mobile + desktop)
   const ActionBtn = ({ href, variant, children, className = "" }) => {
     const btnClass =
       (className ? className + " " : "") +
@@ -54,14 +51,12 @@ export default function SilentDisco() {
     );
   };
 
-  // ✅ Typography
   const sectionTitle =
     "text-left text-2xl md:text-3xl font-semibold text-[var(--color-neon-blue)]";
   const sectionSub = "mt-3 text-left text-gray-400 max-w-3xl";
 
   const anchorOffset = "scroll-mt-28";
 
-  // ✅ FAQ style
   const faqCardBase =
     "glass rounded-2xl neon-border overflow-hidden bg-white/5 border border-white/10";
   const renderAnswer = (text) =>
@@ -81,7 +76,6 @@ export default function SilentDisco() {
       .trim()
       .replace(/\s+/g, "-");
 
-  // Steps
   const STEPS = [
     {
       number: "1",
@@ -163,7 +157,6 @@ export default function SilentDisco() {
     },
   ];
 
-  // ✅ JSON-LD: Service (Silent Disco)
   const silentDiscoServiceLD = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -195,7 +188,6 @@ export default function SilentDisco() {
     url: "https://www.gloeventco.com/services/silent-disco",
   };
 
-  // ✅ JSON-LD: FAQPage (matches your FAQ section)
   const silentDiscoFaqLD = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -209,11 +201,9 @@ export default function SilentDisco() {
     })),
   };
 
-  // ✅ Inject JSON-LD + canonical into <head> without Helmet
   useEffect(() => {
     const canonHref = "https://www.gloeventco.com/services/silent-disco";
 
-    // canonical
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
@@ -222,7 +212,6 @@ export default function SilentDisco() {
     }
     link.setAttribute("href", canonHref);
 
-    // JSON-LD scripts
     const ids = ["ld-sd-service", "ld-sd-faq"];
     ids.forEach((id) => {
       const existing = document.getElementById(id);
@@ -247,12 +236,10 @@ export default function SilentDisco() {
         if (el) el.remove();
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      {/* ✅ Page Hero */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle
           title="Silent Disco"
@@ -266,7 +253,6 @@ export default function SilentDisco() {
           is loud.
         </p>
 
-        {/* Video */}
         <div className="mt-10 max-w-4xl mx-auto">
           <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black aspect-video">
             <video
@@ -280,7 +266,6 @@ export default function SilentDisco() {
           </div>
         </div>
 
-        {/* ✅ Buttons centered on mobile */}
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
           <ActionBtn href={QUOTE_RENTAL_BASE} variant="red">
             See Pricing + Book Online
@@ -291,9 +276,7 @@ export default function SilentDisco() {
         </div>
       </header>
 
-      {/* ✅ MAIN CONTENT */}
       <main className="mt-14 min-w-0">
-        {/* Section 1: How it works */}
         <section id="how-it-works" className={anchorOffset}>
           <h2 className={sectionTitle}>
             What is Silent Disco and How Does it Work?
@@ -351,7 +334,6 @@ export default function SilentDisco() {
           </p>
         </section>
 
-        {/* Section 2: Why */}
         <section id="why" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Why Silent Disco Works</h2>
           <p className={sectionSub}>
@@ -376,12 +358,10 @@ export default function SilentDisco() {
           </div>
         </section>
 
-        {/* Mini video gallery */}
         <div className="mt-20">
           <MiniVideoGallery />
         </div>
 
-        {/* Section 3: Two ways to book */}
         <section id="ways" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Two Ways to Book</h2>
           <p className={sectionSub}>
@@ -457,7 +437,6 @@ export default function SilentDisco() {
           </div>
         </section>
 
-        {/* Section 4: Great for */}
         <section id="great-for" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Great For</h2>
           <p className={sectionSub}>
@@ -480,7 +459,6 @@ export default function SilentDisco() {
           </div>
         </section>
 
-        {/* Section 5: FAQs */}
         <section id="faqs" className={`${anchorOffset} mt-20`}>
           <h2 className={sectionTitle}>Silent Disco FAQs</h2>
           <p className={sectionSub}>Quick answers to help you plan the right setup.</p>
@@ -526,7 +504,6 @@ export default function SilentDisco() {
           </div>
         </section>
 
-        {/* Final CTA */}
         <section id="ready" className={`${anchorOffset} mt-24`}>
           <div className="glass rounded-2xl p-8 md:p-10 border border-white/5 text-center">
             <h2 className="text-2xl md:text-3xl font-semibold text-white/90">

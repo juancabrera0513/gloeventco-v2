@@ -1,4 +1,3 @@
-// src/components/HomeFAQ.jsx
 import NeonTitle from "./NeonTitle";
 
 const faqs = [
@@ -24,7 +23,6 @@ const faqs = [
   },
 ];
 
-// util: divide en párrafos por líneas en blanco
 const renderAnswer = (text) =>
   String(text)
     .split(/\n\s*\n/)
@@ -57,10 +55,8 @@ export default function HomeFAQ({
             </div>
           )}
 
-          {/* ✅ Same title component/style as OurWork */}
           <NeonTitle title={title} id="home-faq-heading" />
 
-          {/* ✅ Same subtitle sizing as OurWork */}
           {subtitle && (
             <p className="mt-3 text-gray-400 text-center text-base md:text-lg">
               {subtitle}
@@ -77,7 +73,7 @@ export default function HomeFAQ({
                   key={id}
                   className={[
                     "glass rounded-2xl neon-border overflow-hidden",
-                    "glo-hover-green", // ✅ hover verde
+                    "glo-hover-green", 
                   ].join(" ")}
                 >
                   <details className="group open:rounded-b-none">

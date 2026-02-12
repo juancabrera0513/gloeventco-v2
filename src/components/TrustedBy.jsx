@@ -1,4 +1,3 @@
-// src/components/TrustedBy.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const LOGOS = [
@@ -28,10 +27,8 @@ const LOGOS = [
 export default function TrustedBy({
   speed = 40,
 
-  // 🔧 Tamaño de logos
   boxClass = "h-16 sm:h-18 md:h-20",
 
-  // 🔧 Espacio entre logos
   gapClass = "gap-6",
 }) {
   const wrapRef = useRef(null);
@@ -45,7 +42,6 @@ export default function TrustedBy({
     const track = trackRef.current;
     if (!wrap || !track) return;
 
-    // Respeta reduced-motion: si el user lo tiene activado, no calculamos animación
     const reduceMotion =
       typeof window !== "undefined" &&
       window.matchMedia &&
@@ -64,17 +60,14 @@ export default function TrustedBy({
   const regionId = "trusted-by-logos-title";
 
   return (
-    // ✅ Full-bleed seguro (evita overflow/scroll horizontal)
     <section
       className="relative left-1/2 w-[100vw] -translate-x-1/2 bg-gray-100 overflow-x-clip"
       aria-labelledby={regionId}
     >
-      {/* Heading accesible */}
       <h2 id={regionId} className="sr-only">
         Trusted by
       </h2>
 
-      {/* Label visible con mejor contraste */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
         <span
           className="
@@ -99,7 +92,6 @@ export default function TrustedBy({
           role="region"
           aria-label="Trusted by logos carousel"
         >
-          {/* Fade edges */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -117,7 +109,6 @@ export default function TrustedBy({
               gapClass,
               "trustedby-marquee",
               paused ? "trustedby-paused" : "",
-              // ✅ si reduced-motion, evita animación via clase (por si tu CSS lo usa)
               "motion-reduce:translate-x-0 motion-reduce:animate-none",
             ].join(" ")}
           >
@@ -144,7 +135,6 @@ export default function TrustedBy({
             ))}
           </ul>
 
-          {/* (Opcional) Texto extra para screen readers si quieres más contexto */}
           <p className="sr-only">
             Logos of organizations that have worked with or trust Glo Event Co.
           </p>

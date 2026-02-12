@@ -1,4 +1,3 @@
-// src/components/OurWork.jsx
 import NeonTitle from "./NeonTitle";
 
 export default function OurWork({

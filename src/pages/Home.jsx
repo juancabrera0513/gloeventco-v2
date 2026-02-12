@@ -1,5 +1,3 @@
-// src/pages/Home.jsx
-
 import { useEffect } from "react";
 import GlowButton from "../components/GlowButton";
 import NeonSign from "../components/NeonSign";
@@ -16,7 +14,6 @@ import HomeFAQ from "../components/HomeFAQ";
 import HomeReadyCTA from "../components/HomeReadyCTA";
 
 export default function Home() {
-  // JSON-LD “Service” para Photo Booth / Selfie Station (SEO)
   const photoBoothServiceLD = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -65,11 +62,9 @@ export default function Home() {
     sameAs: ["https://glo-event-co.checkcherry.com"],
   };
 
-  // ✅ Inject JSON-LD into <head> without Helmet
   useEffect(() => {
     const ids = ["ld-localbusiness", "ld-photobooth-service"];
 
-    // cleanup old
     ids.forEach((id) => {
       const existing = document.getElementById(id);
       if (existing) existing.remove();
@@ -93,15 +88,12 @@ export default function Home() {
         if (el) el.remove();
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <main className="flex-1 glo-scope">
-      {/* HERO */}
       <section className="relative border-b border-white/5 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center isolate">
-          {/* Texto */}
           <div className="relative z-10 min-w-0">
             <p className="text-xs tracking-widest text-gray-400">
               ST. LOUIS & SURROUNDING AREAS
@@ -124,7 +116,6 @@ export default function Home() {
               Glo Event Co
             </NeonSign>
 
-            {/* Subtítulo */}
             <p className="mt-3 text-xl sm:text-2xl md:text-3xl text-gray-200 flex items-center gap-3 flex-wrap">
               <span className="neon-text-cyan">Silent Disco</span>
 
@@ -135,7 +126,6 @@ export default function Home() {
               <span className="neon-text-mint">Photo Booth</span>
             </p>
 
-            {/* línea oculta para SEO extra sin afectar UI */}
             <p className="sr-only">
               Silent Disco rentals and Photo Booth rentals in St. Louis,
               Missouri and surrounding areas by Glo Event Co.
@@ -161,7 +151,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Media (Video) */}
           <div className="relative rounded-2xl glass glo-on-blue glo-hover z-0 mt-6 md:mt-0 overflow-hidden">
             <video
               className="w-full h-[320px] sm:h-[380px] md:h-[420px] object-cover"
@@ -184,16 +173,13 @@ export default function Home() {
               Your browser does not support the video tag.
             </video>
 
-            {/* Glow overlay constante */}
             <div className="pointer-events-none absolute inset-0 glo-video-glow" />
           </div>
         </div>
       </section>
 
-      {/* LOGOS */}
       <TrustedBy />
 
-      {/* Silent Disco */}
       <ChooseExperience />
 
       <HowItWorks />

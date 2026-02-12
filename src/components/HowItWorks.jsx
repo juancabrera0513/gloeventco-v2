@@ -1,4 +1,3 @@
-// src/components/HowItWorks.jsx
 import NeonTitle from "./NeonTitle"
 
 const STEPS = [
@@ -36,7 +35,6 @@ export default function HowItWorks({
   return (
     <section className="bg-black border-b border-white/5" aria-labelledby="how-it-works-heading">
       <div className="max-w-7xl mx-auto px-4 py-24">
-        {/* ✅ MISMA estructura que OurWork */}
         <div className="max-w-5xl mx-auto">
           {kicker && (
             <div className="text-center text-xs tracking-widest text-gray-400">
@@ -44,11 +42,10 @@ export default function HowItWorks({
             </div>
           )}
 
-          {/* ✅ MISMO componente/tipografía/efecto que OurWork */}
           <NeonTitle
             title={heading}
             id="how-it-works-heading"
-            className="uppercase"  // 👈 para que se vea igual que “BRAND ACTIVATIONS…”
+            className="uppercase" 
           />
 
           {subtitle && (
@@ -58,7 +55,6 @@ export default function HowItWorks({
           )}
         </div>
 
-        {/* Steps */}
         <div className="mt-16 grid gap-8 md:grid-cols-3">
           {STEPS.map((s) => (
             <article

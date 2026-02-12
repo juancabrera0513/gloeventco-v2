@@ -1,4 +1,3 @@
-// src/components/HomeFAQ.jsx
 import NeonTitle from "./NeonTitle";
 
 const faqs = [
@@ -30,7 +29,6 @@ Have questions or want a custom experience? Connect with our team and we’ll re
   },
 ];
 
-// util: divide en párrafos por líneas en blanco
 const renderAnswer = (text) =>
   String(text)
     .split(/\n\s*\n/)
@@ -76,14 +74,12 @@ export default function HomeFAQ({
         </div>
 
         <div className="mt-10 max-w-4xl mx-auto">
-          {/* ✅ DL con grupos DT/DD correctamente ordenados */}
           <dl className="space-y-4">
             {faqs.map((f) => {
               const id = `home-faq-${slug(f.q)}`;
               const panelId = `${id}-panel`;
 
               return (
-                // ✅ wrapper permitido dentro de DL
                 <div
                   key={id}
                   className={[
@@ -91,7 +87,6 @@ export default function HomeFAQ({
                     "glo-hover-green",
                   ].join(" ")}
                 >
-                  {/* ✅ DT (término/pregunta) */}
                   <dt className="m-0">
                     <details className="group">
                       <summary
@@ -99,7 +94,6 @@ export default function HomeFAQ({
                         className="flex items-center justify-between cursor-pointer list-none px-5 py-4"
                         aria-controls={panelId}
                       >
-                        {/* ✅ texto de la pregunta (no uses <dt> dentro del summary) */}
                         <span className="font-semibold pr-4 text-gray-100">
                           {f.q}
                         </span>
@@ -124,7 +118,6 @@ export default function HomeFAQ({
                         </span>
                       </summary>
 
-                      {/* ✅ DD (definición/respuesta) */}
                       <dd
                         id={panelId}
                         className="px-5 pb-5 pt-1 space-y-3"

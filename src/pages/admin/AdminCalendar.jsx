@@ -1,4 +1,3 @@
-// src/pages/admin/AdminCalendar.jsx
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 
@@ -12,7 +11,6 @@ function toPublicUrl(path) {
 }
 
 export default function AdminCalendar() {
-  // list state
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -21,7 +19,6 @@ export default function AdminCalendar() {
   const [busyId, setBusyId] = useState("");
   const [err, setErr] = useState("");
 
-  // form state
   const [editingId, setEditingId] = useState(null);
 
   const [eventDate, setEventDate] = useState("");
@@ -42,15 +39,13 @@ export default function AdminCalendar() {
   const imagePreviewUrl = useMemo(() => {
     if (file) return URL.createObjectURL(file);
     return toPublicUrl(currentImagePath);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, currentImagePath]);
 
   useEffect(() => {
-    // cleanup object url (preview)
     return () => {
       if (file) URL.revokeObjectURL(imagePreviewUrl);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [file]);
 
   const load = async (nextPage = page) => {
@@ -86,13 +81,10 @@ export default function AdminCalendar() {
 
   useEffect(() => {
     load(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // if total changes and page is out of range, fix it
   useEffect(() => {
     if (page > pageCount) load(pageCount);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageCount]);
 
   const resetForm = () => {
@@ -114,7 +106,6 @@ export default function AdminCalendar() {
     setCurrentImagePath(ev.image_path || "");
     setFile(null);
 
-    // scroll to form (nice UX)
     try {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {}
@@ -123,7 +114,6 @@ export default function AdminCalendar() {
   async function uploadImageIfAny() {
     if (!file) return currentImagePath || "";
 
-    // If replacing, delete previous image (best effort)
     if (currentImagePath) {
       await supabase.storage.from(BUCKET).remove([currentImagePath]);
     }
@@ -156,7 +146,6 @@ export default function AdminCalendar() {
       const image_path = await uploadImageIfAny();
 
       if (editingId) {
-        // UPDATE
         const { error } = await supabase
           .from("calendar_events")
           .update({
@@ -170,7 +159,6 @@ export default function AdminCalendar() {
 
         if (error) throw error;
       } else {
-        // INSERT
         const { error } = await supabase.from("calendar_events").insert({
           event_date: eventDate,
           title: title.trim(),
@@ -206,12 +194,10 @@ export default function AdminCalendar() {
 
       if (error) throw error;
 
-      // delete image file too (best effort)
       if (ev.image_path) {
         await supabase.storage.from(BUCKET).remove([ev.image_path]);
       }
 
-      // if deleting the one being edited, reset form
       if (editingId === ev.id) resetForm();
 
       await load(page);
@@ -223,15 +209,12 @@ export default function AdminCalendar() {
   }
 
   async function onRemoveImage() {
-    // remove local selection
     setFile(null);
 
-    // if editing, update row
     if (editingId) {
       setSaving(true);
       setErr("");
       try {
-        // delete from storage (best effort)
         if (currentImagePath) {
           await supabase.storage.from(BUCKET).remove([currentImagePath]);
         }
@@ -251,7 +234,6 @@ export default function AdminCalendar() {
         setSaving(false);
       }
     } else {
-      // create mode: just clear
       setCurrentImagePath("");
     }
   }
@@ -275,7 +257,6 @@ export default function AdminCalendar() {
           </div>
         ) : null}
 
-        {/* FORM */}
         <form onSubmit={onSave} className="mt-6 glass neon-border rounded-2xl p-5">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="text-sm text-gray-300 tracking-widest uppercase">
@@ -405,7 +386,6 @@ export default function AdminCalendar() {
           </div>
         </form>
 
-        {/* LIST + PAGINATION */}
         <div className="mt-8 glass neon-border rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between gap-3 p-4 border-b border-white/10 flex-wrap">
             <div className="text-sm text-gray-300 tracking-widest uppercase">Events</div>

@@ -1,9 +1,7 @@
-// src/pages/Terms.jsx
 import { useEffect, useMemo } from "react";
 import NeonTitle from "../components/NeonTitle";
 
 export default function Terms() {
-  // Match site styling (same as Privacy)
   const sectionTitle =
     "text-left text-xl md:text-2xl font-semibold text-[var(--color-neon-blue)]";
   const sectionSub = "mt-3 text-left text-gray-300 leading-relaxed";
@@ -17,7 +15,6 @@ export default function Terms() {
 
   const CANONICAL = "https://www.gloeventco.com/terms";
 
-  // ✅ Meta without Helmet (keeps Cloudflare build happy)
   const meta = useMemo(
     () => ({
       title: "Terms and Conditions | Glo Event Co",
@@ -32,7 +29,6 @@ export default function Terms() {
   useEffect(() => {
     document.title = meta.title;
 
-    // description
     let desc = document.querySelector('meta[name="description"]');
     if (!desc) {
       desc = document.createElement("meta");
@@ -41,7 +37,6 @@ export default function Terms() {
     }
     desc.setAttribute("content", meta.description);
 
-    // canonical
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
@@ -50,7 +45,6 @@ export default function Terms() {
     }
     link.setAttribute("href", meta.canonical);
 
-    // robots
     let robots = document.querySelector('meta[name="robots"]');
     if (!robots) {
       robots = document.createElement("meta");
@@ -62,7 +56,6 @@ export default function Terms() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-16">
-      {/* HERO */}
       <header className="max-w-5xl mx-auto text-center">
         <NeonTitle
           title="Terms and Conditions"
@@ -71,7 +64,6 @@ export default function Terms() {
         />
       </header>
 
-      {/* CONTENT */}
       <section className="mt-12 max-w-5xl mx-auto">
         <div className={card}>
           <p className="text-gray-300 leading-relaxed">
@@ -209,7 +201,6 @@ export default function Terms() {
 
           <hr className={hr} />
 
-          {/* ✅ keeping your numbering exactly as you had it */}
           <h2 className={sectionTitle}>25. Contact Us</h2>
           <p className={sectionSub}>
             Silent Night Events, LLC doing business as Glo Event Co

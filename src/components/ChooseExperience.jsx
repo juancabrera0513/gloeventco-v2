@@ -1,4 +1,3 @@
-// src/components/ChooseExperience.jsx
 import GlowButton from "./GlowButton";
 import NeonTitle from "./NeonTitle";
 import { SDHR, DJAT, SFA } from "../lib/constants";
@@ -133,7 +132,6 @@ export default function ChooseExperience({
                 active:translate-y-0
               `}
             >
-              {/* Image */}
               <div className="relative">
                 <img
                   src={card.img}
@@ -146,7 +144,6 @@ export default function ChooseExperience({
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/70 to-transparent" />
               </div>
 
-              {/* Content */}
               <div className="px-5 sm:px-6 pb-6 pt-5 text-center flex flex-col flex-1">
                 <h3
                   className={`
@@ -185,7 +182,6 @@ export default function ChooseExperience({
                   ))}
                 </ul>
 
-                {/* CTA (estandarizado, redondeado, sin box-shadow inline) */}
                 <div className="mt-8 flex justify-center">
                   <GlowButton
                     href={card.cta.href}

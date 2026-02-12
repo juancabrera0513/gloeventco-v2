@@ -1,4 +1,3 @@
-// src/components/HomeReadyCTA.jsx
 import NeonTitle from "./NeonTitle";
 import GlowButton from "./GlowButton";
 import { BOOK_BASE } from "../lib/constants";
@@ -26,7 +25,6 @@ export default function HomeReadyCTA({
             {subtitle}
           </p>
 
-          {/* ✅ Botones: side-by-side */}
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <GlowButton
               href={BOOK_BASE}
