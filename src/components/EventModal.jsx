@@ -63,7 +63,6 @@ export default function EventModal({
       />
 
       <div className={`calm calm--${accent}`} role="document">
-        {/* Header */}
         <div className="calm__top">
           <div className="calm__meta">
             <div className="calm__date">{dateLabel}</div>

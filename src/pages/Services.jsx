@@ -95,7 +95,6 @@ export default function Services() {
         </p>
       </header>
 
-      {/* Silent Disco */}
       <section className="mt-20">
         <h2 className={sectionTitle}>Silent Disco</h2>
         <p className={sectionSub}>
@@ -189,7 +188,6 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Photo Booth */}
       <section className="mt-24">
         <h2 className={sectionTitle}>Digital Photo Booth Rental</h2>
         <p className={sectionSub}>
