@@ -96,186 +96,128 @@ export default function Services() {
       </header>
 
       <section className="mt-20">
-        <h2 className={sectionTitle}>Silent Disco</h2>
-        <p className={sectionSub}>
-          Pick DIY rentals with local support, or go full service with a DJ and
-          attendants.
-        </p>
+  <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
+    {/* ===================== CARD 1 — Silent Disco ===================== */}
+    <GlowCard variant="pink">
+      <div className="not-prose w-full h-full flex flex-col">
+        {/* Title (inside) */}
+        <h3 className="font-display text-xl md:text-2xl text-[#ff4567] mb-4">
+          Silent Disco Events
+        </h3>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
-          <GlowCard title="Silent Disco Headphone Rentals" variant="mint">
-            <div className={cardLayout}>
-              <div className={contentArea}>
-                <CardImage
-                  src="/images/silent-disco-headphones-st-louis.webp"
-                  alt="Silent disco headphone rentals in St. Louis"
-                />
-
-                <p className={descClamp}>
-                  DIY friendly headphone rentals with clear instructions and
-                  local support when you need it.
-                </p>
-
-                <ul className={`${bulletsBase} marker:text-[#23ff11]`}>
-                  <li>24 hour rental includes headphones + 3 transmitters</li>
-                  <li>Guests choose their channel and enjoy the music</li>
-                  <li>Local pick up or delivery options</li>
-                  <li>Simple setup instructions included</li>
-                  <li>Local support available</li>
-                  <li className="opacity-0 select-none">Spacer</li>
-                </ul>
-              </div>
-
-              <div className={footerArea}>
-                <p className={priceRow}>
-                  <span className="text-white/60">Starting at:</span>{" "}
-                  <strong className="text-[#23ff11]">From $5 per headphone</strong>
-                </p>
-
-                <div className={actionRowCenter}>
-                  <ActionBtn href={LEARN_SILENT} variant="green">
-                    Learn More
-                  </ActionBtn>
-                  <ActionBtn href={SDHR} variant="green">
-                    See Pricing + Book Online
-                  </ActionBtn>
-                </div>
-              </div>
-            </div>
-          </GlowCard>
-
-          <GlowCard title="Silent Disco DJ Experience" variant="pink">
-            <div className={cardLayout}>
-              <div className={contentArea}>
-                <CardImage
-                  src="/images/dj-experience.jpg"
-                  alt="Silent disco DJ experience in St. Louis"
-                />
-
-                <p className={descClamp}>
-                  Full service silent disco with a DJ and attendants handling
-                  everything.
-                </p>
-
-                <ul className={`${bulletsBase} marker:text-[#ff4567]`}>
-                  <li>3 channel LED wireless headphones</li>
-                  <li>1–3 DJs plus playlists</li>
-                  <li>Delivery, attendants, and cleanup included</li>
-                  <li>High energy crowd control</li>
-                  <li className="opacity-0 select-none">Spacer</li>
-                </ul>
-              </div>
-
-              <div className={footerArea}>
-                <p className={priceRow}>
-                  <span className="text-white/60">Starting at:</span>{" "}
-                  <strong className="text-[#ff4567]">
-                    From $8.15 per headphone
-                  </strong>
-                </p>
-
-                <div className={actionRowCenter}>
-                  <ActionBtn href={LEARN_SILENT} variant="red">
-                    Learn More
-                  </ActionBtn>
-                  <ActionBtn href={DJAT} variant="red">
-                    See Pricing + Book Online
-                  </ActionBtn>
-                </div>
-              </div>
-            </div>
-          </GlowCard>
+        {/* Image */}
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+          <img
+            src="/images/silent-disco-headphones-st-louis.webp"
+            alt="Silent disco headphone rentals in St. Louis"
+            className="w-full h-56 md:h-64 object-cover"
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
         </div>
-      </section>
 
-      <section className="mt-24">
-        <h2 className={sectionTitle}>Digital Photo Booth Rental</h2>
-        <p className={sectionSub}>
-          A modern digital selfie station with instant sharing and custom
-          branding.
-        </p>
+        {/* Content */}
+        <div className="mt-4 text-gray-300">
+          <p className="leading-relaxed">
+            High-energy entertainment without the noise—perfect for schools,
+            parties, and events with mixed crowds.
+          </p>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
-          <GlowCard title="Drop Off Digital Photo Booth" variant="mint">
-            <div className={cardLayout}>
-              <div className={contentArea}>
-                <CardImage
-                  src="/images/DropOffDigitalBooth.jpg"
-                  alt="Drop off digital photo booth rental in St. Louis"
-                />
+          <p className="mt-4 font-semibold text-[#ff4567]">Choose Your Experience:</p>
+          <p className="mt-2">Headphone Rentals (DIY + easy pickup/drop-off)</p>
+          <p className="mt-1">
+            Full-Service Silent Disco (DJ + attendants + smooth event flow)
+          </p>
 
-                <p className={descClamp}>
-                  Delivered ready to use with instant sharing and branded
-                  overlays.
-                </p>
-
-                <ul className={`${bulletsBase} marker:text-[#23ff11]`}>
-                  <li>Delivery + setup included</li>
-                  <li>Custom branded overlays</li>
-                  <li>GIFs, boomerangs, and downloads</li>
-                  <li>Digital backdrops and props</li>
-                </ul>
-              </div>
-
-              <div className={footerArea}>
-                <p className={priceRow}>
-                  <span className="text-white/60">Starting at:</span>{" "}
-                  <strong className="text-[#23ff11]">$595 for 10 hours</strong>
-                </p>
-
-                <div className={actionRowCenter}>
-                  <ActionBtn href={LEARN_BOOTH} variant="green">
-                    Learn More
-                  </ActionBtn>
-                  <ActionBtn href={SFA} variant="green">
-                    See Pricing + Book Online
-                  </ActionBtn>
-                </div>
-              </div>
-            </div>
-          </GlowCard>
-
-          <GlowCard title="Full Service Photo Booth With Attendant" variant="pink">
-            <div className={cardLayout}>
-              <div className={contentArea}>
-                <CardImage
-                  src="/images/photo-booth-attendant.jpg"
-                  alt="Full service photo booth with attendant in St. Louis"
-                />
-
-                <p className={descClamp}>
-                  Fully supported photo booth experience with an on site
-                  attendant.
-                </p>
-
-                <ul className={`${bulletsBase} marker:text-[#ff4567]`}>
-                  <li>Attendant guided experience</li>
-                  <li>Custom branding included</li>
-                  <li>Instant sharing</li>
-                  <li>Optional upgrades available</li>
-                </ul>
-              </div>
-
-              <div className={footerArea}>
-                <p className={priceRow}>
-                  <span className="text-white/60">Starting at:</span>{" "}
-                  <strong className="text-[#ff4567]">$895 for 3 hours</strong>
-                </p>
-
-                <div className={actionRowCenter}>
-                  <ActionBtn href={LEARN_BOOTH} variant="red">
-                    Learn More
-                  </ActionBtn>
-                  <ActionBtn href={SFA} variant="red">
-                    See Pricing + Book Online
-                  </ActionBtn>
-                </div>
-              </div>
-            </div>
-          </GlowCard>
+          <p className="mt-4">
+            <span className="font-semibold text-[#ff4567]">Great for:</span>{" "}
+            school events… corporate parties… fundraisers… festivals… weddings
+            (late-night)
+          </p>
         </div>
-      </section>
 
+        {/* Buttons (aligned) */}
+        <div className="mt-auto pt-6 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <ActionBtn href={LEARN_SILENT} variant="pink">
+            Learn More
+          </ActionBtn>
+          <ActionBtn href={SDHR} variant="pink">
+            See Pricing + Book Online
+          </ActionBtn>
+        </div>
+      </div>
+    </GlowCard>
+
+    {/* ===================== CARD 2 — Photo Booth ===================== */}
+    <GlowCard variant="mint">
+      <div className="not-prose w-full h-full flex flex-col">
+        {/* Title (inside) */}
+        <h3 className="font-display text-xl md:text-2xl text-[#23ff11] mb-4">
+          Photo Booth Experiences
+        </h3>
+
+        {/* Image */}
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+          <img
+            src="/images/DropOffDigitalBooth.jpg"
+            alt="Digital photo booth rental in St. Louis"
+            className="w-full h-56 md:h-64 object-cover"
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="mt-4 text-gray-300">
+          <p className="leading-relaxed">
+            A modern photo booth experience built for instant sharing, polished
+            branding, and content guests actually keep.
+          </p>
+
+          <p className="mt-4 font-semibold text-[#23ff11]">
+            Choose your experience:
+          </p>
+          <p className="mt-2">Glo Pop Up (simple + shareable)</p>
+          <p className="mt-1">Glo Transformation (AI wow moments)</p>
+          <p className="mt-1">Glo Hosted (premium + managed)</p>
+          <p className="mt-1">Glo Brand Spotlight (fully branded activation)</p>
+
+          <p className="mt-4">
+            <span className="font-semibold text-[#23ff11]">Great for:</span>{" "}
+            weddings… birthdays… grad parties… corporate events… grand openings
+          </p>
+        </div>
+
+        {/* Buttons (aligned) */}
+        <div className="mt-auto pt-6 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <ActionBtn href={LEARN_BOOTH} variant="green">
+            Learn More
+          </ActionBtn>
+          <ActionBtn href={SFA} variant="green">
+            See Pricing + Book Online
+          </ActionBtn>
+        </div>
+      </div>
+    </GlowCard>
+  </div>
+
+  {/* helper line */}
+  <p className="mt-6 text-center text-sm text-white/70">
+  Not sure which option fits?{" "}
+  <Link
+    to="/contact"
+    className="text-white/90 font-semibold hover:text-[#23ff11] transition-colors"
+  >
+    Tell us your date + guest count…
+  </Link>{" "}
+  and we’ll recommend the best setup.
+</p>
+
+</section>
+
+    
       <ServicesExtras quoteHref={QUOTE_HUB} connectHref={CONNECT_HREF} />
     </div>
   );

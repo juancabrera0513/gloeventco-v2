@@ -42,7 +42,7 @@ export default function ServicesExtras({
     );
   };
 
-  const sectionWrap = "bg-black border-b border-white/5";
+  const sectionWrap = "bg-transparent border-b border-white/5";
   const kicker = "text-xs tracking-widest text-gray-400 text-center";
 
   const renderAnswer = (text) =>

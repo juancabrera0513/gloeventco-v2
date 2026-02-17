@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import GlowButton from "../components/GlowButton";
-import { SFA, DROP_OFF, PB_ATTENDANCE } from "../lib/constants";
+import { SFA, DROP_OFF, PB_ATTENDANCE, LINK_GloPopUpExperience, LINK_GloTransformationExperience, LINK_GloHostedExperience, LINK_GloBrandSpotlightExperience} from "../lib/constants";
 
 const isVideoSrc = (src = "") =>
   typeof src === "string" && /\.(mp4|webm|mov)(\?.*)?$/i.test(src || "");
@@ -12,7 +12,7 @@ function Media({
   src,
   alt = "",
   className = "",
-  object = "object-contain", 
+  object = "object-contain",
   autoPlay = true,
 }) {
   const vid = isVideoSrc(src);
@@ -64,7 +64,7 @@ export default function PhotoBooth() {
     if (tryScroll()) return;
 
     let tries = 0;
-    const maxTries = 20; 
+    const maxTries = 20;
     const t = setInterval(() => {
       tries += 1;
       if (tryScroll() || tries >= maxTries) clearInterval(t);
@@ -132,8 +132,11 @@ export default function PhotoBooth() {
     },
   ];
 
-  const cardImgDropoff = "/images/DropOffDigitalBooth.jpg";
-  const cardImgFull = "/images/photo-booth-attendant.jpg";
+  const GloPopUpExperience = "/images/GloPopUpExperience.png";
+  const GloTransformationExperience = "/images/GloTransformationExperience.png";
+  const GloHostedExperience = "/images/GloHostedExperience.png";
+  const GloBrandSpotlightExperience =
+    "/images/GloBrandSpotlightExperience.png";
 
   const greatFor = [
     {
@@ -317,22 +320,31 @@ export default function PhotoBooth() {
       <section className="mt-20">
         <div className="grid lg:grid-cols-[1.4fr_0.6fr] gap-8 items-stretch">
           <div className="flex flex-col">
-            <h2 className={sectionTitle}>What is a Digital Photo Booth</h2>
+            <h2 className={sectionTitle}>
+              Turn your event into a share-worthy moment.{" "}
+            </h2>
 
             <p className={sectionSub}>
-              A Digital Photo Booth is a selfie station style photo booth that
-              runs completely digitally. Guests take photos, GIFs, and
-              boomerangs, then share instantly. After your event, you have
-              access to a complete, shareable gallery—plus branding options
-              that make it feel premium and personalized.
+              Photo booth experiences that light up the room, keep guests
+              engaged, and make hosting feel effortless—from simple drop-off
+              setups to fully hosted, fully branded activations.
+            </p>
+            <p>
+              {" "}
+              <br /> <strong>Perfect for:</strong> weddings… schools… corporate
+              events… birthdays… fundraisers… grand openings <br />{" "}
             </p>
 
             <div className="mt-6 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
               <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
-                <li>Fully digital experience with instant sharing</li>
-                <li>Shareable gallery for you and your guests</li>
-                <li>Custom overlays + digital backdrops</li>
-                <li>Optional AI face swapping enhancements</li>
+                <li>Tap… snap… share in seconds (QR + text)</li>
+                <li>Photos, GIFs, and boomerangs built in</li>
+                <li>Clean, modern setup that fits your vibe</li>
+                <li>Full event gallery delivered after the event</li>
+                <li>
+                  Optional upgrades: AI effects… custom overlays… backdrops…
+                  premium props
+                </li>
               </ul>
 
               <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 items-center justify-center md:justify-start w-full">
@@ -347,7 +359,7 @@ export default function PhotoBooth() {
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-[320px]">
+            <div className="w-full max-w-[270px]">
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-transparent aspect-[9/16]">
                 <video
                   className="absolute inset-0 w-full h-full object-cover"
@@ -367,22 +379,17 @@ export default function PhotoBooth() {
       </section>
 
       <section className="mt-24">
-        <h2 className={sectionTitle}>What’s Included</h2>
+        <h2 className={sectionTitle}>Make It Effortless. Make It Memorable.</h2>
         <p className={sectionSub}>
-          Everything you need for a smooth, premium booth experience—plus
-          branding options that look amazing in the final media.
+          Most people don’t need a photo booth… They need a way to:
         </p>
 
         <div className="mt-10 glass rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
           <ul className="list-disc pl-6 text-gray-300 space-y-2 marker:text-[var(--color-neon-blue)]">
-            <li>Photos, GIFs, and boomerangs</li>
-            <li>Instant sharing + post event gallery</li>
-            <li>Custom branded overlay (name/date/logo available)</li>
-            <li>Digital backdrops to match your theme</li>
-            <li>
-              Optional add ons: data capture, email collection, AI face
-              swapping, and more
-            </li>
+            <li>Keep guests entertained without extra planning</li>
+            <li>Create content worth sharing (not just random snapshots)</li>
+            <li>Make the experience feel intentional and on-brand</li>
+            <li>Avoid awkward lines, confusion, or equipment stress</li>
           </ul>
 
           <div className="mt-8 grid sm:grid-cols-3 gap-4">
@@ -417,118 +424,356 @@ export default function PhotoBooth() {
               </figure>
             ))}
           </div>
+
+          <p>
+            <br />
+            That’s exactly what our packages are built for.
+          </p>
+
+          <p>
+            <br />
+            Whether you want something simple and shareable or fully hosted and
+            fully branded, we make it easy to choose the right experience.
+          </p>
         </div>
       </section>
 
+      {/* ===================== PACKAGES (UPDATED: NO GlowCard) ===================== */}
       <section className="mt-24">
-        <h2 className={sectionTitle}>Two Ways to Book</h2>
+        <h2 className={sectionTitle}>Pick Your Level of Glo</h2>
         <p className={sectionSub}>
-          Choose a simple drop off option, or go full service with an attendant
-          to guide guests and keep the flow smooth.
+          From simple + shareable… to fully hosted… to fully branded brand
+          activations.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-12 items-stretch">
-          <GlowCard
-            title={
-              <span className="text-center block">
-                Drop Off Digital Photo Booth
-              </span>
-            }
-            variant="mint"
+        <div className="mt-12 grid gap-8 max-w-6xl mx-auto">
+          {/* ===================== CARD 1 (mint) ===================== */}
+          <div
+            className="
+              group
+              rounded-2xl border border-white/10
+bg-[#0a0a0a]
+              p-6 md:p-8 overflow-hidden
+              transition-shadow
+              glo-hover-mint glo-hover-green
+            "
           >
-            <div className="grid h-full grid-rows-[auto_1fr_auto]">
-              <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
-                <img
-                  src={cardImgDropoff}
-                  alt="Drop off digital photo booth setup"
-                  className="w-full h-56 md:h-64 object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
+            <h3
+              className="
+                text-[#23ff11] font-display text-xl md:text-2xl mb-4 text-left
+                drop-shadow-[0_0_10px_rgba(35,255,17,0.35)]
+                group-hover:drop-shadow-[0_0_16px_rgba(35,255,17,0.85)]
+              "
+            >
+              Glo Pop Up Experience
+            </h3>
+
+            <div className="grid md:grid-cols-[360px_1fr] gap-6 md:gap-8 items-start">
+              <div className="flex justify-start">
+                <div className="mt-2 md:mt-6 w-full max-w-[360px]">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                    <img
+                      src={GloPopUpExperience}
+                      alt="Glo Pop Up Experience"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="min-h-0">
-                <p className="text-gray-300">
-                  Delivered ready to use with instant sharing and custom
-                  branding options. We set it up and show you exactly how it
-                  works.
+              <div className="text-gray-300 min-w-0">
+                <h4 className="text-[#23ff11] font-bold text-lg md:text-xl leading-tight">
+                  Simple… shareable… effortless
+                </h4>
+
+                <p className="mt-2 text-base leading-relaxed">
+                  An easy photo booth experience for casual events, instant
+                  sharing, and quick setup.
                 </p>
 
-                <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#23ff11]">
-                  <li>We deliver, set it up, and show you how to use it</li>
-                  <li>Custom branded overlays included</li>
-                  <li>4x6 digital downloads, GIFs, and boomerangs included</li>
-                  <li>Digital backdrops to match any theme</li>
-                  <li>Digital props included</li>
-                  <li>Optional enhancements available upon request</li>
-                </ul>
-              </div>
+                <p className="mt-3 text-base">
+                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
+                  <span className="text-[#23ff11] font-bold">$495 for 3 hrs</span>
+                </p>
 
-              <div className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  <ActionBtn href={DROP_OFF} variant="red">
-                    See Pricing + Book Online
+                <p className="mt-4 text-[#23ff11] font-semibold">Includes:</p>
+
+                <ul className="mt-2 list-disc pl-5 space-y-1.5 marker:text-[#23ff11] text-base">
+                  <li>Drop off + pickup</li>
+                  <li>Premium template overlay selection</li>
+                  <li>4×6 photos, GIFs, and Boomerangs</li>
+                  <li>Instant sharing via QR code + text</li>
+                  <li>Download link to the full event photo + video gallery</li>
+                </ul>
+
+                <p className="mt-4 text-base">
+                  <span className="text-[#23ff11] font-semibold">Best for:</span>{" "}
+                  private parties… birthdays… grad parties… open houses… casual
+                  gatherings
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3 justify-center sm:justify-start">
+                <ActionBtn href={LINK_GloPopUpExperience} variant="red" className="!w-auto">
+                    Ready to Book
                   </ActionBtn>
-                  <ActionBtn href={connectHref} variant="green">
+                  <ActionBtn href={connectHref} variant="green" className="!w-auto">
                     Connect with Our Team
                   </ActionBtn>
                 </div>
               </div>
             </div>
-          </GlowCard>
+          </div>
 
-          <GlowCard
-            title={
-              <span className="text-center block">
-                Full Service Photo Booth With Attendant
-              </span>
-            }
-            variant="pink"
+          {/* ===================== CARD 2 (pink) ===================== */}
+          <div
+            className="
+              group
+              rounded-2xl border border-white/10
+              bg-black
+              p-6 md:p-8 overflow-hidden
+              transition-shadow
+              glo-hover-pink
+            "
           >
-            <div className="grid h-full grid-rows-[auto_1fr_auto]">
-              <div className="-mx-6 -mt-6 mb-5 overflow-hidden rounded-t-2xl relative">
-                <img
-                  src={cardImgFull}
-                  alt="Photo booth attendant helping guests"
-                  className="w-full h-56 md:h-64 object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent" />
+           <h3
+  className="
+  
+  text-[#ff4567] font-display text-xl md:text-2xl mb-4 text-left
+  drop-shadow-[0_0_10px_rgba(255,69,103,0.35)]
+  group-hover:drop-shadow-[0_0_16px_rgba(255,69,103,0.85)]
+"
+>
+  Glo Transformation Experience
+</h3>
+
+            <div className="grid md:grid-cols-[360px_1fr] gap-6 md:gap-8 items-start">
+              <div className="flex justify-start">
+                <div className="mt-2 md:mt-6 w-full max-w-[360px]">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                    <img
+                      src={GloTransformationExperience}
+                      alt="Glo Transformation Experience"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="min-h-0">
-                <p className="text-gray-300">
-                  A fully supported photo booth experience. We set it up and an
-                  attendant guides guests during your event for a smooth flow
-                  and premium feel.
+              <div className="text-gray-300 min-w-0">
+                <h4 className="text-[#ff4567] font-bold text-lg md:text-xl leading-tight">
+                  AI effects… big reactions… unforgettable content
+                </h4>
+
+                <p className="mt-2 text-base leading-relaxed">
+                  Guests transform with immersive AI effects that create instant
+                  wow moments and highly shareable media.
                 </p>
 
-                <ul className="!mt-4 !mb-0 list-disc pl-6 text-gray-300 space-y-2 marker:text-[#ff4567]">
-                  <li>Delivery + setup included</li>
-                  <li>Attendant guides guests and manages the flow</li>
-                  <li>Custom branded overlays included</li>
-                  <li>Photos, GIFs, and boomerangs included</li>
-                  <li>Digital backdrops + props included</li>
-                  <li>Optional enhancements available upon request</li>
-                </ul>
-              </div>
+                <p className="mt-3 text-base">
+                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
+                  <span className="text-[#ff4567] font-bold">$795 for 3 hrs</span>
+                </p>
 
-              <div className="pt-6">
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  <ActionBtn href={PB_ATTENDANCE} variant="red">
-                    See Pricing + Book Online
+                <p className="mt-4 text-[#ff4567] font-semibold">Includes:</p>
+
+                <ul className="mt-2 list-disc pl-5 space-y-1.5 marker:text-[#ff4567] text-base">
+                  <li>Drop off + pickup</li>
+                  <li>Choose 2–3 AI effects from our curated collection</li>
+                  <li>Premium template overlay selection</li>
+                  <li>4×6 photos, GIFs, and Boomerangs</li>
+                  <li>Instant sharing via QR code + text</li>
+                  <li>Download link to the full event photo + video gallery</li>
+                </ul>
+
+                <p className="mt-4 text-base">
+                  <span className="text-[#ff4567] font-semibold">Best for:</span>{" "}
+                  schools… fundraisers… themed parties… corporate events… large
+                  groups
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3 justify-center sm:justify-start">
+                <ActionBtn href={LINK_GloTransformationExperience} variant="red" className="!w-auto">
+                  Ready to Book
                   </ActionBtn>
-                  <ActionBtn href={connectHref} variant="green">
+                  <ActionBtn href={connectHref} variant="green" className="!w-auto">
                     Connect with Our Team
                   </ActionBtn>
                 </div>
               </div>
             </div>
-          </GlowCard>
+          </div>
+
+          {/* ===================== CARD 3 (mint) ===================== */}
+          <div
+            className="
+              group
+              rounded-2xl border border-white/10
+              bg-black
+              p-6 md:p-8 overflow-hidden
+              transition-shadow
+              glo-hover-mint glo-hover-green
+            "
+          >
+            <h3
+              className="
+                text-[#23ff11] font-display text-xl md:text-2xl mb-4 text-left
+                drop-shadow-[0_0_10px_rgba(35,255,17,0.35)]
+                group-hover:drop-shadow-[0_0_16px_rgba(35,255,17,0.85)]
+              "
+            >
+              Glo Hosted Experience
+            </h3>
+
+            <div className="grid md:grid-cols-[360px_1fr] gap-6 md:gap-8 items-start">
+              <div className="flex justify-start">
+                <div className="mt-2 md:mt-6 w-full max-w-[360px]">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                    <img
+                      src={GloHostedExperience}
+                      alt="Glo Hosted Experience"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-gray-300 min-w-0">
+                <h4 className="text-[#23ff11] font-bold text-lg md:text-xl leading-tight">
+                  Premium setup… guided flow… zero stress
+                </h4>
+
+                <p className="mt-2 text-base leading-relaxed">
+                  A fully hosted photo booth experience with hands-on support,
+                  premium props, and a physical backdrop.
+                </p>
+
+                <p className="mt-3 text-base">
+                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
+                  <span className="text-[#23ff11] font-bold">$995 for 3 hrs</span>
+                </p>
+
+                <p className="mt-4 text-[#23ff11] font-semibold">Includes:</p>
+
+                <ul className="mt-2 list-disc pl-5 space-y-1.5 marker:text-[#23ff11] text-base">
+                  <li>Onsite attendant</li>
+                  <li>Drop off, setup, and breakdown</li>
+                  <li>Choice of physical backdrop from our curated selection</li>
+                  <li>Premium props</li>
+                  <li>Custom event overlay</li>
+                  <li>4×6 photos, GIFs, and Boomerangs</li>
+                  <li>Instant sharing via QR code + text</li>
+                  <li>Download link to the full event photo + video gallery</li>
+                </ul>
+
+                <p className="mt-4 text-base">
+                  <span className="text-[#23ff11] font-semibold">Best for:</span>{" "}
+                  weddings… receptions… ticketed events… corporate celebrations…
+                  school dances
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3 justify-center sm:justify-start">
+                <ActionBtn href={LINK_GloHostedExperience} variant="red" className="!w-auto">
+Ready to Book                  </ActionBtn>
+                  <ActionBtn href={connectHref} variant="green" className="!w-auto">
+                    Connect with Our Team
+                  </ActionBtn>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ===================== CARD 4 (pink) ===================== */}
+          <div
+            className="
+              group
+              rounded-2xl border border-white/10
+              bg-black
+              p-6 md:p-8 overflow-hidden
+              transition-shadow
+              glo-hover-pink
+            "
+          >
+            <h3
+              className="
+                text-[#ff4567] font-display text-xl md:text-2xl mb-4 text-left
+                drop-shadow-[0_0_10px_rgba(255,69,103,0.35)]
+                group-hover:drop-shadow-[0_0_16px_rgba(255,69,103,0.85)]
+              "
+            >
+              Glo Brand Spotlight Experience
+            </h3>
+
+            <div className="grid md:grid-cols-[360px_1fr] gap-6 md:gap-8 items-start">
+              <div className="flex justify-start">
+                <div className="mt-2 md:mt-6 w-full max-w-[360px]">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                    <img
+                      src={GloBrandSpotlightExperience}
+                      alt="Glo Brand Spotlight Experience"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-gray-300 min-w-0">
+                <h4 className="text-[#ff4567] font-bold text-lg md:text-xl leading-tight">
+                  Fully branded… highly engaging… built for impact
+                </h4>
+
+                <p className="mt-2 text-base leading-relaxed">
+                  A premium brand activation that turns your booth into a
+                  branded guest journey with calls to action.
+                </p>
+
+                <p className="mt-3 text-base">
+                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
+                  <span className="text-[#ff4567] font-bold">$1,495 for 4 hrs</span>
+                </p>
+
+                <p className="mt-4 text-[#ff4567] font-semibold">Includes:</p>
+
+                <ul className="mt-2 list-disc pl-5 space-y-1.5 marker:text-[#ff4567] text-base">
+                  <li>Onsite attendant</li>
+                  <li>Drop off, setup, and breakdown</li>
+                  <li>Custom AI prompt included</li>
+                  <li>Custom overlay design</li>
+                  <li>Custom start screen + experience screen</li>
+                  <li>Branded buttons + on-screen calls to action</li>
+                  <li>4×6 photos, GIFs, and Boomerangs</li>
+                  <li>Instant sharing via QR code + text</li>
+                  <li>Download link to the full event photo + video gallery</li>
+                </ul>
+
+                <p className="mt-4 text-base">
+                  <span className="text-[#ff4567] font-semibold">Best for:</span>{" "}
+                  conferences… chambers… networking… grand openings… product
+                  launches
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3 justify-center sm:justify-start">
+                <ActionBtn href={LINK_GloBrandSpotlightExperience} variant="red" className="!w-auto">
+                    Ready to Book
+                  </ActionBtn>
+                  <ActionBtn href={connectHref} variant="green" className="!w-auto">
+                    Connect with Our Team
+                  </ActionBtn>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

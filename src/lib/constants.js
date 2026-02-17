@@ -18,6 +18,11 @@ export const DROP_OFF = `${BOOK_BASE}/reservation/user_info?event_type_id=37628`
 export const PB_ATTENDANCE = `${BOOK_BASE}/reservation/user_info?event_type_id=61522`
 
 
+export const LINK_GloPopUpExperience = "https://glo-event-co.checkcherry.com/reservation/set_event?event_type_id=162823";
+export const LINK_GloTransformationExperience = "https://glo-event-co.checkcherry.com/reservation/set_event?event_type_id=162831";
+export const LINK_GloHostedExperience = "https://glo-event-co.checkcherry.com/reservation/set_event?event_type_id=162835";
+export const LINK_GloBrandSpotlightExperience = "https://glo-event-co.checkcherry.com/reservation/set_event?event_type_id=162836";
+
 
 const CASES_BASE = '/images/cases'
 
