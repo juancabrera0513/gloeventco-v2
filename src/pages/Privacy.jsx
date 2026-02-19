@@ -227,7 +227,7 @@ export default function Privacy() {
             <div className="text-gray-200">
               Silent Night Events, LLC doing business as Glo Event Co
             </div>
-            <div>11123 South Towne Sq. Suite B, St. Louis, MO 63123</div>
+            <div>11123 South Towne Square, Ste. B, St. Louis, MO 63123            </div>
             <div>
               Email: <span className="text-gray-200">info@gloeventco.com</span>
             </div>
