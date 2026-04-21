@@ -149,6 +149,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   filter: none;
 }
 
+
 .glo-hover-soft:hover {
   filter: drop-shadow(0 0 12px rgba(0,131,253,.75));
   text-shadow: 0 0 6px var(--color-neon-blue), 0 0 12px rgba(0,131,253,.6);
