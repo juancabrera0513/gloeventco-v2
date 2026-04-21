@@ -11,7 +11,10 @@ export const BOOK_BASE = 'https://glo-event-co.checkcherry.com'
 export const BOOK_SELFIE = `${BOOK_BASE}/reservation/event_type?package_group_id=13666`
 export const BOOK_SILENT = `${BOOK_BASE}/reservation/package_group?service_id=9587`
 export const PRICING = `${BOOK_BASE}/reservation`
+export const NEW_SDHR = `${BOOK_BASE}/reservation/event_type?package_group_id=49977`
 export const SDHR = `${BOOK_BASE}/reservation/event_type?package_group_id=13679`
+export const NEW_DJAT = `${BOOK_BASE}/reservation//event_type?package_group_id=49976`
+
 export const DJAT = `${BOOK_BASE}/reservation/event_type?package_group_id=13678`
 export const SFA = `${BOOK_BASE}/reservation/event_type?package_group_id=13666`
 export const DROP_OFF = `${BOOK_BASE}/reservation/user_info?event_type_id=37628`

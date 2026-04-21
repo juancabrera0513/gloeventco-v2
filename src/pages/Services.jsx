@@ -3,7 +3,7 @@ import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import ServicesExtras from "../components/ServicesExtras";
 import GlowButton from "../components/GlowButton";
-import { DJAT, SDHR, SFA, PRICING } from "../lib/constants";
+import { DJAT, SDHR, SFA, PRICING, NEW_SDHR } from "../lib/constants";
 import { useEffect } from "react";
 
 export default function Services() {
@@ -142,7 +142,7 @@ export default function Services() {
           <ActionBtn href={LEARN_SILENT} variant="pink">
             Learn More
           </ActionBtn>
-          <ActionBtn href={SDHR} variant="pink">
+          <ActionBtn href={NEW_SDHR} variant="pink">
             See Pricing + Book Online
           </ActionBtn>
         </div>

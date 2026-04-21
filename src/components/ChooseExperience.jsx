@@ -1,6 +1,6 @@
 import GlowButton from "./GlowButton";
 import NeonTitle from "./NeonTitle";
-import { SDHR, DJAT, SFA } from "../lib/constants";
+import { SDHR, DJAT, SFA, NEW_SDHR, NEW_DJAT } from "../lib/constants";
 
 const EXPERIENCES = [
   {
@@ -21,7 +21,7 @@ const EXPERIENCES = [
       "Simple setup instructions included",
       "Local support if you need help",
     ],
-    cta: { href: SDHR },
+    cta: { href: NEW_SDHR },
   },
   {
     title: "Silent Disco with DJ & Attendants",
@@ -41,7 +41,7 @@ const EXPERIENCES = [
       "We handle setup, breakdown, and event flow",
       "Perfect for schools, corporate events, fundraisers, and large celebrations",
     ],
-    cta: { href: DJAT },
+    cta: { href: NEW_DJAT },
   },
   {
     title: "Selfie Station Photo Booth Rental",

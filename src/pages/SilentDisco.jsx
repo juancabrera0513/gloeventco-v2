@@ -4,6 +4,7 @@ import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import GlowButton from "../components/GlowButton";
 import MiniVideoGallery from "../components/MiniVideoGallery";
+import { NEW_DJAT, NEW_SDHR } from "../lib/constants";
 
 export default function SilentDisco() {
   const PRICING = "https://glo-event-co.checkcherry.com";
@@ -392,7 +393,7 @@ export default function SilentDisco() {
                 </ul>
 
                 <div className="mt-auto pt-6 flex flex-col sm:flex-row justify-center items-center gap-3 w-full">
-                  <ActionBtn href={QUOTE_RENTALS} variant="red">
+                  <ActionBtn href={NEW_SDHR} variant="red">
                     See Pricing + Book Online
                   </ActionBtn>
                   <ActionBtn href={CONNECT} variant="green">
@@ -425,7 +426,7 @@ export default function SilentDisco() {
                 </ul>
 
                 <div className="mt-auto pt-6 flex flex-col sm:flex-row justify-center items-center gap-3 w-full">
-                  <ActionBtn href={QUOTE_DJ} variant="red">
+                  <ActionBtn href={NEW_DJAT} variant="red">
                     See Pricing + Book Online
                   </ActionBtn>
                   <ActionBtn href={CONNECT} variant="green">
