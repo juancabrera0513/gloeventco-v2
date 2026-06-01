@@ -494,11 +494,7 @@ bg-[#0a0a0a]
                   sharing, and quick setup.
                 </p>
 
-                <p className="mt-3 text-base">
-                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
-                  <span className="text-[#23ff11] font-bold">$495 for 3 hrs</span>
-                </p>
-
+          
                 <p className="mt-4 text-[#23ff11] font-semibold">Includes:</p>
 
                 <ul className="mt-2 list-disc pl-5 space-y-1.5 marker:text-[#23ff11] text-base">
@@ -575,10 +571,7 @@ bg-[#0a0a0a]
                   wow moments and highly shareable media.
                 </p>
 
-                <p className="mt-3 text-base">
-                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
-                  <span className="text-[#ff4567] font-bold">$795 for 3 hrs</span>
-                </p>
+              
 
                 <p className="mt-4 text-[#ff4567] font-semibold">Includes:</p>
 
@@ -656,10 +649,6 @@ bg-[#0a0a0a]
                   premium props, and a physical backdrop.
                 </p>
 
-                <p className="mt-3 text-base">
-                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
-                  <span className="text-[#23ff11] font-bold">$995 for 3 hrs</span>
-                </p>
 
                 <p className="mt-4 text-[#23ff11] font-semibold">Includes:</p>
 
@@ -738,10 +727,7 @@ Ready to Book                  </ActionBtn>
                   branded guest journey with calls to action.
                 </p>
 
-                <p className="mt-3 text-base">
-                  <span className="text-gray-100 font-semibold">Starting at:</span>{" "}
-                  <span className="text-[#ff4567] font-bold">$1,495 for 4 hrs</span>
-                </p>
+             
 
                 <p className="mt-4 text-[#ff4567] font-semibold">Includes:</p>
 

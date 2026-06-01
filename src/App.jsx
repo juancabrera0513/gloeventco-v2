@@ -1,8 +1,7 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import TawkTo from "./components/TawkTo";
 
 import Home from "./pages/Home";
 import Services from "./pages/Services";
@@ -21,14 +20,8 @@ import AdminCalendar from "./pages/admin/AdminCalendar";
 import AdminGuard from "./components/AdminGuard";
 
 export default function App() {
-  const { pathname } = useLocation();
-
-  const isAdminRoute = pathname.startsWith("/admin");
-
   return (
     <div className="min-h-dvh flex flex-col">
-      {import.meta.env.PROD && !isAdminRoute ? <TawkTo /> : null}
-
       <Header />
       <ScrollToTop behavior="auto" />
 
