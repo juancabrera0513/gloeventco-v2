@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { EMAIL, PHONE } from "../lib/constants";
+import { EMAIL, PHONE, TEXT_PHONE } from "../lib/constants";
 
 export default function Footer({
   logoSrc = "/images/glo-logo.webp",
@@ -221,7 +221,15 @@ export default function Footer({
                     className={`${itemLinkBase} ${glowGreen}`}
                     href={`tel:${PHONE}`}
                   >
-                    {PHONE}
+                    Call: {PHONE}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className={`${itemLinkBase} ${glowBlue}`}
+                    href={`sms:${TEXT_PHONE}`}
+                  >
+                    Text: {TEXT_PHONE}
                   </a>
                 </li>
                 <li>

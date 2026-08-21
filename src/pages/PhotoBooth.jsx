@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import GlowButton from "../components/GlowButton";
-import { SFA, DROP_OFF, PB_ATTENDANCE, LINK_GloPopUpExperience, LINK_GloTransformationExperience, LINK_GloHostedExperience, LINK_GloBrandSpotlightExperience} from "../lib/constants";
+import { SFA, DROP_OFF, PB_ATTENDANCE, LINK_GloPopUpExperience, LINK_GloTransformationExperience, LINK_GloHostedExperience, LINK_GloBrandSpotlightExperience, PHONE, TEXT_PHONE } from "../lib/constants";
 
 const isVideoSrc = (src = "") =>
   typeof src === "string" && /\.(mp4|webm|mov)(\?.*)?$/i.test(src || "");
@@ -231,14 +231,14 @@ export default function PhotoBooth() {
     provider: {
       "@type": "LocalBusiness",
       name: "Glo Event Co",
-      telephone: "314-282-7888",
+      telephone: [PHONE, TEXT_PHONE],
       email: "info@gloeventco.com",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "11123 South Towne Sq. Suite B",
-        addressLocality: "St. Louis",
+        streetAddress: "4051 Jeffco Blvd. Suite 6",
+        addressLocality: "Arnold",
         addressRegion: "MO",
-        postalCode: "63123",
+        postalCode: "63010",
         addressCountry: "US",
       },
       url: "https://www.gloeventco.com/",

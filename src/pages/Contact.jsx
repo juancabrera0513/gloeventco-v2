@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import NeonTitle from "../components/NeonTitle";
-import { EMAIL, PHONE, ADDRESS_HTML } from "../lib/constants";
+import { EMAIL, PHONE, TEXT_PHONE, ADDRESS_HTML } from "../lib/constants";
 
 export default function Contact() {
   const CHECKCHERRY_HOST = "https://glo-event-co.checkcherry.com";
@@ -34,14 +34,14 @@ export default function Contact() {
       about: {
         "@type": "LocalBusiness",
         name: "Glo Event Co",
-        telephone: PHONE,
+        telephone: [PHONE, TEXT_PHONE],
         email: EMAIL,
         address: {
           "@type": "PostalAddress",
-          streetAddress: "11123 South Towne Sq. Suite B",
-          addressLocality: "St. Louis",
+          streetAddress: "4051 Jeffco Blvd. Suite 6",
+          addressLocality: "Arnold",
           addressRegion: "MO",
-          postalCode: "63123",
+          postalCode: "63010",
           addressCountry: "US",
         },
         areaServed: { "@type": "Place", name: "St. Louis, MO" },
@@ -231,8 +231,15 @@ export default function Contact() {
             </a>
           </p>
           <p>
+            Call:{" "}
             <a className="underline" href={`tel:${PHONE}`}>
               {PHONE}
+            </a>
+          </p>
+          <p>
+            Text:{" "}
+            <a className="underline" href={`sms:${TEXT_PHONE}`}>
+              {TEXT_PHONE}
             </a>
           </p>
 
@@ -307,6 +314,10 @@ export default function Contact() {
                 or call{" "}
                 <a className="underline" href={`tel:${PHONE}`}>
                   {PHONE}
+                </a>
+                {" "}or text{" "}
+                <a className="underline" href={`sms:${TEXT_PHONE}`}>
+                  {TEXT_PHONE}
                 </a>
                 .
               </div>

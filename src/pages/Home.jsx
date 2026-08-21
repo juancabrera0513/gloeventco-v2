@@ -6,7 +6,7 @@ import OurWork from "../components/OurWork";
 import ChooseExperience from "../components/ChooseExperience";
 
 import TestimonialsCarousel from "../components/TestimonialsCarousel";
-import { OUR_WORK, TESTIMONIALS, PRICING } from "../lib/constants";
+import { OUR_WORK, TESTIMONIALS, PRICING, PHONE, TEXT_PHONE } from "../lib/constants";
 
 import HowItWorks from "../components/HowItWorks";
 import HomeGallery from "../components/HomeGallery";
@@ -22,14 +22,14 @@ export default function Home() {
     provider: {
       "@type": "LocalBusiness",
       name: "Glo Event Co",
-      telephone: "314-282-7888",
+      telephone: [PHONE, TEXT_PHONE],
       email: "info@gloeventco.com",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "11123 South Towne Sq. Suite B",
-        addressLocality: "St. Louis",
+        streetAddress: "4051 Jeffco Blvd. Suite 6",
+        addressLocality: "Arnold",
         addressRegion: "MO",
-        postalCode: "63123",
+        postalCode: "63010",
         addressCountry: "US",
       },
       url: "https://www.gloeventco.com/",
@@ -48,14 +48,14 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "Glo Event Co",
-    telephone: "314-282-7888",
+    telephone: [PHONE, TEXT_PHONE],
     email: "info@gloeventco.com",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "11123 South Towne Sq. Suite B",
-      addressLocality: "St. Louis",
+      streetAddress: "4051 Jeffco Blvd. Suite 6",
+      addressLocality: "Arnold",
       addressRegion: "MO",
-      postalCode: "63123",
+      postalCode: "63010",
       addressCountry: "US",
     },
     url: "https://www.gloeventco.com/",

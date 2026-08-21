@@ -2,9 +2,10 @@
 
 export const LOGO_TEXT = 'GLO EVENT CO'
 export const PHONE = '314-282-7888'
+export const TEXT_PHONE = '314-798-9900'
 export const EMAIL = 'info@gloeventco.com'
 export const ADDRESS_HTML =
-  '11123 South Towne Sq. Suite B<br/>St. Louis, MO 63123'
+  '4051 Jeffco Blvd. Suite 6<br/>Arnold, MO 63010'
 
 
 export const BOOK_BASE = 'https://glo-event-co.checkcherry.com'

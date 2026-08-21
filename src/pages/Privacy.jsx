@@ -227,12 +227,15 @@ export default function Privacy() {
             <div className="text-gray-200">
               Silent Night Events, LLC doing business as Glo Event Co
             </div>
-            <div>11123 South Towne Square, Ste. B, St. Louis, MO 63123            </div>
+            <div>4051 Jeffco Blvd. Suite 6, Arnold, MO 63010</div>
             <div>
               Email: <span className="text-gray-200">info@gloeventco.com</span>
             </div>
             <div>
-              Phone: <span className="text-gray-200">314-282-7888</span>
+              Call: <span className="text-gray-200">314-282-7888</span>
+            </div>
+            <div>
+              Text: <span className="text-gray-200">314-798-9900</span>
             </div>
           </div>
 

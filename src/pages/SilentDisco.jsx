@@ -4,7 +4,7 @@ import GlowCard from "../components/GlowCard";
 import NeonTitle from "../components/NeonTitle";
 import GlowButton from "../components/GlowButton";
 import MiniVideoGallery from "../components/MiniVideoGallery";
-import { NEW_DJAT, NEW_SDHR } from "../lib/constants";
+import { NEW_DJAT, NEW_SDHR, PHONE, TEXT_PHONE } from "../lib/constants";
 
 export default function SilentDisco() {
   const PRICING = "https://glo-event-co.checkcherry.com";
@@ -165,14 +165,14 @@ export default function SilentDisco() {
     provider: {
       "@type": "LocalBusiness",
       name: "Glo Event Co",
-      telephone: "314-282-7888",
+      telephone: [PHONE, TEXT_PHONE],
       email: "info@gloeventco.com",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "11123 South Towne Sq. Suite B",
-        addressLocality: "St. Louis",
+        streetAddress: "4051 Jeffco Blvd. Suite 6",
+        addressLocality: "Arnold",
         addressRegion: "MO",
-        postalCode: "63123",
+        postalCode: "63010",
         addressCountry: "US",
       },
       url: "https://www.gloeventco.com/",

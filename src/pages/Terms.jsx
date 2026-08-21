@@ -469,12 +469,13 @@ export default function Terms() {
             <br />
             Silent Night Events, LLC doing business as Glo Event Co
             <br />
-            Mailing Address: 11123 South Towne Square, Ste. B, St. Louis, MO
-            63123
+            Mailing Address: 4051 Jeffco Blvd. Suite 6, Arnold, MO 63010
             <br />
             Email: info@gloeventco.com
             <br />
-            Phone: 314-282-7888
+            Call: 314-282-7888
+            <br />
+            Text: 314-798-9900
           </p>
         </div>
       </section>
